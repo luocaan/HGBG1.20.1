@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "DDD"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:oak_stairs"
+    },
+    "D": {
+      "item": "minecraft:oak_log"
+    }
+  },
+  "result": {
+    "item": "hunger-begone:mortar_and_pestle",
+    "count": 1
+  }
+}

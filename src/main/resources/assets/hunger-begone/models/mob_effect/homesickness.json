@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:mob_effect",
+  "textures": {
+    "layer0": "hunger-begone:mob_effect/homesickness"
+  }
+}

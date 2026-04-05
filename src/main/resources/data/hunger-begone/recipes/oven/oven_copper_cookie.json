@@ -1,0 +1,18 @@
+{
+  "type": "hunger-begone:oven",
+  "ingredients": [
+    {
+      "item": "minecraft:honeycomb"
+    },
+    {
+      "item": "minecraft:copper_ingot"
+    },
+    {
+      "item": "minecraft:wheat"
+    }
+  ],
+  "result": {
+    "item": "hunger-begone:copper_cookie",
+    "count": 1
+  }
+}

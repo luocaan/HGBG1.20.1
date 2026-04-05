@@ -1,0 +1,16 @@
+{
+  "type": "hunger-begone:pan_cooking",
+  "inputs": [
+    {
+      "item": "hunger-begone:raw_shrimp",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": "hunger-begone:cooked_shrimp",
+      "count": 1
+    }
+  ],
+  "cookTime": 150
+}

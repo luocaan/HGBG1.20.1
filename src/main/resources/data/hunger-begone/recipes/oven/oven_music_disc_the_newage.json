@@ -1,0 +1,12 @@
+{
+  "type": "hunger-begone:oven",
+  "ingredients": [
+    {
+      "tag": "minecraft:music_discs"
+    }
+  ],
+  "result": {
+    "item": "hunger-begone:music_disc_the_newage",
+    "count": 1
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "hunger-begone:oven",
+  "ingredients": [
+    {
+      "item": "minecraft:chicken"
+    },
+    {
+      "item": "minecraft:honey_bottle"
+    },
+    {
+      "item": "minecraft:bowl"
+    }
+  ],
+  "result": {
+    "item": "hunger-begone:orleans_roasted_chicken",
+    "count": 1
+  }
+}

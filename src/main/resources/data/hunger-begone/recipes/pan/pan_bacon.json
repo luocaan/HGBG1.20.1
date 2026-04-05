@@ -1,0 +1,16 @@
+{
+  "type": "hunger-begone:pan_cooking",
+  "inputs": [
+    {
+      "item": "hunger-begone:raw_bacon",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": "hunger-begone:bacon",
+      "count": 1
+    }
+  ],
+  "cookTime": 100
+}

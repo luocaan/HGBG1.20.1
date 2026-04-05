@@ -1,0 +1,18 @@
+{
+  "type": "hunger-begone:oven",
+  "ingredients": [
+    {
+      "item": "minecraft:egg"
+    },
+    {
+      "item": "minecraft:sugar_cane"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "result": {
+    "item": "minecraft:cake",
+    "count": 1
+  }
+}

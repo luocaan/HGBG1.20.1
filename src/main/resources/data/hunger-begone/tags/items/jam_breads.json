@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "hunger-begone:shiny_berry_jam_bread",
+    "hunger-begone:apple_jam_bread",
+    "hunger-begone:berry_jam_bread",
+    "hunger-begone:watermelon_jam_bread",
+    "hunger-begone:chocolate_bread"
+  ]
+}

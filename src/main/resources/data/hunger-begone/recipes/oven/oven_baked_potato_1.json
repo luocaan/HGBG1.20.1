@@ -1,0 +1,12 @@
+{
+  "type": "hunger-begone:oven",
+  "ingredients": [
+    {
+      "item": "minecraft:potato"
+    }
+  ],
+  "result": {
+    "item": "minecraft:baked_potato",
+    "count": 1
+  }
+}

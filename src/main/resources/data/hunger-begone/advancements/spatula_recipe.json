@@ -1,0 +1,29 @@
+{
+  "parent": "hunger-begone:pan_recipe",
+  "display": {
+    "icon": {
+      "item": "hunger-begone:spatula"
+    },
+    "title": {
+      "translate": "advancement.hunger-begone.spatula_recipe.title"
+    },
+    "description": {
+      "translate": "advancement.hunger-begone.spatula_recipe.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "craft_spatula": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "hunger-begone:tool/spatula"
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [],
+    "experience": 35
+  }
+}

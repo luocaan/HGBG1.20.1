@@ -1,0 +1,29 @@
+{
+  "parent": "hunger-begone:stove_recipe",
+  "display": {
+    "icon": {
+      "item": "hunger-begone:oven"
+    },
+    "title": {
+      "translate": "advancement.hunger-begone.oven_recipe.title"
+    },
+    "description": {
+      "translate": "advancement.hunger-begone.oven_recipe.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "craft_oven": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "hunger-begone:oven/oven"
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [],
+    "experience": 20
+  }
+}

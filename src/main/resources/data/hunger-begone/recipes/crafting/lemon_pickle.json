@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:sea_pickle"
+    },
+    {
+      "item": "minecraft:bowl"
+    },
+    {
+      "item": "hunger-begone:lemon"
+    }
+  ],
+  "result": {
+    "item": "hunger-begone:lemon_pickle",
+    "count": 1
+  }
+}

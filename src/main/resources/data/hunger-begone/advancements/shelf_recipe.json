@@ -1,0 +1,29 @@
+{
+  "parent": "hunger-begone:well_fed_journey",
+  "display": {
+    "icon": {
+      "item": "hunger-begone:shelf"
+    },
+    "title": {
+      "translate": "advancement.hunger-begone.shelf_recipe.title"
+    },
+    "description": {
+      "translate": "advancement.hunger-begone.shelf_recipe.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "craft_shelf": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "hunger-begone:tool/shelf"
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [],
+    "experience": 10
+  }
+}

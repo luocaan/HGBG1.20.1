@@ -1,0 +1,26 @@
+{
+  "parent": "hunger-begone:oven_recipe",
+  "display": {
+    "icon": {
+      "item": "minecraft:tnt"
+    },
+    "title": {
+      "translate": "advancement.hunger-begone.bake_explosive.title"
+    },
+    "description": {
+      "translate": "advancement.hunger-begone.bake_explosive.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "dummy": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "rewards": {
+    "recipes": [],
+    "experience": 10
+  }
+}

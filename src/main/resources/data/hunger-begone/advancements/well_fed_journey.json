@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "hunger-begone:pan"
+    },
+    "title": {
+      "translate": "advancement.hunger-begone.well_fed_journey.title"
+    },
+    "description": {
+      "translate": "advancement.hunger-begone.well_fed_journey.description"
+    },
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "reach_distance": {
+      "trigger": "hunger-begone:distance_trigger"
+    }
+  },
+  "rewards": {
+    "recipes": [],
+    "experience": 20
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "hunger-begone:pan_cooking",
+  "inputs": [
+    {
+      "item": "minecraft:cooked_cod",
+      "count": 1
+    },
+    {
+      "item": "hunger-begone:chips",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": "hunger-begone:fish_and_chips",
+      "count": 1
+    }
+  ],
+  "cookTime": 200
+}

@@ -1,0 +1,12 @@
+{
+  "type": "hunger-begone:oven",
+  "ingredients": [
+    {
+      "item": "hunger-begone:raw_shrimp"
+    }
+  ],
+  "result": {
+    "item": "hunger-begone:cooked_shrimp",
+    "count": 1
+  }
+}

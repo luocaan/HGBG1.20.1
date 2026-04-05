@@ -1,0 +1,33 @@
+{
+  "parent": "hunger-begone:jam_bread",
+  "display": {
+    "icon": {
+      "item": "hunger-begone:jam_bread"
+    },
+    "title": {
+      "translate": "advancement.hunger-begone.ruined_jam_bread.title"
+    },
+    "description": {
+      "translate": "advancement.hunger-begone.ruined_jam_bread.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "eat_ruined_jam_bread": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": [
+            "hunger-begone:jam_bread"
+          ]
+        }
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [],
+    "experience": 10
+  }
+}

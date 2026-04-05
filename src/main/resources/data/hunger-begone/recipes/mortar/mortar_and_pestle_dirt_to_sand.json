@@ -1,0 +1,10 @@
+{
+  "type": "hunger-begone:mortar_and_pestle",
+  "ingredient": {
+    "item": "minecraft:dirt"
+  },
+  "result": {
+    "item": "minecraft:sand",
+    "count": 1
+  }
+}

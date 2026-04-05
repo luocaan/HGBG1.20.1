@@ -1,0 +1,33 @@
+{
+  "parent": "hunger-begone:well_fed_journey",
+  "display": {
+    "icon": {
+      "item": "hunger-begone:diamond_cookie"
+    },
+    "title": {
+      "translate": "advancement.hunger-begone.diamond_cookie_recipe.title"
+    },
+    "description": {
+      "translate": "advancement.hunger-begone.diamond_cookie_recipe.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "eat_diamond_cookie": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": [
+            "hunger-begone:diamond_cookie"
+          ]
+        }
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [],
+    "experience": 50
+  }
+}

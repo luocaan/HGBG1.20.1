@@ -1,0 +1,26 @@
+{
+  "parent": "hunger-begone:well_fed_journey",
+  "display": {
+    "icon": {
+      "item": "minecraft:oak_leaves"
+    },
+    "title": {
+      "translate": "advancement.hunger-begone.apple_tree.title"
+    },
+    "description": {
+      "translate": "advancement.hunger-begone.apple_tree.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "bonemeal_oak_leaves": {
+      "trigger": "hunger-begone:bonemeal_oak_leaves_trigger"
+    }
+  },
+  "rewards": {
+    "recipes": [],
+    "experience": 15
+  }
+}

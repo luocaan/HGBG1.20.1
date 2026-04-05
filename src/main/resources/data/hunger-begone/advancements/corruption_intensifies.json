@@ -1,0 +1,26 @@
+{
+  "parent": "hunger-begone:lemon_tree",
+  "display": {
+    "icon": {
+      "item": "minecraft:crimson_fungus"
+    },
+    "title": {
+      "translate": "advancement.hunger-begone.corruption_intensifies.title"
+    },
+    "description": {
+      "translate": "advancement.hunger-begone.corruption_intensifies.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "bonemeal_crimson": {
+      "trigger": "hunger-begone:bonemeal_crimson_trigger"
+    }
+  },
+  "rewards": {
+    "recipes": [],
+    "experience": 15
+  }
+}

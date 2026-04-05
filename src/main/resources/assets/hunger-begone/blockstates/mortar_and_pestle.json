@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "hunger-begone:block/mortar_and_pestle"
+    },
+    "facing=east": {
+      "model": "hunger-begone:block/mortar_and_pestle",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "hunger-begone:block/mortar_and_pestle",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "hunger-begone:block/mortar_and_pestle",
+      "y": 270
+    }
+  }
+}

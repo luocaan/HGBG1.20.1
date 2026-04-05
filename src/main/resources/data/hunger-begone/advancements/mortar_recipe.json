@@ -1,0 +1,29 @@
+{
+  "parent": "hunger-begone:pan_recipe",
+  "display": {
+    "icon": {
+      "item": "hunger-begone:mortar_and_pestle"
+    },
+    "title": {
+      "translate": "advancement.hunger-begone.mortar_recipe.title"
+    },
+    "description": {
+      "translate": "advancement.hunger-begone.mortar_recipe.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "craft_mortar": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "hunger-begone:mortar/mortar_and_pestle"
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [],
+    "experience": 30
+  }
+}

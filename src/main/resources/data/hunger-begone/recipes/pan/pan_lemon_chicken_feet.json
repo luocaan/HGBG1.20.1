@@ -1,0 +1,24 @@
+{
+  "type": "hunger-begone:pan_cooking",
+  "inputs": [
+    {
+      "item": "minecraft:chicken",
+      "count": 1
+    },
+    {
+      "item": "hunger-begone:lemon_water",
+      "count": 1
+    },
+    {
+      "item": "minecraft:bowl",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": "hunger-begone:lemon_chicken_feet",
+      "count": 1
+    }
+  ],
+  "cookTime": 100
+}

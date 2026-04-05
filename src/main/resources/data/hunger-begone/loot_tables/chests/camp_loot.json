@@ -1,0 +1,53 @@
+{
+  "pools": [
+    {
+      "rolls": { "min": 3, "max": 6 },
+      "entries": [
+        { "type": "minecraft:item", "name": "hunger-begone:bacon", "weight": 10 },
+        { "type": "minecraft:item", "name": "hunger-begone:raw_bacon", "weight": 8 },
+        { "type": "minecraft:item", "name": "hunger-begone:jam_bread", "weight": 8 },
+        { "type": "minecraft:item", "name": "hunger-begone:shiny_berry_jam_bottle", "weight": 6 },
+        { "type": "minecraft:item", "name": "hunger-begone:shiny_berry_jam_bread", "weight": 6 },
+        { "type": "minecraft:item", "name": "hunger-begone:mushroom_oil_bottle", "weight": 5 },
+        { "type": "minecraft:item", "name": "hunger-begone:mushroom_jam_bottle", "weight": 5 },
+        { "type": "minecraft:item", "name": "hunger-begone:apple_jam_bottle", "weight": 5 },
+        { "type": "minecraft:item", "name": "hunger-begone:apple_jam_bread", "weight": 5 },
+        { "type": "minecraft:item", "name": "hunger-begone:chocolate_milk", "weight": 5 },
+        { "type": "minecraft:item", "name": "hunger-begone:berry_jam_bottle", "weight": 5 },
+        { "type": "minecraft:item", "name": "hunger-begone:berry_jam_bread", "weight": 5 },
+        { "type": "minecraft:item", "name": "hunger-begone:watermelon_jam_bottle", "weight": 5 },
+        { "type": "minecraft:item", "name": "hunger-begone:watermelon_jam_bread", "weight": 5 },
+        { "type": "minecraft:item", "name": "hunger-begone:hot_chocolate_bottle", "weight": 5 },
+        { "type": "minecraft:item", "name": "hunger-begone:chocolate_bread", "weight": 5 },
+        { "type": "minecraft:item", "name": "hunger-begone:mayonnaise_bottle", "weight": 4 },
+        { "type": "minecraft:item", "name": "hunger-begone:baguette", "weight": 7 },
+        { "type": "minecraft:item", "name": "hunger-begone:raw_shrimp", "weight": 6 },
+        { "type": "minecraft:item", "name": "hunger-begone:cooked_shrimp", "weight": 8 },
+        { "type": "minecraft:item", "name": "hunger-begone:goodbro", "weight": 3 },
+        { "type": "minecraft:item", "name": "hunger-begone:shiny_berry_cola_bottle", "weight": 4 },
+        { "type": "minecraft:item", "name": "hunger-begone:berry_cola_bottle", "weight": 4 },
+        { "type": "minecraft:item", "name": "hunger-begone:apple_cola_bottle", "weight": 4 },
+        { "type": "minecraft:item", "name": "hunger-begone:daisy_flower_tea", "weight": 5 },
+        { "type": "minecraft:item", "name": "hunger-begone:flower_tea", "weight": 5 },
+        { "type": "minecraft:item", "name": "hunger-begone:chips", "weight": 7 },
+        { "type": "minecraft:item", "name": "hunger-begone:fish_and_chips", "weight": 6 },
+        { "type": "minecraft:item", "name": "hunger-begone:crude_cake", "weight": 4 },
+        { "type": "minecraft:item", "name": "hunger-begone:lemon", "weight": 8 },
+        { "type": "minecraft:item", "name": "hunger-begone:lemon_water", "weight": 6 },
+        { "type": "minecraft:item", "name": "hunger-begone:full_sugar_lemonade", "weight": 5 },
+        { "type": "minecraft:item", "name": "hunger-begone:lemon_pickle", "weight": 4 },
+        { "type": "minecraft:item", "name": "hunger-begone:orleans_roasted_chicken", "weight": 3 },
+        { "type": "minecraft:item", "name": "hunger-begone:lemon_chicken_feet", "weight": 4 },
+        { "type": "minecraft:item", "name": "hunger-begone:copper_cookie", "weight": 5 },
+        { "type": "minecraft:item", "name": "hunger-begone:iron_cookie", "weight": 4 },
+        { "type": "minecraft:item", "name": "hunger-begone:diamond_cookie", "weight": 2 },
+        { "type": "minecraft:item", "name": "hunger-begone:creamy_mushroom_soup", "weight": 4 },
+        { "type": "minecraft:item", "name": "hunger-begone:moss", "weight": 6 },
+        { "type": "minecraft:item", "name": "minecraft:bread", "weight": 10 },
+        { "type": "minecraft:item", "name": "minecraft:sugar_cane", "weight": 8 },
+        { "type": "minecraft:item", "name": "minecraft:honey_bottle", "weight": 9 },
+        { "type": "minecraft:item", "name": "hunger-begone:music_disc_afternoon", "weight": 3 }
+      ]
+    }
+  ]
+}

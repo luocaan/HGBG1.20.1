@@ -1,0 +1,12 @@
+{
+	"variants": {
+		"facing=north,has_pan=false": { "model": "hunger-begone:block/stove_nopan", "y": 0 },
+		"facing=east,has_pan=false": { "model": "hunger-begone:block/stove_nopan", "y": 90 },
+		"facing=south,has_pan=false": { "model": "hunger-begone:block/stove_nopan", "y": 180 },
+		"facing=west,has_pan=false": { "model": "hunger-begone:block/stove_nopan", "y": 270 },
+		"facing=north,has_pan=true": { "model": "hunger-begone:block/stove", "y": 0 },
+		"facing=east,has_pan=true": { "model": "hunger-begone:block/stove", "y": 90 },
+		"facing=south,has_pan=true": { "model": "hunger-begone:block/stove", "y": 180 },
+		"facing=west,has_pan=true": { "model": "hunger-begone:block/stove", "y": 270 }
+	}
+}

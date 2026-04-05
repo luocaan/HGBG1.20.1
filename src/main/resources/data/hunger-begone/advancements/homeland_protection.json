@@ -1,0 +1,26 @@
+{
+  "parent": "hunger-begone:well_fed_journey",
+  "display": {
+    "icon": {
+      "item": "hunger-begone:homeland_dirt"
+    },
+    "title": {
+      "translate": "advancement.hunger-begone.homeland_protection.title"
+    },
+    "description": {
+      "translate": "advancement.hunger-begone.homeland_protection.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "trigger_homeland_dirt": {
+      "trigger": "hunger-begone:homeland_dirt_trigger"
+    }
+  },
+  "rewards": {
+    "recipes": [],
+    "experience": 50
+  }
+}

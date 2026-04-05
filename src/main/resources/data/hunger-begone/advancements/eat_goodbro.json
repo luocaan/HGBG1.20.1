@@ -1,0 +1,33 @@
+{
+  "parent": "hunger-begone:catch_shrimp",
+  "display": {
+    "icon": {
+      "item": "hunger-begone:goodbro"
+    },
+    "title": {
+      "translate": "advancement.hunger-begone.eat_goodbro.title"
+    },
+    "description": {
+      "translate": "advancement.hunger-begone.eat_goodbro.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "eat_goodbro": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": [
+            "hunger-begone:goodbro"
+          ]
+        }
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [],
+    "experience": 30
+  }
+}

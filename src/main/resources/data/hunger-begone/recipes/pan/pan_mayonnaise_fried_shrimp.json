@@ -1,0 +1,24 @@
+{
+  "type": "hunger-begone:pan_cooking",
+  "inputs": [
+    {
+      "item": "hunger-begone:mayonnaise_bottle",
+      "count": 1
+    },
+    {
+      "item": "hunger-begone:cooked_shrimp",
+      "count": 1
+    },
+    {
+      "item": "hunger-begone:mushroom_oil_bottle",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": "hunger-begone:goodbro",
+      "count": 1
+    }
+  ],
+  "cookTime": 150
+}

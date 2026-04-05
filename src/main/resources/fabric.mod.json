@@ -1,0 +1,48 @@
+{
+	"schemaVersion": 1,
+	"id": "hunger-begone",
+	"version": "${version}",
+	"name": "Hunger Begone",
+	"description": "A mod centered around the player's hunger system, making hunger last longer and more player-friendly through enchantments and other features.",
+	"authors": [
+		"Dev and partial texture drawing: Hydroceder",
+		"Partial texture drawing and inspiration: CornBoom"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/hunger-begone"
+	},
+	"license": "MIT",
+	"icon": "assets/hunger-begone/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			{
+				"value": "com.hydroceder.hgbg.HungerBegone",
+				"adapter": "kotlin"
+			}
+		],
+		"client": [
+			{
+				"value": "com.hydroceder.hgbg.HungerBegoneClient",
+				"adapter": "kotlin"
+			}
+		]
+	},
+	"mixins": [
+		"hunger-begone.mixins.json",
+		{
+			"config": "hunger-begone.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.18.4",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*",
+		"fabric-language-kotlin": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

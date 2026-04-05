@@ -1,0 +1,35 @@
+{
+  "parent": "hunger-begone:homeland_protection",
+  "display": {
+    "icon": {
+      "item": "hunger-begone:homeland_dirt"
+    },
+    "title": {
+      "translate": "advancement.hunger-begone.homesickness_effect.title"
+    },
+    "description": {
+      "translate": "advancement.hunger-begone.homesickness_effect.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "get_homesickness": {
+      "trigger": "minecraft:effects_changed",
+      "conditions": {
+        "effects": {
+          "hunger-begone:homesickness": {
+            "amplifier": {
+              "min": 0
+            }
+          }
+        }
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [],
+    "experience": 100
+  }
+}

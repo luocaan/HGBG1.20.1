@@ -1,0 +1,10 @@
+{
+  "type": "hunger-begone:mortar_and_pestle",
+  "ingredient": {
+    "item": "hunger-begone:lemon"
+  },
+  "result": {
+    "item": "hunger-begone:lemon_water",
+    "count": 1
+  }
+}

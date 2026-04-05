@@ -1,0 +1,31 @@
+{
+  "parent": "hunger-begone:diamond_cookie_recipe",
+  "display": {
+    "icon": {
+      "item": "hunger-begone:shiny_berry_jam_bread"
+    },
+    "title": {
+      "translate": "advancement.hunger-begone.jam_bread.title"
+    },
+    "description": {
+      "translate": "advancement.hunger-begone.jam_bread.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "eat_jam_bread": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "tag": "hunger-begone:jam_breads"
+        }
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [],
+    "experience": 20
+  }
+}

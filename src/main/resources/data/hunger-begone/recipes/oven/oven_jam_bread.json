@@ -1,0 +1,12 @@
+{
+  "type": "hunger-begone:oven",
+  "ingredients": [
+    {
+      "tag": "hunger-begone:jam_breads"
+    }
+  ],
+  "result": {
+    "item": "hunger-begone:jam_bread",
+    "count": 1
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "parent": "hunger-begone:apple_tree",
+  "display": {
+    "icon": {
+      "item": "minecraft:birch_leaves"
+    },
+    "title": {
+      "translate": "advancement.hunger-begone.lemon_tree.title"
+    },
+    "description": {
+      "translate": "advancement.hunger-begone.lemon_tree.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "obtain_lemon": {
+      "trigger": "hunger-begone:obtain_lemon_trigger"
+    }
+  },
+  "rewards": {
+    "recipes": [],
+    "experience": 15
+  }
+}

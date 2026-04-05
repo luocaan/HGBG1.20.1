@@ -1,0 +1,33 @@
+{
+  "parent": "hunger-begone:diamond_cookie_recipe",
+  "display": {
+    "icon": {
+      "item": "hunger-begone:raw_shrimp"
+    },
+    "title": {
+      "translate": "advancement.hunger-begone.catch_shrimp.title"
+    },
+    "description": {
+      "translate": "advancement.hunger-begone.catch_shrimp.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "catch_shrimp": {
+      "trigger": "minecraft:fishing_rod_hooked",
+      "conditions": {
+        "item": {
+          "items": [
+            "hunger-begone:raw_shrimp"
+          ]
+        }
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [],
+    "experience": 20
+  }
+}

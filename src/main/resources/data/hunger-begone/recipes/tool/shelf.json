@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "ASA",
+    "A A"
+  ],
+  "key": {
+    "A": { "item": "minecraft:stripped_oak_log" },
+    "S": { "item": "minecraft:oak_slab" }
+  },
+  "result": {
+    "item": "hunger-begone:shelf",
+    "count": 1
+  }
+}

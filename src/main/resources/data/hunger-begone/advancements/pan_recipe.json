@@ -1,0 +1,29 @@
+{
+  "parent": "hunger-begone:oven_recipe",
+  "display": {
+    "icon": {
+      "item": "hunger-begone:pan"
+    },
+    "title": {
+      "translate": "advancement.hunger-begone.pan_recipe.title"
+    },
+    "description": {
+      "translate": "advancement.hunger-begone.pan_recipe.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "craft_pan": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "hunger-begone:pan/pan"
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [],
+    "experience": 25
+  }
+}

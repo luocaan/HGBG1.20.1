@@ -38,31 +38,18 @@ public class OvenRecipe implements Recipe<Inventory> {
     
     @Override
     public boolean matches(Inventory inventory, net.minecraft.world.World world) {
-        List<Ingredient> remainingIngredients = new ArrayList<>(ingredients);
-        
+        List<ItemStack> items = new ArrayList<>(inventory.size());
         for (int i = 0; i < inventory.size(); i++) {
             ItemStack stack = inventory.getStack(i);
-            if (stack.isEmpty()) continue;
-            
-            boolean found = false;
-            Iterator<Ingredient> iterator = remainingIngredients.iterator();
-            while (iterator.hasNext()) {
-                Ingredient ingredient = iterator.next();
-                if (ingredient.test(stack)) {
-                    iterator.remove();
-                    found = true;
-                    break;
-                }
+            if (!stack.isEmpty()) {
+                items.add(stack);
             }
-            
-            if (!found) return false;
         }
-        
-        return remainingIngredients.isEmpty();
+        return matches(items);
     }
     
     /**
-     * 检查物品列表是否匹配配方（顺序无关）
+     * 检查物品列表是否匹配配方（宽松匹配：只要材料足够即可）
      */
     public boolean matches(List<ItemStack> inputItems) {
         List<Ingredient> remainingIngredients = new ArrayList<>(ingredients);
@@ -85,6 +72,62 @@ public class OvenRecipe implements Recipe<Inventory> {
         }
         
         return remainingIngredients.isEmpty();
+    }
+    
+    /**
+     * 检查物品列表是否严格匹配配方（材料数量必须正好匹配）
+     * 注意：对于烤箱配方，每个 Ingredient 代表 1 个材料（多个相同材料通过多个 Ingredient 条目表示）
+     */
+    public boolean matchesStrictly(List<ItemStack> inputItems) {
+        // 创建材料副本，避免修改原数据
+        List<ItemStack> remainingMaterials = new ArrayList<>();
+        for (ItemStack stack : inputItems) {
+            remainingMaterials.add(stack.copy());
+        }
+        
+        // 检查总材料数量是否一致
+        // 对于烤箱配方，每个 Ingredient 代表 1 个材料，所以 ingredients.size() 就是总材料数
+        int totalInputCount = ingredients.size();
+        int totalMaterialCount = 0;
+        for (ItemStack stack : remainingMaterials) {
+            totalMaterialCount += stack.getCount();
+        }
+        
+        if (totalInputCount != totalMaterialCount) {
+            return false;
+        }
+        
+        // 逐一匹配每种配料
+        for (Ingredient ingredient : ingredients) {
+            boolean found = false;
+            
+            for (int i = 0; i < remainingMaterials.size(); i++) {
+                ItemStack materialStack = remainingMaterials.get(i);
+                
+                if (ingredient.test(materialStack)) {
+                    // 消耗一个材料
+                    materialStack.decrement(1);
+                    if (materialStack.isEmpty()) {
+                        remainingMaterials.remove(i);
+                    }
+                    found = true;
+                    break;
+                }
+            }
+            
+            if (!found) {
+                return false;
+            }
+        }
+        
+        // 检查是否有剩余材料
+        for (ItemStack stack : remainingMaterials) {
+            if (!stack.isEmpty()) {
+                return false;
+            }
+        }
+        
+        return true;
     }
     
     @Override
@@ -135,7 +178,7 @@ public class OvenRecipe implements Recipe<Inventory> {
     }
     
     public List<ItemStack> getInputs() {
-        List<ItemStack> inputs = new ArrayList<>();
+        List<ItemStack> inputs = new ArrayList<>(ingredients.size());
         for (Ingredient ingredient : ingredients) {
             ItemStack[] matchingStacks = ingredient.getMatchingStacks();
             if (matchingStacks.length > 0) {

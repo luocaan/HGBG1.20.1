@@ -162,11 +162,11 @@ public class StoveBlock extends BlockWithEntity {
                     return ActionResult.SUCCESS;
                 }
                 
-                Optional<PanCookingRecipe> recipe = PanCookingRecipeManager.findRecipe(stoveBlockEntity.getMaterials());
+                Optional<PanCookingRecipeManager.MatchResult> matchResult = PanCookingRecipeManager.findRecipe(stoveBlockEntity.getMaterials());
                 int cookTime = 200;
-                boolean hasValidRecipe = recipe.isPresent();
+                boolean hasValidRecipe = matchResult.isPresent();
                 if (hasValidRecipe) {
-                    cookTime = recipe.get().getCookTime();
+                    cookTime = matchResult.get().recipe.getCookTime();
                 }
                 
                 stoveBlockEntity.startCooking(cookTime, hasValidRecipe, player.getUuid());
@@ -193,13 +193,15 @@ public class StoveBlock extends BlockWithEntity {
      * 处理烹饪完成后的逻辑
      */
     public static void finishCooking(World world, BlockPos pos, BlockState state, StoveBlockEntity blockEntity) {
-        Optional<PanCookingRecipe> recipe = PanCookingRecipeManager.findRecipe(blockEntity.getMaterials());
+        Optional<PanCookingRecipeManager.MatchResult> matchResult = PanCookingRecipeManager.findRecipe(blockEntity.getMaterials());
         java.util.List<ItemStack> outputs = new java.util.ArrayList<>();
-        boolean hasValidRecipe = recipe.isPresent();
+        boolean hasValidRecipe = matchResult.isPresent();
         
         if (hasValidRecipe) {
-            recipe.get().consumeMaterials(blockEntity.getMaterials());
-            outputs.addAll(recipe.get().getOutputs());
+            PanCookingRecipe recipe = matchResult.get().recipe;
+            int scaleFactor = matchResult.get().scaleFactor;
+            recipe.consumeMaterials(blockEntity.getMaterials(), scaleFactor);
+            outputs.addAll(recipe.getOutputs(scaleFactor));
         } else {
             outputs.add(new ItemStack(Items.CHARCOAL));
         }

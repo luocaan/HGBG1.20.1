@@ -1,5 +1,6 @@
 {
   "type": "hunger-begone:pan_cooking",
+  "scalable": true,
   "inputs": [
     {
       "item": "hunger-begone:raw_bacon",

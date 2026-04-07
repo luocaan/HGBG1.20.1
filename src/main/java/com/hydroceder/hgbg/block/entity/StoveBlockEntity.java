@@ -46,7 +46,7 @@ public class StoveBlockEntity extends BlockEntity implements Inventory {
     }
     
     public List<ItemStack> getMaterials() {
-        List<ItemStack> result = new ArrayList<>();
+        List<ItemStack> result = new ArrayList<>(materials.size());
         for (ItemStack stack : materials) {
             result.add(stack.copy());
         }

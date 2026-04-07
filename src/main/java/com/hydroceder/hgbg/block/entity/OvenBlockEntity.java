@@ -24,13 +24,15 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.Random;
 
 /**
  * 烤箱方块实体类
  * 存储物品和烤制时间
  */
 public class OvenBlockEntity extends BlockEntity implements Inventory {
+    private static final Random random = new Random();
+    
     private final DefaultedList<ItemStack> items = DefaultedList.ofSize(3, ItemStack.EMPTY);
     private int cookTime = 0;
     private static final int COOK_TIME_TOTAL = 200; // 10秒 = 200 ticks
@@ -151,16 +153,26 @@ public class OvenBlockEntity extends BlockEntity implements Inventory {
         world.playSound(null, pos, ModSounds.BELL, SoundCategory.BLOCKS, 1.0f, 1.0f);
         
         // 收集所有非空物品
-        List<ItemStack> inputItems = new ArrayList<>();
+        List<ItemStack> inputItems = new ArrayList<>(items.size());
         for (ItemStack stack : items) {
             if (!stack.isEmpty()) {
-                inputItems.add(stack);
+                inputItems.add(stack.copy());
                 broadcastDebug("输入物品: " + stack.getName().getString() + " x" + stack.getCount());
             }
         }
         
         // 查找匹配的配方
-        ItemStack result = findMatchingRecipe(inputItems);
+        OvenRecipe matchResult = findMatchingRecipe(inputItems);
+        
+        ItemStack result;
+        if (matchResult != null) {
+            result = matchResult.getOutput();
+            broadcastDebug("找到匹配配方");
+        } else {
+            // 如果没有匹配的配方，返回木炭
+            broadcastDebug("未找到匹配配方，返回木炭");
+            result = new ItemStack(Items.CHARCOAL, inputItems.size());
+        }
         
         // 弹出结果
         ejectResult(result);
@@ -180,26 +192,31 @@ public class OvenBlockEntity extends BlockEntity implements Inventory {
         markDirty();
     }
     
-    private ItemStack findMatchingRecipe(List<ItemStack> inputItems) {
-        if (world == null) return new ItemStack(Items.CHARCOAL);
+    private OvenRecipe findMatchingRecipe(List<ItemStack> inputItems) {
+        if (world == null) return null;
         
         // 创建一个简单的库存用于配方匹配
         SimpleInventory inventory = new SimpleInventory(inputItems.toArray(new ItemStack[0]));
         
-        // 查找匹配的烤箱配方
-        Optional<OvenRecipe> matchingRecipe = world.getRecipeManager()
-            .getAllMatches(ModRecipeTypes.OVEN_RECIPE_TYPE, inventory, world)
-            .stream()
-            .findFirst();
+        // 获取所有烤箱配方
+        List<OvenRecipe> allRecipes = world.getRecipeManager()
+            .getAllMatches(ModRecipeTypes.OVEN_RECIPE_TYPE, inventory, world);
         
-        if (matchingRecipe.isPresent()) {
-            broadcastDebug("找到匹配配方！");
-            return matchingRecipe.get().getOutput().copy();
+        // 寻找完全精准匹配的配方
+        List<OvenRecipe> exactMatches = new ArrayList<>();
+        
+        for (OvenRecipe recipe : allRecipes) {
+            if (recipe.matchesStrictly(inputItems)) {
+                exactMatches.add(recipe);
+            }
         }
         
-        // 如果没有匹配的配方，返回木炭
-        broadcastDebug("未找到匹配配方，返回木炭");
-        return new ItemStack(Items.CHARCOAL, inputItems.size());
+        if (!exactMatches.isEmpty()) {
+            // 随机选择一个完全匹配的配方
+            return exactMatches.get(random.nextInt(exactMatches.size()));
+        }
+        
+        return null;
     }
     
     /**

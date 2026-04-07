@@ -20,6 +20,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,22 +30,38 @@ import java.util.List;
  * 锅烹饪配方类
  * 用于定义锅专属的烹饪配方
  * 支持多材料输入和多物品输出
+ * 支持可缩放配方（scalable=true：1:1 基础配方，自动缩放数量）
  */
 public class PanCookingRecipe implements Recipe<Inventory> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PanCookingRecipe.class);
+    
     private final Identifier id;
     private final List<ItemStack> inputs;
     private final List<ItemStack> outputs;
     private final int cookTime; // 烹饪时间（刻）
+    private final boolean scalable; // 是否支持数量缩放
     
-    public PanCookingRecipe(Identifier id, List<ItemStack> inputs, List<ItemStack> outputs, int cookTime) {
+    public PanCookingRecipe(Identifier id, List<ItemStack> inputs, List<ItemStack> outputs, int cookTime, boolean scalable) {
         this.id = id;
         this.inputs = inputs;
         this.outputs = outputs;
         this.cookTime = cookTime;
+        
+        // 验证：只有单个输入的配方才能设置 scalable=true
+        if (scalable && inputs.size() != 1) {
+            LOGGER.warn("Recipe {} has scalable=true but has {} inputs. Only recipes with 1 input can be scalable. Ignoring scalable flag.", id, inputs.size());
+            this.scalable = false;
+        } else {
+            this.scalable = scalable;
+        }
+    }
+    
+    public PanCookingRecipe(Identifier id, List<ItemStack> inputs, List<ItemStack> outputs, int cookTime) {
+        this(id, inputs, outputs, cookTime, false);
     }
     
     public PanCookingRecipe(List<ItemStack> inputs, List<ItemStack> outputs, int cookTime) {
-        this(new Identifier("hunger-begone", "pan_cooking"), inputs, outputs, cookTime);
+        this(new Identifier("hunger-begone", "pan_cooking"), inputs, outputs, cookTime, false);
     }
     
     /**
@@ -112,7 +131,7 @@ public class PanCookingRecipe implements Recipe<Inventory> {
     }
     
     /**
-     * 检查材料列表是否匹配此配方
+     * 检查材料列表是否匹配此配方（宽松匹配：只要材料足够即可）
      */
     public boolean matches(List<ItemStack> materials) {
         // 检查每种输入材料是否在材料列表中存在足够数量
@@ -138,11 +157,50 @@ public class PanCookingRecipe implements Recipe<Inventory> {
     }
     
     /**
-     * 从材料列表中消耗配方所需的材料
+     * 检查材料列表是否严格匹配此配方（材料数量必须正好匹配）
      */
-    public void consumeMaterials(List<ItemStack> materials) {
+    public boolean matchesStrictly(List<ItemStack> materials) {
+        // 计算每种材料的总数量
+        int totalInputCount = 0;
+        for (ItemStack inputStack : inputs) {
+            totalInputCount += inputStack.getCount();
+        }
+        
+        int totalMaterialCount = 0;
+        for (ItemStack materialStack : materials) {
+            totalMaterialCount += materialStack.getCount();
+        }
+        
+        // 首先检查总数量是否一致
+        if (totalInputCount != totalMaterialCount) {
+            return false;
+        }
+        
+        // 然后检查每种输入材料是否正好匹配
         for (ItemStack inputStack : inputs) {
             int requiredCount = inputStack.getCount();
+            int availableCount = 0;
+            
+            for (ItemStack materialStack : materials) {
+                if (ItemStack.areItemsEqual(inputStack, materialStack) && (inputStack.getNbt() == null ? materialStack.getNbt() == null : inputStack.getNbt().equals(materialStack.getNbt()))) {
+                    availableCount += materialStack.getCount();
+                }
+            }
+            
+            if (availableCount != requiredCount) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    /**
+     * 从材料列表中消耗配方所需的材料（带缩放）
+     */
+    public void consumeMaterials(List<ItemStack> materials, int scaleFactor) {
+        for (ItemStack inputStack : inputs) {
+            int requiredCount = inputStack.getCount() * scaleFactor;
             
             for (int i = 0; i < materials.size(); i++) {
                 ItemStack materialStack = materials.get(i);
@@ -165,14 +223,65 @@ public class PanCookingRecipe implements Recipe<Inventory> {
     }
     
     /**
-     * 获取输出物品列表
+     * 从材料列表中消耗配方所需的材料（默认不缩放）
      */
-    public List<ItemStack> getOutputs() {
-        List<ItemStack> result = new ArrayList<>();
+    public void consumeMaterials(List<ItemStack> materials) {
+        consumeMaterials(materials, 1);
+    }
+    
+    /**
+     * 计算配方可以缩放的倍数
+     * 对于可缩放配方，返回最大的倍数
+     * 对于不可缩放配方，返回 1
+     */
+    public int calculateScaleFactor(List<ItemStack> materials) {
+        if (!scalable) {
+            return 1;
+        }
+        
+        int maxFactor = Integer.MAX_VALUE;
+        for (ItemStack inputStack : inputs) {
+            int requiredCount = inputStack.getCount();
+            int availableCount = 0;
+            
+            for (ItemStack materialStack : materials) {
+                if (ItemStack.areItemsEqual(inputStack, materialStack) && 
+                    (inputStack.getNbt() == null ? materialStack.getNbt() == null : inputStack.getNbt().equals(materialStack.getNbt()))) {
+                    availableCount += materialStack.getCount();
+                }
+            }
+            
+            if (availableCount < requiredCount) {
+                return 0; // 材料不足
+            }
+            
+            int factor = availableCount / requiredCount;
+            if (factor < maxFactor) {
+                maxFactor = factor;
+            }
+        }
+        
+        return maxFactor;
+    }
+    
+    /**
+     * 获取输出物品列表（带缩放）
+     */
+    public List<ItemStack> getOutputs(int scaleFactor) {
+        List<ItemStack> result = new ArrayList<>(outputs.size());
         for (ItemStack stack : outputs) {
-            result.add(stack.copy());
+            ItemStack scaled = stack.copy();
+            scaled.setCount(scaled.getCount() * scaleFactor);
+            result.add(scaled);
         }
         return result;
+    }
+    
+    /**
+     * 获取输出物品列表（默认不缩放）
+     */
+    public List<ItemStack> getOutputs() {
+        return getOutputs(1);
     }
     
     /**
@@ -183,10 +292,17 @@ public class PanCookingRecipe implements Recipe<Inventory> {
     }
     
     /**
+     * 是否支持数量缩放
+     */
+    public boolean isScalable() {
+        return scalable;
+    }
+    
+    /**
      * 获取输入物品列表
      */
     public List<ItemStack> getInputs() {
-        List<ItemStack> result = new ArrayList<>();
+        List<ItemStack> result = new ArrayList<>(inputs.size());
         for (ItemStack stack : inputs) {
             result.add(stack.copy());
         }
@@ -259,7 +375,10 @@ public class PanCookingRecipe implements Recipe<Inventory> {
             // 读取烹饪时间
             int cookTime = JsonHelper.getInt(json, "cookTime", 200);
             
-            return new PanCookingRecipe(id, inputs, outputs, cookTime);
+            // 读取是否支持缩放（默认 false）
+            boolean scalable = JsonHelper.getBoolean(json, "scalable", false);
+            
+            return new PanCookingRecipe(id, inputs, outputs, cookTime, scalable);
         }
         
         @Override
@@ -282,7 +401,10 @@ public class PanCookingRecipe implements Recipe<Inventory> {
             // 读取烹饪时间
             int cookTime = buf.readVarInt();
             
-            return new PanCookingRecipe(id, inputs, outputs, cookTime);
+            // 读取是否支持缩放
+            boolean scalable = buf.readBoolean();
+            
+            return new PanCookingRecipe(id, inputs, outputs, cookTime, scalable);
         }
         
         @Override
@@ -301,6 +423,9 @@ public class PanCookingRecipe implements Recipe<Inventory> {
             
             // 写入烹饪时间
             buf.writeVarInt(recipe.cookTime);
+            
+            // 写入是否支持缩放
+            buf.writeBoolean(recipe.scalable);
         }
     }
 }

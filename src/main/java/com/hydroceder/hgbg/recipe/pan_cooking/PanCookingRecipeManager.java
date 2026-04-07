@@ -5,17 +5,36 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.recipe.RecipeManager;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 /**
  * 锅烹饪配方管理器
  * 用于管理所有锅专属的烹饪配方
  */
 public class PanCookingRecipeManager {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PanCookingRecipeManager.class);
     private static final List<PanCookingRecipe> recipes = Collections.synchronizedList(new ArrayList<>());
+    private static final Random random = new Random();
+    
+    /**
+     * 配方匹配结果
+     */
+    public static class MatchResult {
+        public final PanCookingRecipe recipe;
+        public final int scaleFactor;
+        
+        public MatchResult(PanCookingRecipe recipe, int scaleFactor) {
+            this.recipe = recipe;
+            this.scaleFactor = scaleFactor;
+        }
+    }
     
     /**
      * 注册配方
@@ -38,40 +57,97 @@ public class PanCookingRecipeManager {
                 count++;
             }
         }
-        System.out.println("Loaded " + count + " pan cooking recipes from server");
+        LOGGER.info("Loaded {} pan cooking recipes from server", count);
     }
     
     /**
-     * 计算配方所需的材料总数
+     * 检查两个材料列表是否完全一致（材料类型和数量都必须匹配）
      */
-    private static int calculateTotalInputCount(PanCookingRecipe recipe) {
-        int total = 0;
-        for (ItemStack input : recipe.getInputs()) {
-            total += input.getCount();
+    private static boolean areMaterialsExactlyMatching(List<ItemStack> recipeInputs, List<ItemStack> materials) {
+        // 先创建副本，避免修改原数据
+        List<ItemStack> remainingMaterials = new ArrayList<>();
+        for (ItemStack stack : materials) {
+            remainingMaterials.add(stack.copy());
         }
-        return total;
+        
+        // 检查每种配方输入材料
+        for (ItemStack inputStack : recipeInputs) {
+            int requiredCount = inputStack.getCount();
+            boolean found = false;
+            
+            for (int i = 0; i < remainingMaterials.size(); i++) {
+                ItemStack materialStack = remainingMaterials.get(i);
+                if (ItemStack.areItemsEqual(inputStack, materialStack) && 
+                    (inputStack.getNbt() == null ? materialStack.getNbt() == null : inputStack.getNbt().equals(materialStack.getNbt()))) {
+                    
+                    if (materialStack.getCount() >= requiredCount) {
+                        materialStack.decrement(requiredCount);
+                        if (materialStack.isEmpty()) {
+                            remainingMaterials.remove(i);
+                        }
+                        found = true;
+                        break;
+                    }
+                }
+            }
+            
+            if (!found) {
+                return false;
+            }
+        }
+        
+        // 检查是否有剩余材料
+        for (ItemStack stack : remainingMaterials) {
+            if (!stack.isEmpty()) {
+                return false;
+            }
+        }
+        
+        return true;
     }
     
     /**
      * 查找匹配的配方
-     * 优先匹配需要材料总数最多的配方
+     * 优先级：
+     * 1. 完全精准匹配的不可缩放配方（材料类型和数量完全一致）
+     * 2. 如果有多个完全匹配的，随机选择一个
+     * 3. 如果没有完全匹配的，查找可缩放配方
      */
-    public static Optional<PanCookingRecipe> findRecipe(List<ItemStack> materials) {
-        PanCookingRecipe bestMatch = null;
-        int bestMatchCount = -1;
+    public static Optional<MatchResult> findRecipe(List<ItemStack> materials) {
+        // 第一阶段：寻找完全精准匹配的不可缩放配方
+        List<PanCookingRecipe> exactMatches = new ArrayList<>();
         
         for (PanCookingRecipe recipe : recipes) {
-            if (recipe.matches(materials)) {
-                int totalCount = calculateTotalInputCount(recipe);
-                // 优先选择需要材料总数最多的配方
-                if (totalCount > bestMatchCount) {
-                    bestMatch = recipe;
-                    bestMatchCount = totalCount;
+            if (!recipe.isScalable() && areMaterialsExactlyMatching(recipe.getInputs(), materials)) {
+                exactMatches.add(recipe);
+            }
+        }
+        
+        if (!exactMatches.isEmpty()) {
+            // 随机选择一个完全匹配的配方
+            PanCookingRecipe selectedRecipe = exactMatches.get(random.nextInt(exactMatches.size()));
+            return Optional.of(new MatchResult(selectedRecipe, 1));
+        }
+        
+        // 第二阶段：寻找可缩放配方
+        PanCookingRecipe bestScalableRecipe = null;
+        int bestScaleFactor = 0;
+        
+        for (PanCookingRecipe recipe : recipes) {
+            if (recipe.isScalable()) {
+                int scaleFactor = recipe.calculateScaleFactor(materials);
+                if (scaleFactor > bestScaleFactor) {
+                    bestScalableRecipe = recipe;
+                    bestScaleFactor = scaleFactor;
                 }
             }
         }
         
-        return bestMatch != null ? Optional.of(bestMatch) : Optional.empty();
+        if (bestScalableRecipe != null && bestScaleFactor > 0) {
+            return Optional.of(new MatchResult(bestScalableRecipe, bestScaleFactor));
+        }
+        
+        return Optional.empty();
     }
     
     /**

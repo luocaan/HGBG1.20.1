@@ -1,5 +1,6 @@
 {
   "type": "hunger-begone:oven",
+  "scalable": true,
   "ingredients": [
     {
       "item": "minecraft:potato"

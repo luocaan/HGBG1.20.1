@@ -193,17 +193,28 @@ public class StoveBlock extends BlockWithEntity {
      * 处理烹饪完成后的逻辑
      */
     public static void finishCooking(World world, BlockPos pos, BlockState state, StoveBlockEntity blockEntity) {
-        Optional<PanCookingRecipeManager.MatchResult> matchResult = PanCookingRecipeManager.findRecipe(blockEntity.getMaterials());
+        java.util.List<ItemStack> materials = blockEntity.getMaterials();
+        Optional<PanCookingRecipeManager.MatchResult> matchResult = PanCookingRecipeManager.findRecipe(materials);
         java.util.List<ItemStack> outputs = new java.util.ArrayList<>();
         boolean hasValidRecipe = matchResult.isPresent();
+        
+        java.util.List<String> seasoningIds;
         
         if (hasValidRecipe) {
             PanCookingRecipe recipe = matchResult.get().recipe;
             int scaleFactor = matchResult.get().scaleFactor;
-            recipe.consumeMaterials(blockEntity.getMaterials(), scaleFactor);
+            seasoningIds = matchResult.get().seasoningIds;
             outputs.addAll(recipe.getOutputs(scaleFactor));
         } else {
+            // 如果没有匹配的配方，提取所有调味料
+            seasoningIds = com.hydroceder.hgbg.util.SeasoningNBT.extractSeasoningIds(materials);
             outputs.add(new ItemStack(Items.CHARCOAL));
+        }
+        
+        if (!seasoningIds.isEmpty()) {
+            for (ItemStack output : outputs) {
+                com.hydroceder.hgbg.util.SeasoningNBT.addSeasonings(output, seasoningIds);
+            }
         }
         
         ActionResult eventResult = StoveEvents.FINISH_COOKING.invoker().onFinishCooking(world, pos, hasValidRecipe, outputs);

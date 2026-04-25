@@ -8,7 +8,9 @@ import com.hydroceder.hgbg.recipe.oven.OvenRecipe;
 import com.hydroceder.hgbg.sound.ModSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
@@ -20,6 +22,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -121,6 +124,14 @@ public class OvenBlockEntity extends BlockEntity implements Inventory {
                 }
             }
             
+            // 给范围内所有生物向上的力
+            Box explosionBox = new Box(pos).expand(8.0); // 64方块距离约等于8格
+            List<LivingEntity> livingEntities = world.getEntitiesByClass(LivingEntity.class, explosionBox, entity -> true);
+            for (LivingEntity entity : livingEntities) {
+                entity.addVelocity(entity.getVelocity().x, 2.0, entity.getVelocity().z);
+                entity.velocityModified = true;
+            }
+            
             // 发生爆炸：10f，无火焰，不破坏方块
             world.createExplosion(
                 null,
@@ -162,16 +173,21 @@ public class OvenBlockEntity extends BlockEntity implements Inventory {
         }
         
         // 查找匹配的配方
-        OvenRecipe matchResult = findMatchingRecipe(inputItems);
+        OvenMatchResult matchResult = findMatchingRecipe(inputItems);
         
         ItemStack result;
-        if (matchResult != null) {
-            result = matchResult.getOutput();
+        if (matchResult.recipe != null) {
+            result = matchResult.recipe.getOutput();
             broadcastDebug("找到匹配配方");
         } else {
             // 如果没有匹配的配方，返回木炭
             broadcastDebug("未找到匹配配方，返回木炭");
             result = new ItemStack(Items.CHARCOAL, inputItems.size());
+        }
+        
+        java.util.List<String> seasoningIds = matchResult.seasoningIds;
+        if (!seasoningIds.isEmpty()) {
+            com.hydroceder.hgbg.util.SeasoningNBT.addSeasonings(result, seasoningIds);
         }
         
         // 弹出结果
@@ -192,11 +208,27 @@ public class OvenBlockEntity extends BlockEntity implements Inventory {
         markDirty();
     }
     
-    private OvenRecipe findMatchingRecipe(List<ItemStack> inputItems) {
+    private static class OvenMatchResult {
+        public final OvenRecipe recipe;
+        public final List<String> seasoningIds;
+        
+        public OvenMatchResult(OvenRecipe recipe, List<String> seasoningIds) {
+            this.recipe = recipe;
+            this.seasoningIds = seasoningIds;
+        }
+    }
+    
+    private OvenMatchResult findMatchingRecipe(List<ItemStack> inputItems) {
         if (world == null) return null;
         
+        // 先分离调味料和食材
+        com.hydroceder.hgbg.util.SeasoningNBT.SeparationResult separationResult = 
+            com.hydroceder.hgbg.util.SeasoningNBT.separateSeasonings(inputItems);
+        List<ItemStack> nonSeasoningMaterials = separationResult.nonSeasoningMaterials;
+        List<String> seasoningIds = separationResult.seasoningIds;
+        
         // 创建一个简单的库存用于配方匹配
-        SimpleInventory inventory = new SimpleInventory(inputItems.toArray(new ItemStack[0]));
+        SimpleInventory inventory = new SimpleInventory(nonSeasoningMaterials.toArray(new ItemStack[0]));
         
         // 获取所有烤箱配方
         List<OvenRecipe> allRecipes = world.getRecipeManager()
@@ -206,17 +238,18 @@ public class OvenBlockEntity extends BlockEntity implements Inventory {
         List<OvenRecipe> exactMatches = new ArrayList<>();
         
         for (OvenRecipe recipe : allRecipes) {
-            if (recipe.matchesStrictly(inputItems)) {
+            if (recipe.matchesStrictly(nonSeasoningMaterials)) {
                 exactMatches.add(recipe);
             }
         }
         
         if (!exactMatches.isEmpty()) {
             // 随机选择一个完全匹配的配方
-            return exactMatches.get(random.nextInt(exactMatches.size()));
+            OvenRecipe selectedRecipe = exactMatches.get(random.nextInt(exactMatches.size()));
+            return new OvenMatchResult(selectedRecipe, seasoningIds);
         }
         
-        return null;
+        return new OvenMatchResult(null, seasoningIds);
     }
     
     /**

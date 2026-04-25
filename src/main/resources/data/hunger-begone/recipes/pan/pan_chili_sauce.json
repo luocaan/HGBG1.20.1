@@ -1,0 +1,20 @@
+{
+  "type": "hunger-begone:pan_cooking",
+  "inputs": [
+    {
+      "item": "minecraft:crimson_fungus",
+      "count": 1
+    },
+    {
+      "item": "minecraft:glass_bottle",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": "hunger-begone:chili_bottle",
+      "count": 1
+    }
+  ],
+  "cookTime": 200
+}

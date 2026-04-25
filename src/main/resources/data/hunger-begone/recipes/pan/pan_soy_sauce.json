@@ -1,0 +1,25 @@
+{
+  "type": "hunger-begone:pan_cooking",
+  "scalable": false,
+  "inputs": [
+    {
+      "item": "hunger-begone:salt",
+      "count": 1
+    },
+    {
+      "item": "minecraft:wheat",
+      "count": 1
+    },
+    {
+      "item": "minecraft:glass_bottle",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": "hunger-begone:soy_sauce",
+      "count": 1
+    }
+  ],
+  "cookTime": 300
+}

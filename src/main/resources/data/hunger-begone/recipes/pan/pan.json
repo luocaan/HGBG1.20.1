@@ -7,13 +7,13 @@
   ],
   "key": {
     "A": {
-      "item": "minecraft:iron_block"
+      "item": "minecraft:iron_ingot"
     },
     "S": {
       "item": "minecraft:string"
     },
     "D": {
-      "item": "minecraft:iron_ingot"
+      "item": "minecraft:iron"
     }
   },
   "result": {

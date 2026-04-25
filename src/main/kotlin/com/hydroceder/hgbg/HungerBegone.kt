@@ -6,6 +6,8 @@ import com.hydroceder.hgbg.enchantment.SpeedEnchantment
 import com.hydroceder.hgbg.enchantment.WarmthEnchantment
 import com.hydroceder.hgbg.enchantment.EnthusiasmEnchantment
 import com.hydroceder.hgbg.enchantment.FieldHarvesterEnchantment
+import com.hydroceder.hgbg.seasoning.SeasoningRegistry
+import com.hydroceder.hgbg.seasoning.SimpleSeasoning
 import com.hydroceder.hgbg.effect.ModEffects
 import com.hydroceder.hgbg.effect.HomesicknessEffect
 import com.hydroceder.hgbg.util.PotionEffectRemover
@@ -116,6 +118,9 @@ object HungerBegone : ModInitializer {
         
         // 注册战利品表修改
         registerLootTableModifications()
+        
+        // 注册调味料
+        registerSeasonings()
 	}
     
     /**
@@ -733,5 +738,73 @@ object HungerBegone : ModInitializer {
      */
     private fun dropItem(world: World, pos: BlockPos, stack: net.minecraft.item.ItemStack) {
         net.minecraft.block.Block.dropStack(world, pos, stack)
+    }
+    
+    /**
+     * 注册调味料
+     */
+    private fun registerSeasonings() {
+        // 海盐 - 饱和效果 (1分钟 = 1200 ticks)
+        SeasoningRegistry.register(SimpleSeasoning(
+            "hunger-begone:salt",
+            "item.hunger-begone.seasoned.salt",
+            ModItems.SALT
+        ) { user ->
+            user.addStatusEffect(net.minecraft.entity.effect.StatusEffectInstance(
+                net.minecraft.entity.effect.StatusEffects.SATURATION,
+                1200,
+                0,
+                false,
+                true
+            ))
+        })
+        
+        // 酱油 - 急迫效果 (25秒 = 500 ticks)
+        SeasoningRegistry.register(SimpleSeasoning(
+            "hunger-begone:soy_sauce",
+            "item.hunger-begone.seasoned.soy_sauce",
+            ModItems.SOY_SAUCE
+        ) { user ->
+            user.addStatusEffect(net.minecraft.entity.effect.StatusEffectInstance(
+                net.minecraft.entity.effect.StatusEffects.HASTE,
+                500,
+                0,
+                false,
+                true
+            ))
+        })
+        
+        // 辣椒酱 - 着火 (3秒 = 60 ticks) + 跳跃提升II (35秒 = 700 ticks)
+        SeasoningRegistry.register(SimpleSeasoning(
+            "hunger-begone:chili_sauce",
+            "item.hunger-begone.seasoned.chili_sauce",
+            ModItems.CHILI_BOTTLE
+        ) { user ->
+            user.fireTicks = 60
+            user.addStatusEffect(net.minecraft.entity.effect.StatusEffectInstance(
+                net.minecraft.entity.effect.StatusEffects.JUMP_BOOST,
+                700,
+                1,
+                false,
+                true
+            ))
+        })
+        
+        // 肉桂粉 - 速度提升 (15秒 = 600 ticks)
+        SeasoningRegistry.register(SimpleSeasoning(
+            "hunger-begone:cinnamon",
+            "item.hunger-begone.seasoned.cinnamon",
+            ModItems.CINNAMON
+        ) { user ->
+            user.addStatusEffect(net.minecraft.entity.effect.StatusEffectInstance(
+                net.minecraft.entity.effect.StatusEffects.SPEED,
+                600,
+                0,
+                false,
+                true
+            ))
+        })
+        
+        logger.info("Registered ${SeasoningRegistry.size()} seasonings!")
     }
 }

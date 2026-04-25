@@ -26,6 +26,8 @@
   "block.hunger-begone.shelf": "食架",
 
   "item.hunger-begone.pan": "釜",
+  "item.hunger-begone.pot_charge": "釜(前線)",
+  "item.hunger-begone.pot_charge.tooltip": "執此一釜，可破千軍",
   "item.hunger-begone.spatula": "釜铲",
 
   "item.hunger-begone.raw_bacon": "生豚脍",

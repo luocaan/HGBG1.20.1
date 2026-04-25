@@ -8,6 +8,8 @@
   "enchantment.hunger-begone.warmth_enchantment": "Warm Satiety",
   "enchantment.hunger-begone.warmth_enchantment.desc": "Prevents frost damage from powder snow when hunger is above 14.",
   "item.hunger-begone.pan": "Pan",
+  "item.hunger-begone.pot_charge": "Pot Charge",
+  "item.hunger-begone.pot_charge.tooltip": "fighhhhhhhhhhht!",
   "item.hunger-begone.pan.tooltip": "Theoretically, this is for cooking, but when dealing with unreasonable customers, it's not without combat potential",
   "itemGroup.hunger-begone": "Hunger Begone",
   "subtitles.hunger-begone.hit": "Pan hits",
@@ -124,10 +126,22 @@
   "advancement.hunger-begone.corruption_intensifies.title": "Corruption Intensifies",
   "advancement.hunger-begone.corruption_intensifies.description": "Try bonemealing weeping vines?",
   "item.hunger-begone.cola.tooltip": "Wow! The air in the water is teleporting!",
+  
+  "item.hunger-begone.seasoned.salt": "§7Seasoned: Salt",
+  "item.hunger-begone.seasoned.soy_sauce": "§7Seasoned: Soy Sauce",
+  "item.hunger-begone.seasoned.chili_sauce": "§7Seasoned: Chili Sauce",
+  "item.hunger-begone.seasoned.cinnamon": "§7Seasoned: Cinnamon",
+  
   "item.hunger-begone.full_sugar_lemonade": "Full Sugar Lemonade",
   "item.hunger-begone.lemon_pickle": "Lemon Pickle",
   "item.hunger-begone.orleans_roasted_chicken": "Orleans Roasted Chicken",
   "item.hunger-begone.lemon_chicken_feet": "Lemon Chicken Feet",
+  
+  "item.hunger-begone.salt": "Sea Salt",
+  "item.hunger-begone.soy_sauce": "Soy Sauce",
+  "item.hunger-begone.chili_bottle": "Chili Sauce",
+  "item.hunger-begone.cinnamon": "Cinnamon",
+  
   "item.hunger-begone.flower_tea": "Honey Flower Tea",
   
   "stove.cooking": "Cooking... about %s seconds remaining",

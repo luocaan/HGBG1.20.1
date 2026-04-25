@@ -1,0 +1,10 @@
+{
+  "type": "hunger-begone:mortar_and_pestle",
+  "ingredient": {
+    "item": "minecraft:spruce_leaves"
+  },
+  "result": {
+    "item": "hunger-begone:cinnamon",
+    "count": 3
+  }
+}

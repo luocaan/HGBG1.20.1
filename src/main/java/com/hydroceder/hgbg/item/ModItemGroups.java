@@ -31,6 +31,9 @@ public class ModItemGroups {
                 .entries((displayContext, entries) -> {
                     // 添加锅武器到物品组
                     entries.add(ModItems.PAN);
+
+                    // 添加冲锋锅武器到物品组
+                    entries.add(ModItems.POT_CHARGE);
                     
                     // 添加灶台到物品组
                     entries.add(ModBlocks.STOVE);
@@ -134,6 +137,14 @@ public class ModItemGroups {
                     
                     // 添加故乡土壤到物品组
                     entries.add(ModItems.HOMELAND_DIRT);
+                    
+                    // 添加新材料到物品组
+                    entries.add(ModItems.SALT);
+                    entries.add(ModItems.CINNAMON);
+                    
+                    // 添加新饮料到物品组
+                    entries.add(ModItems.SOY_SAUCE);
+                    entries.add(ModItems.CHILI_BOTTLE);
                     
                     // 添加本模组的附魔书到物品组
                     entries.add(EnchantedBookItem.forEnchantment(new net.minecraft.enchantment.EnchantmentLevelEntry(NourishmentEnchantment.INSTANCE, 1)));

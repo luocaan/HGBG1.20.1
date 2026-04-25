@@ -1,0 +1,1 @@
+{"type": "hunger-begone:pan_cooking", "cookTime": 100, "inputs": [{"item": "minecraft:glow_berries"}, {"item": "minecraft:sugar"}, {"item": "minecraft:honey_bottle"}], "outputs": [{"item": "hunger-begone:shiny_berry_jam_bottle", "count": 1}]}

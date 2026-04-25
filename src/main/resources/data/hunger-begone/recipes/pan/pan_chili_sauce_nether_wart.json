@@ -1,0 +1,17 @@
+{
+  "type": "hunger-begone:pan_cooking",
+  "scalable": true,
+  "inputs": [
+    {
+      "item": "minecraft:nether_wart",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": "hunger-begone:chili_bottle",
+      "count": 1
+    }
+  ],
+  "cookTime": 200
+}

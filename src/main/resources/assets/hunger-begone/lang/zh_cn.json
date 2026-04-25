@@ -26,6 +26,7 @@
   "block.hunger-begone.shelf": "置物架",
 
   "item.hunger-begone.pan": "锅",
+  "item.hunger-begone.pot_charge": "锅(冲锋)",
   "item.hunger-begone.spatula": "锅铲",
 
   "item.hunger-begone.raw_bacon": "生培根",
@@ -48,6 +49,11 @@
   "item.hunger-begone.orleans_roasted_chicken": "奥尔良烤鸡",
   "item.hunger-begone.lemon_chicken_feet": "柠檬鸡爪",
   "item.hunger-begone.lemon_pickle": "柠檬泡菜",
+
+  "item.hunger-begone.salt": "海盐",
+  "item.hunger-begone.soy_sauce": "酱油",
+  "item.hunger-begone.chili_bottle": "辣椒酱",
+  "item.hunger-begone.cinnamon": "肉桂粉",
 
   "item.hunger-begone.shiny_berry_jam_bottle": "发光果酱瓶",
   "item.hunger-begone.mushroom_oil_bottle": "菌油瓶",
@@ -126,7 +132,8 @@
   "advancement.hunger-begone.homesickness_effect.title": "回去吗？亦或者继续前行？",
   "advancement.hunger-begone.homesickness_effect.description": "当你远离你的故乡",
 
-  "item.hunger-begone.pan.tooltip": "理论上这是用来做饭的，但是遇到刁蛮的客户，也并非没有一战之力",
+  "item.hunger-begone.pan.tooltip": "理论上这是用来做饭的",
+  "item.hunger-begone.pot_charge.tooltip": "呱！轮椅大人口牙！",
   "item.hunger-begone.pan.cooking_count": "烹饪次数: %s",
   "item.hunger-begone.jam_bread.tooltip": "§7也许是因为从烤箱出来时被门夹的，看起来像是被腰斩了(目移",
   "item.hunger-begone.baguette.too_hard": "太硬了！哦！我的牙！",
@@ -137,6 +144,11 @@
   "item.hunger-begone.homeland_dirt.tooltip": "死亡时像不死图腾一样保护你，20分钟冷却",
   "item.hunger-begone.cola.tooltip": "挖袄！水里的空气在瞬移！",
   "item.hunger-begone.crude_cake.tooltip": "粗制的蛋糕，耐吃是最大的优点",
+  
+  "item.hunger-begone.seasoned.salt": "§7调味: 海盐",
+  "item.hunger-begone.seasoned.soy_sauce": "§7调味: 酱油",
+  "item.hunger-begone.seasoned.chili_sauce": "§7调味: 辣椒酱",
+  "item.hunger-begone.seasoned.cinnamon": "§7调味: 肉桂粉",
 
   "shelf.hint.no_recipe": "不是什么好主意",
   "shelf.hint.full_recipe": "俺寻思这能行，把这些放到%s试试？",

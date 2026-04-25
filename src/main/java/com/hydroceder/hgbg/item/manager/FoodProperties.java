@@ -168,4 +168,12 @@ public class FoodProperties {
     // 柠檬鸡爪
     public static final int LEMON_CHICKEN_FEET_HUNGER = 6;
     public static final float LEMON_CHICKEN_FEET_SATURATION = 2.0f;
+    
+    // 酱油
+    public static final int SOY_SAUCE_HUNGER = 2;
+    public static final float SOY_SAUCE_SATURATION = 1.0f;
+    
+    // 辣椒酱
+    public static final int CHILI_SAUCE_HUNGER = 2;
+    public static final float CHILI_SAUCE_SATURATION = 1.0f;
 }

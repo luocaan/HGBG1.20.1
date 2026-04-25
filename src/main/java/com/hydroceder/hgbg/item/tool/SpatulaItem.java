@@ -11,7 +11,7 @@ import net.minecraft.item.ToolMaterial;
 public class SpatulaItem extends SwordItem {
     private static final int ADDITIONAL_ATTACK_DAMAGE = 4;
     
-    private static final float ATTACK_SPEED = -3.2f;
+    private static final float ATTACK_SPEED = -2.0f;
     
     public SpatulaItem(ToolMaterial material, Item.Settings settings) {
         super(material, ADDITIONAL_ATTACK_DAMAGE, ATTACK_SPEED, settings);

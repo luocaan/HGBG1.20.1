@@ -10,48 +10,24 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
-import net.minecraft.text.TextColor;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 
 import java.util.List;
 
 /**
- * 锅武器类
+ * 冲锋锅武器类
+ * 与普通锅类似，但不可参与烹饪
  */
-public class PanItem extends SwordItem {
-    private static final int ADDITIONAL_ATTACK_DAMAGE = 13;
+public class PotChargeItem extends SwordItem {
+    private static final int ADDITIONAL_ATTACK_DAMAGE = 20;
     
-    private static final float ATTACK_SPEED = -2.5f;
+    private static final float ATTACK_SPEED = 0.5f;
     
-    // NBT 键名
-    private static final String COOKING_COUNT_KEY = "CookingCount";
-    
-    public PanItem(ToolMaterial material, Settings settings) {
+    public PotChargeItem(ToolMaterial material, Settings settings) {
         super(material, ADDITIONAL_ATTACK_DAMAGE, ATTACK_SPEED, settings);
-    }
-    
-    /**
-     * 获取锅的烹饪次数
-     */
-    public static int getCookingCount(ItemStack stack) {
-        NbtCompound nbt = stack.getNbt();
-        if (nbt != null && nbt.contains(COOKING_COUNT_KEY)) {
-            return nbt.getInt(COOKING_COUNT_KEY);
-        }
-        return 0;
-    }
-    
-    /**
-     * 增加锅的烹饪次数
-     */
-    public static void incrementCookingCount(ItemStack stack) {
-        NbtCompound nbt = stack.getOrCreateNbt();
-        int count = nbt.getInt(COOKING_COUNT_KEY);
-        nbt.putInt(COOKING_COUNT_KEY, count + 1);
     }
     
     /**
@@ -62,12 +38,7 @@ public class PanItem extends SwordItem {
         super.appendTooltip(stack, world, tooltip, context);
         
         // 添加灰色描述文本
-        tooltip.add(Text.translatable("item.hunger-begone.pan.tooltip").formatted(Formatting.GRAY));
-        
-        int cookingCount = getCookingCount(stack);
-        if (cookingCount > 0) {
-            tooltip.add(Text.translatable("item.hunger-begone.pan.cooking_count", cookingCount));
-        }
+        tooltip.add(Text.translatable("item.hunger-begone.pot_charge.tooltip").formatted(Formatting.GRAY));
     }
     
     /**
@@ -107,11 +78,6 @@ public class PanItem extends SwordItem {
                 if (duration > 28 * 20) {
                     duration = 28 * 20;
                 }
-                
-                // 取消击退效果
-                // Vec3d knockbackDirection = player.getRotationVector().normalize().multiply(knockbackDistance);
-                // target.addVelocity(knockbackDirection.x, 0.5, knockbackDirection.z);
-                // target.velocityModified = true;
                 
                 // 赋予目标迟滞效果
                 target.addStatusEffect(new net.minecraft.entity.effect.StatusEffectInstance(SlownessPotionEffect.INSTANCE, duration, 0));

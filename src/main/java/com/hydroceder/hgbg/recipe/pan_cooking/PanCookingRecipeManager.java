@@ -29,10 +29,12 @@ public class PanCookingRecipeManager {
     public static class MatchResult {
         public final PanCookingRecipe recipe;
         public final int scaleFactor;
+        public final List<String> seasoningIds;
         
-        public MatchResult(PanCookingRecipe recipe, int scaleFactor) {
+        public MatchResult(PanCookingRecipe recipe, int scaleFactor, List<String> seasoningIds) {
             this.recipe = recipe;
             this.scaleFactor = scaleFactor;
+            this.seasoningIds = seasoningIds;
         }
     }
     
@@ -112,13 +114,20 @@ public class PanCookingRecipeManager {
      * 1. 完全精准匹配的不可缩放配方（材料类型和数量完全一致）
      * 2. 如果有多个完全匹配的，随机选择一个
      * 3. 如果没有完全匹配的，查找可缩放配方
+     * 注意：调味料会被自动分离，不计入配方匹配
      */
     public static Optional<MatchResult> findRecipe(List<ItemStack> materials) {
+        // 先分离调味料和食材
+        com.hydroceder.hgbg.util.SeasoningNBT.SeparationResult separationResult = 
+            com.hydroceder.hgbg.util.SeasoningNBT.separateSeasonings(materials);
+        List<ItemStack> nonSeasoningMaterials = separationResult.nonSeasoningMaterials;
+        List<String> seasoningIds = separationResult.seasoningIds;
+        
         // 第一阶段：寻找完全精准匹配的不可缩放配方
         List<PanCookingRecipe> exactMatches = new ArrayList<>();
         
         for (PanCookingRecipe recipe : recipes) {
-            if (!recipe.isScalable() && areMaterialsExactlyMatching(recipe.getInputs(), materials)) {
+            if (!recipe.isScalable() && areMaterialsExactlyMatching(recipe.getInputs(), nonSeasoningMaterials)) {
                 exactMatches.add(recipe);
             }
         }
@@ -126,7 +135,7 @@ public class PanCookingRecipeManager {
         if (!exactMatches.isEmpty()) {
             // 随机选择一个完全匹配的配方
             PanCookingRecipe selectedRecipe = exactMatches.get(random.nextInt(exactMatches.size()));
-            return Optional.of(new MatchResult(selectedRecipe, 1));
+            return Optional.of(new MatchResult(selectedRecipe, 1, seasoningIds));
         }
         
         // 第二阶段：寻找可缩放配方
@@ -135,7 +144,7 @@ public class PanCookingRecipeManager {
         
         for (PanCookingRecipe recipe : recipes) {
             if (recipe.isScalable()) {
-                int scaleFactor = recipe.calculateScaleFactor(materials);
+                int scaleFactor = recipe.calculateScaleFactor(nonSeasoningMaterials);
                 if (scaleFactor > bestScaleFactor) {
                     bestScalableRecipe = recipe;
                     bestScaleFactor = scaleFactor;
@@ -144,7 +153,7 @@ public class PanCookingRecipeManager {
         }
         
         if (bestScalableRecipe != null && bestScaleFactor > 0) {
-            return Optional.of(new MatchResult(bestScalableRecipe, bestScaleFactor));
+            return Optional.of(new MatchResult(bestScalableRecipe, bestScaleFactor, seasoningIds));
         }
         
         return Optional.empty();

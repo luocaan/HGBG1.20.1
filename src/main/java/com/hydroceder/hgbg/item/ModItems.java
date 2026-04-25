@@ -29,6 +29,13 @@ public class ModItems {
         new PanItem(PanMaterial.INSTANCE, new FabricItemSettings())
     );
 
+    // 冲锋锅武器实例
+    public static final Item POT_CHARGE = Registry.register(
+        Registries.ITEM,
+        id("pot_charge"),
+        new PotChargeItem(PanMaterial.INSTANCE, new FabricItemSettings())
+    );
+
     // 生培根实例
     public static final Item RAW_BACON = Registry.register(
         Registries.ITEM,
@@ -366,6 +373,34 @@ public class ModItems {
         Registries.ITEM,
         id("lemon_chicken_feet"),
         new LemonChickenFeetItem(new FabricItemSettings().maxCount(1))
+    );
+
+    // 海盐实例
+    public static final Item SALT = Registry.register(
+        Registries.ITEM,
+        id("salt"),
+        new com.hydroceder.hgbg.item.food.SaltItem(new FabricItemSettings())
+    );
+
+    // 酱油实例
+    public static final Item SOY_SAUCE = Registry.register(
+        Registries.ITEM,
+        id("soy_sauce"),
+        new com.hydroceder.hgbg.item.food.SoySauceItem(new FabricItemSettings().maxCount(24))
+    );
+
+    // 辣椒酱实例
+    public static final Item CHILI_BOTTLE = Registry.register(
+        Registries.ITEM,
+        id("chili_bottle"),
+        new com.hydroceder.hgbg.item.food.ChiliSauceItem(new FabricItemSettings().maxCount(24))
+    );
+
+    // 肉桂粉实例
+    public static final Item CINNAMON = Registry.register(
+        Registries.ITEM,
+        id("cinnamon"),
+        new com.hydroceder.hgbg.item.food.CinnamonItem(new FabricItemSettings())
     );
 
     public static void register() {

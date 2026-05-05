@@ -52,7 +52,7 @@ public class PotChargeItem extends SwordItem {
         // 调用父类方法处理耐久度等
         boolean result = super.postHit(stack, target, attacker);
         
-        // 在攻击者身上播放敲击音效
+        // 在攻击者身上播放敲击音效（音效系统自动随机选择hit/hit2）
         World world = attacker.getWorld();
         if (!world.isClient && attacker instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) attacker;
@@ -68,7 +68,7 @@ public class PotChargeItem extends SwordItem {
                 1.0f  // 音调
             );
             
-            // 检测是否有“热情高涨”附魔
+            // 检测是否有"热情高涨"附魔
             if (EnchantmentHelper.getLevel(EnthusiasmEnchantment.INSTANCE, stack) > 0) {
                 // 计算玩家饱和度
                 float saturation = player.getHungerManager().getSaturationLevel();

@@ -6,7 +6,9 @@
 		"PlayerExhaustionMixin",
 		"PlayerEatFoodMixin",
 		"PlayerWarmthMixin",
-		"SeasoningEffectMixin"
+		"SeasoningEffectMixin",
+		"PlayerHealMixin",
+		"CalmnessRemoveMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

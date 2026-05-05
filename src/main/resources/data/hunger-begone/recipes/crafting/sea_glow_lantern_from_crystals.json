@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"XXX",
+		"XAX",
+		"XXX"
+	],
+	"key": {
+		"X": {
+			"item": "minecraft:iron_nugget"
+		},
+		"A": {
+			"item": "minecraft:prismarine_crystals"
+		}
+	},
+	"result": {
+		"item": "hunger-begone:sea_glow_lantern",
+		"count": 1
+	}
+}

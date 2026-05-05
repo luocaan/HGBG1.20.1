@@ -1,0 +1,11 @@
+{
+  "type": "hunger-begone:mortar_and_pestle",
+  "ingredient": {
+    "item": "minecraft:blue_ice"
+  },
+  "result": {
+    "item": "hunger-begone:icecream",
+    "count": 1
+  },
+  "required_container": "minecraft:bowl"
+}

@@ -1,0 +1,1 @@
+{"type": "minecraft:crafting_shaped", "pattern": ["AAA", "ADA", "ABA"], "key": {"A": {"tag": "minecraft:planks"}, "D": {"item": "minecraft:iron_ingot"}, "B": {"item": "minecraft:piston"}}, "result": {"item": "hunger-begone:coin_operated_machine", "count": 1}}

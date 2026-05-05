@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "hunger-begone:block/beat"
+    },
+    "facing=east": {
+      "model": "hunger-begone:block/beat",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "hunger-begone:block/beat",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "hunger-begone:block/beat",
+      "y": 270
+    }
+  }
+}

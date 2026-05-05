@@ -1,0 +1,1 @@
+{"type": "minecraft:block", "pools": [{"rolls": 1, "entries": [{"type": "minecraft:item", "name": "hunger-begone:beat"}], "conditions": [{"condition": "minecraft:survives_explosion"}]}]}

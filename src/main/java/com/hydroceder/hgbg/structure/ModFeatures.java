@@ -19,6 +19,7 @@ public class ModFeatures {
     
     public static final Feature<DefaultFeatureConfig> SMALL_CAMP = new SmallCampFeature();
     
+    @SuppressWarnings("unchecked")
     public static final RegistryKey SMALL_CAMP_PLACED_KEY =
         RegistryKey.of(RegistryKeys.PLACED_FEATURE, new Identifier(HgbgMod.MOD_ID, "small_camp"));
     

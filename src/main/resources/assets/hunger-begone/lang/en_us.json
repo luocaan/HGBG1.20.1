@@ -18,6 +18,7 @@
   "enchantment.hunger-begone.enthusiasm_enchantment": "Enthusiasm",
   "enchantment.hunger-begone.enthusiasm_enchantment.desc": "When hitting a target, calculates knockback distance and slowness effect duration based on saturation",
   "effect.hunger-begone.slowness_effect": "Slowness",
+  "effect.hunger-begone.calmness": "Calmness",
   "block.hunger-begone.stove": "Stove",
   "block.hunger-begone.oven": "Oven",
   "item.hunger-begone.pan.cooking_count": "Cooking Count: %s",
@@ -107,6 +108,11 @@
   "advancement.hunger-begone.homesickness_effect.description": "Reach beyond 30000 blocks",
   "block.hunger-begone.mortar_and_pestle": "Mortar and Pestle",
   "block.hunger-begone.shelf": "Shelf",
+  "block.hunger-begone.chorus_fruit_bowl": "Chorus Fruit Bowl",
+  "block.hunger-begone.apple_fruit_bowl": "Apple Fruit Bowl",
+  "block.hunger-begone.bread_plate": "Bread Plate",
+  "block.hunger-begone.beat": "Metronome",
+  "block.hunger-begone.sea_glow_lantern": "Sea Glow Lantern",
   "shelf.hint.no_recipe": "Not a great idea",
   "shelf.hint.full_recipe": "Try putting these in %s?",
   "shelf.hint.missing_item": "Try adding a %s?",
@@ -115,6 +121,9 @@
   "enchantment.hunger-begone.field_harvester": "Field Harvester",
   "enchantment.hunger-begone.field_harvester.desc": "Gain slow fall near farmland and improve harvest efficiency",
   "item.hunger-begone.homeland_dirt": "Homeland Soil",
+  "item.hunger-begone.sofa": "Sofa",
+
+  "item.hunger-begone.icecream": "Ice Cream",
   "item.hunger-begone.homeland_dirt.tooltip": "Protects you like a totem of undying on death, 20 minute cooldown",
   "item.hunger-begone.lemon": "Lemon",
   "item.hunger-begone.lemon.tooltip": "I don't really recommend eating it directly",
@@ -132,10 +141,17 @@
   "item.hunger-begone.seasoned.chili_sauce": "§7Seasoned: Chili Sauce",
   "item.hunger-begone.seasoned.cinnamon": "§7Seasoned: Cinnamon",
   
+  "item.hunger-begone.salt.tooltip": "[Saturation][1 min]",
+  "item.hunger-begone.soy_sauce.tooltip": "[Haste][25 sec]",
+  "item.hunger-begone.chili_sauce.tooltip": "[Jump Boost II][35 sec]",
+  "item.hunger-begone.cinnamon.tooltip": "[Speed][15 sec]",
+  
   "item.hunger-begone.full_sugar_lemonade": "Full Sugar Lemonade",
   "item.hunger-begone.lemon_pickle": "Lemon Pickle",
   "item.hunger-begone.orleans_roasted_chicken": "Orleans Roasted Chicken",
   "item.hunger-begone.lemon_chicken_feet": "Lemon Chicken Feet",
+  "item.hunger-begone.chicken_wing": "Chicken Wing",
+  "item.hunger-begone.chicken_leg": "Chicken Leg",
   
   "item.hunger-begone.salt": "Sea Salt",
   "item.hunger-begone.soy_sauce": "Soy Sauce",
@@ -145,5 +161,16 @@
   "item.hunger-begone.flower_tea": "Honey Flower Tea",
   
   "stove.cooking": "Cooking... about %s seconds remaining",
-  "stove.cooking_invalid": "%s seconds remaining... something feels off?"
+  "stove.cooking_invalid": "%s seconds remaining... something feels off?",
+
+  "block.hunger-begone.empty_cup": "Empty Cup",
+  "block.hunger-begone.wooden_cup": "Wooden Cup",
+  "block.hunger-begone.cup.stored": "Seasoning stored in cup",
+  "block.hunger-begone.cup.taken_hand": "Seasoning taken out",
+  "block.hunger-begone.cup.taken_bottle": "Seasoning taken out with bottle",
+  "block.hunger-begone.cup.needs_bottle": "Need empty bottle to take out bottled seasoning",
+  "block.hunger-begone.cup.has_seasoning": "Cup already contains seasoning",
+  "block.hunger-begone.wooden_cup.added": "Wooden cup added",
+  "block.hunger-begone.wooden_cup.full": "Cannot add more cups (max 3)",
+  "block.hunger-begone.mortar.needs_container": "Need container to take out result"
 }

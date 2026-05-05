@@ -7,7 +7,11 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class SoySauceItem extends DrinkItem {
     public SoySauceItem(Settings settings) {
@@ -26,5 +30,11 @@ public class SoySauceItem extends DrinkItem {
         }
         
         return result;
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, net.minecraft.client.item.TooltipContext context) {
+        tooltip.add(Text.translatable("item.hunger-begone.soy_sauce.tooltip").formatted(Formatting.BLUE));
+        super.appendTooltip(stack, world, tooltip, context);
     }
 }

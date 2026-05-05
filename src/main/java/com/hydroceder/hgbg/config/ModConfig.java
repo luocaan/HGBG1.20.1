@@ -29,20 +29,20 @@ public class ModConfig {
         
         // 如果配置文件存在，加载它
         if (Files.exists(CONFIG_PATH)) {
-            try {
-                properties.load(Files.newBufferedReader(CONFIG_PATH));
-                
-                // 加载sprintNoExhaustion选项
-                sprintNoExhaustion = Boolean.parseBoolean(properties.getProperty("sprintNoExhaustion", "true"));
-                
-                // 加载giveHomelandDirt选项，如果不存在则添加默认值
-                if (!properties.containsKey("giveHomelandDirt")) {
-                    properties.setProperty("giveHomelandDirt", "true");
-                    configUpdated = true;
-                }
-                giveHomelandDirt = Boolean.parseBoolean(properties.getProperty("giveHomelandDirt"));
-                
-                LOGGER.info("Loaded config: sprintNoExhaustion={}, giveHomelandDirt={}", sprintNoExhaustion, giveHomelandDirt);
+                try {
+                    properties.load(Files.newBufferedReader(CONFIG_PATH));
+                    
+                    // 加载sprintNoExhaustion选项
+                    sprintNoExhaustion = Boolean.parseBoolean(properties.getProperty("sprintNoExhaustion", "true"));
+                    
+                    // 加载giveHomelandDirt选项，如果不存在则添加默认值
+                    if (!properties.containsKey("giveHomelandDirt")) {
+                        properties.setProperty("giveHomelandDirt", "true");
+                        configUpdated = true;
+                    }
+                    giveHomelandDirt = Boolean.parseBoolean(properties.getProperty("giveHomelandDirt"));
+                    
+                    LOGGER.info("Loaded config: sprintNoExhaustion={}, giveHomelandDirt={}", sprintNoExhaustion, giveHomelandDirt);
                 
                 // 如果配置文件被更新，保存它
                 if (configUpdated) {

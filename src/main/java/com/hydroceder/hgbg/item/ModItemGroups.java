@@ -46,6 +46,30 @@ public class ModItemGroups {
                     
                     // 添加置物架到物品组
                     entries.add(ModBlocks.SHELF);
+                    
+                    // 添加紫颂果盘到物品组
+                    entries.add(ModBlocks.CHORUS_FRUIT_BOWL);
+                    
+                    // 添加苹果果盘到物品组
+                    entries.add(ModBlocks.APPLE_FRUIT_BOWL);
+                    
+                    // 添加空杯子到物品组
+                    entries.add(ModBlocks.EMPTY_CUP);
+
+                    // 添加木杯到物品组
+                    entries.add(ModBlocks.WOODEN_CUP);
+
+                    // 添加面包盘到物品组
+                    entries.add(ModBlocks.BREAD_PLATE);
+
+                    // 添加节拍器到物品组
+                    entries.add(ModBlocks.METRONOME);
+
+                    // 添加海晶灯笼到物品组
+                    entries.add(ModBlocks.SEA_GLOW_LANTERN);
+
+                    // 添加投币机到物品组
+                    entries.add(ModBlocks.COIN_OPERATED_MACHINE);
 
                     // 添加锅铲到物品组
                     entries.add(ModItems.SPATULA);
@@ -73,6 +97,10 @@ public class ModItemGroups {
                     
                     // 添加柠檬鸡爪到物品组
                     entries.add(ModItems.LEMON_CHICKEN_FEET);
+                    
+                    // 添加鸡翅和鸡腿到物品组
+                    entries.add(ModItems.CHICKEN_WING);
+                    entries.add(ModItems.CHICKEN_LEG);
                     
                     // 添加果酱面包到物品组
                     entries.add(ModItems.JAM_BREAD);
@@ -155,6 +183,8 @@ public class ModItemGroups {
                     entries.add(EnchantedBookItem.forEnchantment(new net.minecraft.enchantment.EnchantmentLevelEntry(FieldHarvesterEnchantment.INSTANCE, 1)));
                     entries.add(EnchantedBookItem.forEnchantment(new net.minecraft.enchantment.EnchantmentLevelEntry(FieldHarvesterEnchantment.INSTANCE, 2)));
                     entries.add(EnchantedBookItem.forEnchantment(new net.minecraft.enchantment.EnchantmentLevelEntry(FieldHarvesterEnchantment.INSTANCE, 3)));
+                    entries.add(ModItems.SOFA);
+                    entries.add(ModItems.ICECREAM);
                 })
                 .build();
         

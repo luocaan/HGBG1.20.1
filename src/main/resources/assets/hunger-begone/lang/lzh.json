@@ -19,11 +19,14 @@
 
   "effect.hunger-begone.slowness_effect": "迟滞",
   "effect.hunger-begone.homesickness": "归心",
+  "effect.hunger-begone.calmness": "寧靜",
 
   "block.hunger-begone.stove": "灶台",
   "block.hunger-begone.oven": "炙炉",
   "block.hunger-begone.mortar_and_pestle": "研钵",
   "block.hunger-begone.shelf": "食架",
+  "block.hunger-begone.beat": "节拍器",
+  "block.hunger-begone.sea_glow_lantern": "海晶燈籠",
 
   "item.hunger-begone.pan": "釜",
   "item.hunger-begone.pot_charge": "釜(前線)",

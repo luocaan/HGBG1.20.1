@@ -1,0 +1,1 @@
+{"type": "minecraft:crafting_shaped", "pattern": ["XSX", "XDX", "SSS"], "key": {"X": {"tag": "minecraft:planks"}, "D": {"item": "minecraft:item_frame"}, "S": {"tag": "minecraft:wooden_slabs"}}, "result": {"item": "hunger-begone:wooden_cup", "count": 1}}

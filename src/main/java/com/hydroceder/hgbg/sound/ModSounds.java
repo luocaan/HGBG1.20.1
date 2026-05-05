@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 public class ModSounds {
     private static final Logger LOGGER = LoggerFactory.getLogger("hunger-begone");
     
-    // 敲击音效事件
+    // 敲击音效事件（包含hit和hit2两个子音效，由音效系统自动随机选择）
     public static final SoundEvent HIT = SoundEvent.of(new Identifier("hunger-begone", "hit"));
     
     // 烤箱叮声音效事件

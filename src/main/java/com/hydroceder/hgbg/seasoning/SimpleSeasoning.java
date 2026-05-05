@@ -14,12 +14,20 @@ public class SimpleSeasoning implements Seasoning {
     private final String translationKey;
     private final Item item;
     private final Consumer<LivingEntity> effectApplier;
+    private final boolean storable;
+    private final boolean bottled;
 
     public SimpleSeasoning(String id, String translationKey, Item item, Consumer<LivingEntity> effectApplier) {
+        this(id, translationKey, item, effectApplier, false, false);
+    }
+
+    public SimpleSeasoning(String id, String translationKey, Item item, Consumer<LivingEntity> effectApplier, boolean storable, boolean bottled) {
         this.id = id;
         this.translationKey = translationKey;
         this.item = item;
         this.effectApplier = effectApplier;
+        this.storable = storable;
+        this.bottled = bottled;
     }
 
     @Override
@@ -42,5 +50,15 @@ public class SimpleSeasoning implements Seasoning {
         if (effectApplier != null) {
             effectApplier.accept(user);
         }
+    }
+
+    @Override
+    public boolean isStorable() {
+        return storable;
+    }
+
+    @Override
+    public boolean isBottled() {
+        return bottled;
     }
 }

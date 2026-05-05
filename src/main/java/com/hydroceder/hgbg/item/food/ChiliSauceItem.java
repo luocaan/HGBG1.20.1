@@ -5,7 +5,11 @@ import com.hydroceder.hgbg.item.manager.FoodProperties;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ChiliSauceItem extends DrinkItem {
     public ChiliSauceItem(Settings settings) {
@@ -24,5 +28,11 @@ public class ChiliSauceItem extends DrinkItem {
         }
         
         return result;
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, net.minecraft.client.item.TooltipContext context) {
+        tooltip.add(Text.translatable("item.hunger-begone.chili_sauce.tooltip").formatted(Formatting.BLUE));
+        super.appendTooltip(stack, world, tooltip, context);
     }
 }

@@ -1,0 +1,772 @@
+﻿{
+    "ticks":  {
+                  "78":  [
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1.059463,
+                                 "volume":  1
+                             }
+                         ],
+                  "232":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.890899,
+                                  "volume":  1
+                              }
+                          ],
+                  "168":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.66742,
+                                  "volume":  1
+                              }
+                          ],
+                  "196":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.33484,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.529732,
+                                  "volume":  1
+                              }
+                          ],
+                  "198":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.33484,
+                                  "volume":  1
+                              }
+                          ],
+                  "172":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.587401,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.059463,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.793701,
+                                  "volume":  1
+                              }
+                          ],
+                  "228":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.66742,
+                                  "volume":  1
+                              }
+                          ],
+                  "104":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.890899,
+                                  "volume":  1
+                              }
+                          ],
+                  "202":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.33484,
+                                  "volume":  1
+                              }
+                          ],
+                  "180":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.5,
+                                  "volume":  1
+                              }
+                          ],
+                  "120":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.793701,
+                                  "volume":  1
+                              }
+                          ],
+                  "144":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.587401,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  2,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.587401,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.793701,
+                                  "volume":  1
+                              }
+                          ],
+                  "136":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.66742,
+                                  "volume":  1
+                              }
+                          ],
+                  "176":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.587401,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  2,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.66742,
+                                  "volume":  1
+                              }
+                          ],
+                  "240":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.189207,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.587401,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  2,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.189207,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.793701,
+                                  "volume":  1
+                              }
+                          ],
+                  "68":  [
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1.33484,
+                                 "volume":  1
+                             },
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  0.529732,
+                                 "volume":  1
+                             }
+                         ],
+                  "216":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.793701,
+                                  "volume":  1
+                              }
+                          ],
+                  "40":  [
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1.33484,
+                                 "volume":  1
+                             }
+                         ],
+                  "212":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.594604,
+                                  "volume":  1
+                              }
+                          ],
+                  "210":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1,
+                                  "volume":  1
+                              }
+                          ],
+                  "152":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.587401,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  2,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.33484,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.594604,
+                                  "volume":  1
+                              }
+                          ],
+                  "164":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.529732,
+                                  "volume":  1
+                              }
+                          ],
+                  "206":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.059463,
+                                  "volume":  1
+                              }
+                          ],
+                  "76":  [
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  2,
+                                 "volume":  1
+                             }
+                         ],
+                  "36":  [
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1.059463,
+                                 "volume":  1
+                             }
+                         ],
+                  "4":  [
+                            {
+                                "instrument":  "harp",
+                                "pitch":  1.059463,
+                                "volume":  1
+                            }
+                        ],
+                  "208":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.189207,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  2,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.793701,
+                                  "volume":  1
+                              }
+                          ],
+                  "60":  [
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1,
+                                 "volume":  1
+                             }
+                         ],
+                  "38":  [
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1.33484,
+                                 "volume":  1
+                             }
+                         ],
+                  "12":  [
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1.189207,
+                                 "volume":  1
+                             }
+                         ],
+                  "220":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.189207,
+                                  "volume":  1
+                              }
+                          ],
+                  "86":  [
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1,
+                                 "volume":  1
+                             },
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1.587401,
+                                 "volume":  1
+                             }
+                         ],
+                  "32":  [
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1.587401,
+                                 "volume":  1
+                             },
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1.189207,
+                                 "volume":  1
+                             },
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  0.890899,
+                                 "volume":  1
+                             }
+                         ],
+                  "204":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  2,
+                                  "volume":  1
+                              }
+                          ],
+                  "66":  [
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1.33484,
+                                 "volume":  1
+                             }
+                         ],
+                  "124":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1,
+                                  "volume":  1
+                              }
+                          ],
+                  "132":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.529732,
+                                  "volume":  1
+                              }
+                          ],
+                  "64":  [
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1.781797,
+                                 "volume":  1
+                             },
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  0.707107,
+                                 "volume":  1
+                             }
+                         ],
+                  "80":  [
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1.189207,
+                                 "volume":  1
+                             },
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  2,
+                                 "volume":  1
+                             },
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  0.793701,
+                                 "volume":  1
+                             }
+                         ],
+                  "8":  [
+                            {
+                                "instrument":  "harp",
+                                "pitch":  1.33484,
+                                "volume":  1
+                            }
+                        ],
+                  "74":  [
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1.33484,
+                                 "volume":  1
+                             }
+                         ],
+                  "6":  [
+                            {
+                                "instrument":  "harp",
+                                "pitch":  1.33484,
+                                "volume":  1
+                            }
+                        ],
+                  "116":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.66742,
+                                  "volume":  1
+                              }
+                          ],
+                  "156":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.5,
+                                  "volume":  1
+                              }
+                          ],
+                  "184":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.587401,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.594604,
+                                  "volume":  1
+                              }
+                          ],
+                  "191":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  2,
+                                  "volume":  1
+                              }
+                          ],
+                  "44":  [
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1.587401,
+                                 "volume":  1
+                             },
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1.059463,
+                                 "volume":  1
+                             }
+                         ],
+                  "192":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.781797,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.707107,
+                                  "volume":  1
+                              }
+                          ],
+                  "72":  [
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  0.707107,
+                                 "volume":  1
+                             }
+                         ],
+                  "134":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.33484,
+                                  "volume":  1
+                              }
+                          ],
+                  "140":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.189207,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.059463,
+                                  "volume":  1
+                              }
+                          ],
+                  "92":  [
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1.189207,
+                                 "volume":  1
+                             }
+                         ],
+                  "148":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.5,
+                                  "volume":  1
+                              }
+                          ],
+                  "88":  [
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  0.793701,
+                                 "volume":  1
+                             }
+                         ],
+                  "56":  [
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1.587401,
+                                 "volume":  1
+                             },
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1.189207,
+                                 "volume":  1
+                             }
+                         ],
+                  "16":  [
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  2,
+                                 "volume":  1
+                             },
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1.587401,
+                                 "volume":  1
+                             },
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  0.793701,
+                                 "volume":  1
+                             },
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1.33484,
+                                 "volume":  1
+                             }
+                         ],
+                  "128":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.33484,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.781797,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.707107,
+                                  "volume":  1
+                              }
+                          ],
+                  "24":  [
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  2,
+                                 "volume":  1
+                             },
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1.33484,
+                                 "volume":  1
+                             }
+                         ],
+                  "194":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.33484,
+                                  "volume":  1
+                              }
+                          ],
+                  "160":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.587401,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.189207,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.890899,
+                                  "volume":  1
+                              }
+                          ],
+                  "190":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.059463,
+                                  "volume":  1
+                              }
+                          ],
+                  "96":  [
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1.059463,
+                                 "volume":  1
+                             },
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1.33484,
+                                 "volume":  1
+                             },
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  0.890899,
+                                 "volume":  1
+                             }
+                         ],
+                  "224":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.059463,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.33484,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.890899,
+                                  "volume":  1
+                              }
+                          ],
+                  "52":  [
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1,
+                                 "volume":  1
+                             }
+                         ],
+                  "188":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.5,
+                                  "volume":  1
+                              }
+                          ],
+                  "48":  [
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  1.587401,
+                                 "volume":  1
+                             },
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  2,
+                                 "volume":  1
+                             },
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  0.66742,
+                                 "volume":  1
+                             }
+                         ],
+                  "108":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.059463,
+                                  "volume":  1
+                              }
+                          ],
+                  "0":  [
+                            {
+                                "instrument":  "harp",
+                                "pitch":  1.781797,
+                                "volume":  1
+                            },
+                            {
+                                "instrument":  "harp",
+                                "pitch":  0.707107,
+                                "volume":  1
+                            },
+                            {
+                                "instrument":  "harp",
+                                "pitch":  1.33484,
+                                "volume":  1
+                            }
+                        ],
+                  "112":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.793701,
+                                  "volume":  1
+                              }
+                          ],
+                  "84":  [
+                             {
+                                 "instrument":  "harp",
+                                 "pitch":  0.594604,
+                                 "volume":  1
+                             }
+                         ],
+                  "200":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.707107,
+                                  "volume":  1
+                              }
+                          ],
+                  "236":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.059463,
+                                  "volume":  1
+                              }
+                          ],
+                  "214":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.189207,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.587401,
+                                  "volume":  1
+                              }
+                          ],
+                  "166":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.587401,
+                                  "volume":  1
+                              },
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  1.33484,
+                                  "volume":  1
+                              }
+                          ],
+                  "100":  [
+                              {
+                                  "instrument":  "harp",
+                                  "pitch":  0.66742,
+                                  "volume":  1
+                              }
+                          ]
+              },
+    "description":  "Converted from NBS data pack, Unknown author",
+    "name":  "kmb",
+    "speed":  16
+}

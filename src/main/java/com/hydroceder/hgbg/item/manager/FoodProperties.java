@@ -168,6 +168,14 @@ public class FoodProperties {
     // 柠檬鸡爪
     public static final int LEMON_CHICKEN_FEET_HUNGER = 6;
     public static final float LEMON_CHICKEN_FEET_SATURATION = 2.0f;
+
+    // 鸡翅
+    public static final int CHICKEN_WING_HUNGER = 3;
+    public static final float CHICKEN_WING_SATURATION = 4.0f;
+
+    // 鸡腿
+    public static final int CHICKEN_LEG_HUNGER = 4;
+    public static final float CHICKEN_LEG_SATURATION = 5.0f;
     
     // 酱油
     public static final int SOY_SAUCE_HUNGER = 2;
@@ -176,4 +184,8 @@ public class FoodProperties {
     // 辣椒酱
     public static final int CHILI_SAUCE_HUNGER = 2;
     public static final float CHILI_SAUCE_SATURATION = 1.0f;
+
+    // 冰激凌
+    public static final int ICECREAM_HUNGER = 4;
+    public static final float ICECREAM_SATURATION = 3.0f;
 }

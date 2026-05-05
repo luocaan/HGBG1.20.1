@@ -72,6 +72,9 @@ object HungerBegone : ModInitializer {
         // 加载配置文件
         com.hydroceder.hgbg.config.ModConfig.load()
         
+        // 注册实体
+        com.hydroceder.hgbg.entity.ModEntities.register()
+        
         // 注册音效
         com.hydroceder.hgbg.sound.ModSounds.register()
         
@@ -109,6 +112,18 @@ object HungerBegone : ModInitializer {
         
         // 注册事件监听器
         registerEvents()
+
+        // 注册投币机伤害事件
+        com.hydroceder.hgbg.event.CoinMachineDamageHandler.register()
+        logger.info("Coin machine damage handler registered!")
+        
+        // 注册投币机音乐播放tick事件
+        com.hydroceder.hgbg.event.CoinMachineMusicTicker.register()
+        logger.info("Coin machine music ticker registered!")
+
+        // 注册冷静效果事件处理器
+        com.hydroceder.hgbg.event.CalmnessEventHandler.register()
+        logger.info("Calmness effect handler registered!")
         
         // 注册配方同步事件监听器
         registerRecipeSyncListener()
@@ -745,65 +760,81 @@ object HungerBegone : ModInitializer {
      */
     private fun registerSeasonings() {
         // 海盐 - 饱和效果 (1分钟 = 1200 ticks)
+        // 可盛放、非瓶装调味料
         SeasoningRegistry.register(SimpleSeasoning(
             "hunger-begone:salt",
             "item.hunger-begone.seasoned.salt",
-            ModItems.SALT
-        ) { user ->
-            user.addStatusEffect(net.minecraft.entity.effect.StatusEffectInstance(
-                net.minecraft.entity.effect.StatusEffects.SATURATION,
-                1200,
-                0,
-                false,
-                true
-            ))
-        })
+            ModItems.SALT,
+            { user ->
+                user.addStatusEffect(net.minecraft.entity.effect.StatusEffectInstance(
+                    net.minecraft.entity.effect.StatusEffects.SATURATION,
+                    1200,
+                    0,
+                    false,
+                    true
+                ))
+            },
+            true,
+            false
+        ))
         
         // 酱油 - 急迫效果 (25秒 = 500 ticks)
+        // 可盛放、瓶装调味料
         SeasoningRegistry.register(SimpleSeasoning(
             "hunger-begone:soy_sauce",
             "item.hunger-begone.seasoned.soy_sauce",
-            ModItems.SOY_SAUCE
-        ) { user ->
-            user.addStatusEffect(net.minecraft.entity.effect.StatusEffectInstance(
-                net.minecraft.entity.effect.StatusEffects.HASTE,
-                500,
-                0,
-                false,
-                true
-            ))
-        })
+            ModItems.SOY_SAUCE,
+            { user ->
+                user.addStatusEffect(net.minecraft.entity.effect.StatusEffectInstance(
+                    net.minecraft.entity.effect.StatusEffects.HASTE,
+                    500,
+                    0,
+                    false,
+                    true
+                ))
+            },
+            true,
+            true
+        ))
         
         // 辣椒酱 - 着火 (3秒 = 60 ticks) + 跳跃提升II (35秒 = 700 ticks)
+        // 可盛放、瓶装调味料
         SeasoningRegistry.register(SimpleSeasoning(
             "hunger-begone:chili_sauce",
             "item.hunger-begone.seasoned.chili_sauce",
-            ModItems.CHILI_BOTTLE
-        ) { user ->
-            user.fireTicks = 60
-            user.addStatusEffect(net.minecraft.entity.effect.StatusEffectInstance(
-                net.minecraft.entity.effect.StatusEffects.JUMP_BOOST,
-                700,
-                1,
-                false,
-                true
-            ))
-        })
+            ModItems.CHILI_BOTTLE,
+            { user ->
+                user.fireTicks = 60
+                user.addStatusEffect(net.minecraft.entity.effect.StatusEffectInstance(
+                    net.minecraft.entity.effect.StatusEffects.JUMP_BOOST,
+                    700,
+                    1,
+                    false,
+                    true
+                ))
+            },
+            true,
+            true
+        ))
         
         // 肉桂粉 - 速度提升 (15秒 = 600 ticks)
+        // 可盛放、非瓶装调味料
         SeasoningRegistry.register(SimpleSeasoning(
             "hunger-begone:cinnamon",
             "item.hunger-begone.seasoned.cinnamon",
-            ModItems.CINNAMON
-        ) { user ->
-            user.addStatusEffect(net.minecraft.entity.effect.StatusEffectInstance(
-                net.minecraft.entity.effect.StatusEffects.SPEED,
-                600,
-                0,
-                false,
-                true
-            ))
-        })
+            ModItems.CINNAMON,
+            { user ->
+                user.addStatusEffect(net.minecraft.entity.effect.StatusEffectInstance(
+                    net.minecraft.entity.effect.StatusEffects.SPEED,
+                    600,
+                    0,
+                    false,
+                    true
+                ))
+            },
+            true,
+            false
+        ))
         
         logger.info("Registered ${SeasoningRegistry.size()} seasonings!")
     }

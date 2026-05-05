@@ -375,6 +375,20 @@ public class ModItems {
         new LemonChickenFeetItem(new FabricItemSettings().maxCount(1))
     );
 
+    // 鸡翅实例
+    public static final Item CHICKEN_WING = Registry.register(
+        Registries.ITEM,
+        id("chicken_wing"),
+        new ChickenWingItem(new FabricItemSettings())
+    );
+
+    // 鸡腿实例
+    public static final Item CHICKEN_LEG = Registry.register(
+        Registries.ITEM,
+        id("chicken_leg"),
+        new ChickenLegItem(new FabricItemSettings())
+    );
+
     // 海盐实例
     public static final Item SALT = Registry.register(
         Registries.ITEM,
@@ -401,6 +415,20 @@ public class ModItems {
         Registries.ITEM,
         id("cinnamon"),
         new com.hydroceder.hgbg.item.food.CinnamonItem(new FabricItemSettings())
+    );
+
+    // 沙发实例
+    public static final Item SOFA = Registry.register(
+        Registries.ITEM,
+        id("sofa"),
+        new SofaItem(new FabricItemSettings().maxCount(64))
+    );
+
+    // 冰激凌实例
+    public static final Item ICECREAM = Registry.register(
+        Registries.ITEM,
+        id("icecream"),
+        new IceCreamItem(new FabricItemSettings())
     );
 
     public static void register() {

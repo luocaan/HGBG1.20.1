@@ -4,6 +4,9 @@ import com.hydroceder.hgbg.block.entity.OvenBlockEntity;
 import com.hydroceder.hgbg.block.entity.StoveBlockEntity;
 import com.hydroceder.hgbg.block.entity.MortarAndPestleBlockEntity;
 import com.hydroceder.hgbg.block.entity.ShelfBlockEntity;
+import com.hydroceder.hgbg.block.entity.CupBlockEntity;
+import com.hydroceder.hgbg.block.entity.WoodenCupBlockEntity;
+import com.hydroceder.hgbg.block.entity.MetronomeBlockEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.registry.Registries;
@@ -29,6 +32,18 @@ public class ModBlockEntityTypes {
     
     public static BlockEntityType<ShelfBlockEntity> SHELF_BLOCK_ENTITY;
     public static final Identifier SHELF_BLOCK_ENTITY_ID = new Identifier("hunger-begone", "shelf");
+    
+    public static BlockEntityType<CupBlockEntity> CUP_BLOCK_ENTITY;
+    public static final Identifier CUP_BLOCK_ENTITY_ID = new Identifier("hunger-begone", "cup");
+
+    public static BlockEntityType<WoodenCupBlockEntity> WOODEN_CUP_BLOCK_ENTITY;
+    public static final Identifier WOODEN_CUP_BLOCK_ENTITY_ID = new Identifier("hunger-begone", "wooden_cup");
+
+    public static BlockEntityType<MetronomeBlockEntity> METRONOME_BLOCK_ENTITY;
+    public static final Identifier METRONOME_BLOCK_ENTITY_ID = new Identifier("hunger-begone", "beat");
+
+    public static BlockEntityType<com.hydroceder.hgbg.block.entity.CoinOperatedMachineBlockEntity> COIN_OPERATED_MACHINE_BLOCK_ENTITY;
+    public static final Identifier COIN_OPERATED_MACHINE_BLOCK_ENTITY_ID = new Identifier("hunger-begone", "coin_operated_machine");
     
     /**
      * 注册所有方块实体类型
@@ -56,6 +71,30 @@ public class ModBlockEntityTypes {
             Registries.BLOCK_ENTITY_TYPE,
             SHELF_BLOCK_ENTITY_ID,
             FabricBlockEntityTypeBuilder.create(ShelfBlockEntity::new, ModBlocks.SHELF).build()
+        );
+        
+        CUP_BLOCK_ENTITY = Registry.register(
+            Registries.BLOCK_ENTITY_TYPE,
+            CUP_BLOCK_ENTITY_ID,
+            FabricBlockEntityTypeBuilder.create(CupBlockEntity::new, ModBlocks.EMPTY_CUP).build()
+        );
+
+        WOODEN_CUP_BLOCK_ENTITY = Registry.register(
+            Registries.BLOCK_ENTITY_TYPE,
+            WOODEN_CUP_BLOCK_ENTITY_ID,
+            FabricBlockEntityTypeBuilder.create(WoodenCupBlockEntity::new, ModBlocks.WOODEN_CUP).build()
+        );
+
+        METRONOME_BLOCK_ENTITY = Registry.register(
+            Registries.BLOCK_ENTITY_TYPE,
+            METRONOME_BLOCK_ENTITY_ID,
+            FabricBlockEntityTypeBuilder.create(MetronomeBlockEntity::new, ModBlocks.METRONOME).build()
+        );
+
+        COIN_OPERATED_MACHINE_BLOCK_ENTITY = Registry.register(
+            Registries.BLOCK_ENTITY_TYPE,
+            COIN_OPERATED_MACHINE_BLOCK_ENTITY_ID,
+            FabricBlockEntityTypeBuilder.create(com.hydroceder.hgbg.block.entity.CoinOperatedMachineBlockEntity::new, ModBlocks.COIN_OPERATED_MACHINE).build()
         );
         
         LOGGER.info("Block entity types registered successfully!");

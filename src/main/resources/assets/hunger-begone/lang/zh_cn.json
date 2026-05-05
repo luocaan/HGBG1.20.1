@@ -18,12 +18,20 @@
   "enchantment.hunger-begone.field_harvester.desc": "穿戴时在耕地附近获得缓降，提高收获效率",
 
   "effect.hunger-begone.slowness_effect": "迟滞",
+  "effect.hunger-begone.calmness": "冷静",
   "effect.hunger-begone.homesickness": "归心",
 
   "block.hunger-begone.stove": "灶台",
   "block.hunger-begone.oven": "烤箱",
   "block.hunger-begone.mortar_and_pestle": "研钵和杵",
   "block.hunger-begone.shelf": "置物架",
+  "block.hunger-begone.roasted_chicken": "奥尔良烤鸡",
+  "block.hunger-begone.chorus_fruit_bowl": "紫颂果盘",
+  "block.hunger-begone.apple_fruit_bowl": "苹果果盘",
+  "block.hunger-begone.bread_plate": "面包盘",
+  "block.hunger-begone.beat": "节拍器",
+  "block.hunger-begone.sea_glow_lantern": "海晶灯笼",
+  "block.hunger-begone.coin_operated_machine": "投币机",
 
   "item.hunger-begone.pan": "锅",
   "item.hunger-begone.pot_charge": "锅(冲锋)",
@@ -48,6 +56,8 @@
   "item.hunger-begone.crude_cake": "粗制蛋糕",
   "item.hunger-begone.orleans_roasted_chicken": "奥尔良烤鸡",
   "item.hunger-begone.lemon_chicken_feet": "柠檬鸡爪",
+  "item.hunger-begone.chicken_wing": "鸡翅",
+  "item.hunger-begone.chicken_leg": "鸡腿",
   "item.hunger-begone.lemon_pickle": "柠檬泡菜",
 
   "item.hunger-begone.salt": "海盐",
@@ -82,6 +92,9 @@
   "item.hunger-begone.chocolate_bread": "巧克力酱面包",
 
   "item.hunger-begone.homeland_dirt": "故乡土壤",
+  "item.hunger-begone.sofa": "沙发",
+
+  "item.hunger-begone.icecream": "冰激凌",
   "item.hunger-begone.music_disc_the_newage": "音乐唱片",
   "item.hunger-begone.music_disc_afternoon": "音乐唱片",
   "item.hunger-begone.music_disc_afternoon.desc": "HydroCeder - Afternoon",
@@ -149,6 +162,11 @@
   "item.hunger-begone.seasoned.soy_sauce": "§7调味: 酱油",
   "item.hunger-begone.seasoned.chili_sauce": "§7调味: 辣椒酱",
   "item.hunger-begone.seasoned.cinnamon": "§7调味: 肉桂粉",
+  
+  "item.hunger-begone.salt.tooltip": "饱和 （1:00）",
+  "item.hunger-begone.soy_sauce.tooltip": "急迫 （00:25）",
+  "item.hunger-begone.chili_sauce.tooltip": "跳跃提升 II （00:35）",
+  "item.hunger-begone.cinnamon.tooltip": "速度 （00:15）",
 
   "shelf.hint.no_recipe": "不是什么好主意",
   "shelf.hint.full_recipe": "俺寻思这能行，把这些放到%s试试？",
@@ -159,5 +177,18 @@
   
   "shelf.tool.oven": "烤箱",
   "shelf.tool.pan": "锅",
-  "shelf.tool.mortar": "研钵和杵"
+  "shelf.tool.mortar": "研钵和杵",
+
+  "entity.hunger-begone.sofa": "沙发",
+
+  "block.hunger-begone.empty_cup": "空杯子",
+  "block.hunger-begone.wooden_cup": "调味料木杯",
+  "block.hunger-begone.cup.stored": "调味料已存入杯子",
+  "block.hunger-begone.cup.taken_hand": "已取出调味料",
+  "block.hunger-begone.cup.taken_bottle": "已用瓶子取出调味料",
+  "block.hunger-begone.cup.needs_bottle": "需要空瓶子才能取出瓶装调味料",
+  "block.hunger-begone.cup.has_seasoning": "杯子中已有调味料",
+  "block.hunger-begone.wooden_cup.added": "已添加木杯",
+  "block.hunger-begone.wooden_cup.full": "无法添加更多木杯（最多3个）",
+  "block.hunger-begone.mortar.needs_container": "需要容器才能取出结果"
 }

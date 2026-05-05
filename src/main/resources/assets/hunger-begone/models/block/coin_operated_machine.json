@@ -1,0 +1,58 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"texture_size": [32, 32],
+	"textures": {
+		"0": "hunger-begone:block/coin_operated_machine",
+		"particle": "hunger-begone:block/coin_operated_machine"
+	},
+	"elements": [
+		{
+			"from": [4, 0, 4],
+			"to": [12, 8, 12],
+			"rotation": {"angle": 22.5, "axis": "y", "origin": [7, 0, 7]},
+			"faces": {
+				"north": {"uv": [0, 0, 4, 4], "texture": "#0"},
+				"east": {"uv": [0, 4, 4, 8], "texture": "#0"},
+				"south": {"uv": [4, 0, 8, 4], "texture": "#0"},
+				"west": {"uv": [4, 4, 8, 8], "texture": "#0"},
+				"up": {"uv": [4, 12, 0, 8], "texture": "#0"},
+				"down": {"uv": [12, 0, 8, 4], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [59.75, 0, 0],
+			"translation": [0, 2.75, 3.75],
+			"scale": [0.53, 0.51, 0.54]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [59.75, 0, 0],
+			"translation": [0, 2.75, 3.75],
+			"scale": [0.53, 0.51, 0.54]
+		},
+		"firstperson_righthand": {
+			"rotation": [-8.25, 47, 0],
+			"translation": [0, 4.5, 1],
+			"scale": [0.53, 0.51, 0.54]
+		},
+		"firstperson_lefthand": {
+			"rotation": [-8.25, 47, 0],
+			"translation": [0, 4.5, 1],
+			"scale": [0.53, 0.51, 0.54]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.71, 0.71, 0.7]
+		},
+		"gui": {
+			"rotation": [64.93, -44.43, 23.81],
+			"translation": [-1.5, 2.75, 0],
+			"scale": [0.9, 0.91, 0.9]
+		},
+		"head": {
+			"translation": [0, 14, 0]
+		}
+	}
+}

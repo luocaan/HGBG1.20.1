@@ -1,0 +1,4 @@
+{"variants": {
+    "has_seasoning=false": {"model": "hunger-begone:block/empty_cup"},
+    "has_seasoning=true": {"model": "hunger-begone:block/common_liquid_cup"}
+}}

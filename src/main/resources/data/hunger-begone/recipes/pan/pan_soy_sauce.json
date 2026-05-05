@@ -1,6 +1,5 @@
 {
   "type": "hunger-begone:pan_cooking",
-  "scalable": false,
   "inputs": [
     {
       "item": "hunger-begone:salt",

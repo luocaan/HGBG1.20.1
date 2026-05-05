@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "hunger-begone:stove",
-    "hunger-begone:oven"
+    "hunger-begone:oven",
+    "hunger-begone:sea_glow_lantern"
   ]
 }

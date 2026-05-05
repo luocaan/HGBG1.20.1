@@ -23,15 +23,20 @@ public class SeasoningNBT {
      * 为物品添加一个调味料
      */
     public static ItemStack addSeasoning(ItemStack stack, String seasoningId) {
-        NbtCompound nbt = stack.getOrCreateNbt();
-        NbtList list = nbt.getList(SEASONINGS_KEY, 8);
-        
-        for (int i = 0; i < list.size(); i++) {
-            if (list.getString(i).equals(seasoningId)) {
-                return stack;
+        if (stack.hasNbt()) {
+            NbtCompound nbt = stack.getNbt();
+            if (nbt.contains(SEASONINGS_KEY)) {
+                NbtList list = nbt.getList(SEASONINGS_KEY, 8);
+                for (int i = 0; i < list.size(); i++) {
+                    if (list.getString(i).equals(seasoningId)) {
+                        return stack;
+                    }
+                }
             }
         }
         
+        NbtCompound nbt = stack.getOrCreateNbt();
+        NbtList list = nbt.getList(SEASONINGS_KEY, 8);
         list.add(NbtString.of(seasoningId));
         nbt.put(SEASONINGS_KEY, list);
         

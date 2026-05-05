@@ -24,5 +24,10 @@ public class ModEffects {
         HomesicknessEffect.INSTANCE = new HomesicknessEffect();
         Registry.register(Registries.STATUS_EFFECT, HomesicknessEffect.ID, HomesicknessEffect.INSTANCE);
         LOGGER.info("Homesickness effect registered successfully!");
+
+        // 注册冷静效果
+        CalmnessEffect.INSTANCE = new CalmnessEffect();
+        Registry.register(Registries.STATUS_EFFECT, CalmnessEffect.ID, CalmnessEffect.INSTANCE);
+        LOGGER.info("Calmness effect registered successfully!");
     }
 }

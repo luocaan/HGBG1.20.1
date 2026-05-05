@@ -4,7 +4,9 @@ import com.hydroceder.hgbg.recipe.ModRecipeTypes;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
@@ -19,19 +21,17 @@ import net.minecraft.util.collection.DefaultedList;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 研钵和杵配方类
- * 只接受一个输入材料，产生一个输出结果
- */
 public class MortarAndPestleRecipe implements Recipe<Inventory> {
     private final Identifier id;
     private final Ingredient ingredient;
     private final ItemStack output;
-    
-    public MortarAndPestleRecipe(Identifier id, Ingredient ingredient, ItemStack output) {
+    private final Item requiredContainer;
+
+    public MortarAndPestleRecipe(Identifier id, Ingredient ingredient, ItemStack output, Item requiredContainer) {
         this.id = id;
         this.ingredient = ingredient;
         this.output = output;
+        this.requiredContainer = requiredContainer;
     }
     
     @Override
@@ -83,6 +83,14 @@ public class MortarAndPestleRecipe implements Recipe<Inventory> {
     public Ingredient getIngredient() {
         return ingredient;
     }
+
+    public Item getRequiredContainer() {
+        return requiredContainer;
+    }
+
+    public boolean requiresContainer() {
+        return requiredContainer != null;
+    }
     
     @Override
     public DefaultedList<Ingredient> getIngredients() {
@@ -110,27 +118,43 @@ public class MortarAndPestleRecipe implements Recipe<Inventory> {
         public MortarAndPestleRecipe read(Identifier id, JsonObject json) {
             JsonObject ingredientObject = JsonHelper.getObject(json, "ingredient");
             Ingredient ingredient = Ingredient.fromJson(ingredientObject);
-            
+
             JsonObject resultObject = JsonHelper.getObject(json, "result");
             String itemId = JsonHelper.getString(resultObject, "item");
             int count = JsonHelper.getInt(resultObject, "count", 1);
             net.minecraft.item.Item item = Registries.ITEM.get(new Identifier(itemId));
             ItemStack output = new ItemStack(item, count);
-            
-            return new MortarAndPestleRecipe(id, ingredient, output);
+
+            Item requiredContainer = null;
+            if (json.has("required_container")) {
+                String containerId = JsonHelper.getString(json, "required_container");
+                requiredContainer = Registries.ITEM.get(new Identifier(containerId));
+            }
+
+            return new MortarAndPestleRecipe(id, ingredient, output, requiredContainer);
         }
-        
+
         @Override
         public MortarAndPestleRecipe read(Identifier id, PacketByteBuf buf) {
             Ingredient ingredient = Ingredient.fromPacket(buf);
             ItemStack output = buf.readItemStack();
-            return new MortarAndPestleRecipe(id, ingredient, output);
+            boolean hasContainer = buf.readBoolean();
+            Item requiredContainer = null;
+            if (hasContainer) {
+                requiredContainer = Registries.ITEM.get(buf.readIdentifier());
+            }
+            return new MortarAndPestleRecipe(id, ingredient, output, requiredContainer);
         }
-        
+
         @Override
         public void write(PacketByteBuf buf, MortarAndPestleRecipe recipe) {
             recipe.ingredient.write(buf);
             buf.writeItemStack(recipe.output);
+            boolean hasContainer = recipe.requiredContainer != null;
+            buf.writeBoolean(hasContainer);
+            if (hasContainer) {
+                buf.writeIdentifier(Registries.ITEM.getId(recipe.requiredContainer));
+            }
         }
     }
 }

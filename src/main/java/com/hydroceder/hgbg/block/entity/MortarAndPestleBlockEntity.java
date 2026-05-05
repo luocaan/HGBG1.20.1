@@ -10,6 +10,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.collection.DefaultedList;
@@ -70,19 +71,16 @@ public class MortarAndPestleBlockEntity extends BlockEntity implements Inventory
         if (world == null || world.isClient) {
             return net.minecraft.util.ActionResult.SUCCESS;
         }
-        
-        // 如果手持物品
+
         if (!heldStack.isEmpty()) {
-            // 如果研钵为空，检查是否有对应配方
             if (items.get(0).isEmpty()) {
                 SimpleInventory inventory = new SimpleInventory(heldStack);
                 Optional<MortarAndPestleRecipe> recipe = world.getRecipeManager()
                     .getAllMatches(ModRecipeTypes.MORTAR_AND_PESTLE_RECIPE_TYPE, inventory, world)
                     .stream()
                     .findFirst();
-                
+
                 if (recipe.isPresent()) {
-                    // 存储物品（消耗一个）
                     ItemStack toStore = heldStack.copy();
                     toStore.setCount(1);
                     items.set(0, toStore);
@@ -90,32 +88,46 @@ public class MortarAndPestleBlockEntity extends BlockEntity implements Inventory
                     markDirty();
                     return net.minecraft.util.ActionResult.SUCCESS;
                 } else {
-                    // 无配方，无反应
                     return net.minecraft.util.ActionResult.PASS;
                 }
-            }
-        } else {
-            // 空手点击，检查是否有存储的物品
-            if (!items.get(0).isEmpty()) {
-                // 检查配方并输出结果
+            } else if (!heldStack.isEmpty() && !items.get(0).isEmpty()) {
                 SimpleInventory inventory = new SimpleInventory(items.get(0));
                 Optional<MortarAndPestleRecipe> recipe = world.getRecipeManager()
                     .getAllMatches(ModRecipeTypes.MORTAR_AND_PESTLE_RECIPE_TYPE, inventory, world)
                     .stream()
                     .findFirst();
-                
-                if (recipe.isPresent()) {
-                    // 输出结果
+
+                if (recipe.isPresent() && recipe.get().requiresContainer() && heldStack.isOf(recipe.get().getRequiredContainer())) {
                     ItemStack result = recipe.get().getOutput().copy();
                     ejectResult(result);
-                    // 清空存储
+                    heldStack.decrement(1);
+                    items.set(0, ItemStack.EMPTY);
+                    markDirty();
+                    return net.minecraft.util.ActionResult.SUCCESS;
+                }
+            }
+        } else {
+            if (!items.get(0).isEmpty()) {
+                SimpleInventory inventory = new SimpleInventory(items.get(0));
+                Optional<MortarAndPestleRecipe> recipe = world.getRecipeManager()
+                    .getAllMatches(ModRecipeTypes.MORTAR_AND_PESTLE_RECIPE_TYPE, inventory, world)
+                    .stream()
+                    .findFirst();
+
+                if (recipe.isPresent()) {
+                    if (recipe.get().requiresContainer()) {
+                        player.sendMessage(net.minecraft.text.Text.translatable("block.hunger-begone.mortar.needs_container"), true);
+                        return net.minecraft.util.ActionResult.FAIL;
+                    }
+                    ItemStack result = recipe.get().getOutput().copy();
+                    ejectResult(result);
                     items.set(0, ItemStack.EMPTY);
                     markDirty();
                     return net.minecraft.util.ActionResult.SUCCESS;
                 }
             }
         }
-        
+
         return net.minecraft.util.ActionResult.PASS;
     }
     

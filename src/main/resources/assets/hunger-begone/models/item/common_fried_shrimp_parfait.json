@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "hunger-begone:item/common_fried_shrimp_ice_cream_fruit_platter"
+  }
+}

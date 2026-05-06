@@ -10,17 +10,19 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class IceCreamItem extends Item {
-    public IceCreamItem(FabricItemSettings settings) {
-        super(settings.food(FoodProperties.createAlwaysEdibleFood(
-            FoodProperties.ICECREAM_HUNGER,
-            FoodProperties.ICECREAM_SATURATION
-        ).build()));
+public class CommonFriedShrimpParfaitItem extends Item {
+
+    public CommonFriedShrimpParfaitItem(FabricItemSettings settings) {
+        super(settings
+            .food(FoodProperties.createAlwaysEdibleFood(
+                FoodProperties.COMMON_FRIED_SHRIMP_PARFAIT_HUNGER,
+                FoodProperties.COMMON_FRIED_SHRIMP_PARFAIT_SATURATION
+            ).build()));
     }
 
     @Override
     public int getMaxUseTime(ItemStack stack) {
-        return 32;
+        return 64;
     }
 
     @Override
@@ -35,11 +37,7 @@ public class IceCreamItem extends Item {
                 false,
                 true
             ));
-            
-            if (user.isOnFire()) {
-                user.extinguish();
-            }
-            
+
             result = FoodProperties.handleBowlReturn(stack, world, player, result);
         }
 

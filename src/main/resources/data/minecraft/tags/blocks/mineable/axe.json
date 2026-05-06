@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "hunger-begone:shelf",
-    "hunger-begone:mortar_and_pestle"
+    "hunger-begone:mortar_and_pestle",
+    "hunger-begone:coin_operated_machine"
   ]
 }

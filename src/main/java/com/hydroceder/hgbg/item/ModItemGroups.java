@@ -185,6 +185,9 @@ public class ModItemGroups {
                     entries.add(EnchantedBookItem.forEnchantment(new net.minecraft.enchantment.EnchantmentLevelEntry(FieldHarvesterEnchantment.INSTANCE, 3)));
                     entries.add(ModItems.SOFA);
                     entries.add(ModItems.ICECREAM);
+                    entries.add(ModItems.LEMON_ICECREAM);
+                    entries.add(ModItems.FRIED_SHRIMP_PARFAIT);
+                    entries.add(ModItems.COMMON_FRIED_SHRIMP_PARFAIT);
                 })
                 .build();
         

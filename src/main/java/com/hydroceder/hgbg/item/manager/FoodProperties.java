@@ -188,4 +188,12 @@ public class FoodProperties {
     // 冰激凌
     public static final int ICECREAM_HUNGER = 4;
     public static final float ICECREAM_SATURATION = 3.0f;
+
+    //豪华炸虾芭菲
+    public static final int FRIED_SHRIMP_PARFAIT_HUNGER = 20;
+    public static final float FRIED_SHRIMP_PARFAIT_SATURATION = 0.5f;
+
+    //炸虾芭菲
+    public static final int COMMON_FRIED_SHRIMP_PARFAIT_HUNGER = 20;
+    public static final float COMMON_FRIED_SHRIMP_PARFAIT_SATURATION = 0.5f;
 }

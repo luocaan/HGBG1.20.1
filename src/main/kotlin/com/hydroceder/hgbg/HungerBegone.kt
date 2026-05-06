@@ -125,6 +125,10 @@ object HungerBegone : ModInitializer {
         com.hydroceder.hgbg.event.CalmnessEventHandler.register()
         logger.info("Calmness effect handler registered!")
         
+        // 注册玩家数据清理处理器（统一管理所有静态Map数据清理）
+        com.hydroceder.hgbg.event.PlayerDisconnectHandler.register()
+        logger.info("Player disconnect handler registered!")
+        
         // 注册配方同步事件监听器
         registerRecipeSyncListener()
         
@@ -206,13 +210,6 @@ object HungerBegone : ModInitializer {
                     logger.info("Gave homeland dirt to new player: {}", player.name.string)
                 }
             }
-        })
-        
-        // 注册玩家退出游戏事件，清理 SaturationTracker 数据
-        ServerPlayConnectionEvents.DISCONNECT.register(ServerPlayConnectionEvents.Disconnect {
-            handler, server ->
-            com.hydroceder.hgbg.util.SaturationTracker.cleanupPlayer(handler.player.uuid)
-            logger.info("Cleaned up saturation tracker data for player: {}", handler.player.name.string)
         })
         
         // 注册死亡事件，触发故乡土壤效果

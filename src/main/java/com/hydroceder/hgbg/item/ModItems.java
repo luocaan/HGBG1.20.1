@@ -431,6 +431,27 @@ public class ModItems {
         new IceCreamItem(new FabricItemSettings())
     );
 
+    // 柠檬冰激凌实例
+    public static final Item LEMON_ICECREAM = Registry.register(
+        Registries.ITEM,
+        id("lemon_icecream"),
+        new LemonIceCreamItem(new FabricItemSettings())
+    );
+
+    // 豪华炸虾芭菲实例
+    public static final Item FRIED_SHRIMP_PARFAIT = Registry.register(
+        Registries.ITEM,
+        id("fried_shrimp_parfait"),
+        new FriedShrimpParfaitItem(new FabricItemSettings().maxCount(1))
+    );
+
+    // 炸虾芭菲实例
+    public static final Item COMMON_FRIED_SHRIMP_PARFAIT = Registry.register(
+        Registries.ITEM,
+        id("common_fried_shrimp_parfait"),
+        new CommonFriedShrimpParfaitItem(new FabricItemSettings().maxCount(1))
+    );
+
     public static void register() {
         LOGGER.info("Items registered successfully!");
     }

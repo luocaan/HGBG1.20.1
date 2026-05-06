@@ -18,6 +18,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.item.ItemPlacementContext;
+import com.hydroceder.hgbg.item.ModFoodComponents;
 
 public class AppleFruitBowlBlock extends HorizontalFacingBlock {
 
@@ -60,7 +61,10 @@ public class AppleFruitBowlBlock extends HorizontalFacingBlock {
                 pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5,
                 new ItemStack(Items.BOWL)));
 
-        player.getHungerManager().add(16, 18.0f);
+        player.getHungerManager().add(
+            ModFoodComponents.APPLE_FRUIT_BOWL.getHunger(),
+            ModFoodComponents.APPLE_FRUIT_BOWL.getSaturationModifier()
+        );
 
         world.playSound(null, player.getX(), player.getY(), player.getZ(),
             SoundEvents.ENTITY_PLAYER_BURP,

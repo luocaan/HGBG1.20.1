@@ -20,6 +20,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import com.hydroceder.hgbg.item.ModFoodComponents;
 
 /**
  * 烤鸡方块类
@@ -92,8 +93,11 @@ public class RoastedChickenBlock extends Block {
                 1.0f, 0.8f); // 稍微低一点的音调
         }
         
-        // 恢复饥饿值和饱和度（5饥饿值 + 7饱和度）
-        player.getHungerManager().add(5, 14.0f);
+        // 恢复饥饿值和饱和度
+        player.getHungerManager().add(
+            ModFoodComponents.ORLEANS_ROASTED_CHICKEN.getHunger(),
+            ModFoodComponents.ORLEANS_ROASTED_CHICKEN.getSaturationModifier()
+        );
         
         return ActionResult.SUCCESS;
     }

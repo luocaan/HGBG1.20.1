@@ -124,6 +124,9 @@
   "item.hunger-begone.sofa": "Sofa",
 
   "item.hunger-begone.icecream": "Ice Cream",
+  "item.hunger-begone.lemon_icecream": "Lemon Ice Cream",
+  "item.hunger-begone.fried_shrimp_parfait": "Fried Shrimp Parfait",
+  "item.hunger-begone.common_fried_shrimp_parfait": "Common Fried Shrimp Parfait",
   "item.hunger-begone.homeland_dirt.tooltip": "Protects you like a totem of undying on death, 20 minute cooldown",
   "item.hunger-begone.lemon": "Lemon",
   "item.hunger-begone.lemon.tooltip": "I don't really recommend eating it directly",

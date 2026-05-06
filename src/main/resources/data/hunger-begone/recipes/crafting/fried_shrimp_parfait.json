@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:bowl"
+    },
+    {
+      "item": "hunger-begone:goodbro"
+    },
+    {
+      "item": "hunger-begone:lemon_icecream"
+    },
+    {
+      "item": "minecraft:enchanted_golden_apple"
+    }
+  ],
+  "result": {
+    "item": "hunger-begone:fried_shrimp_parfait",
+    "count": 1
+  }
+}

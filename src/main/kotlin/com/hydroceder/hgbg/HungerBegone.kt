@@ -14,7 +14,6 @@ import com.hydroceder.hgbg.util.PotionEffectRemover
 import com.hydroceder.hgbg.util.SaturationTracker
 import com.hydroceder.hgbg.block.ModBlocks
 import com.hydroceder.hgbg.block.ModBlockEntityTypes
-import com.hydroceder.hgbg.recipe.pan_cooking.CookingRecipeCache
 import com.hydroceder.hgbg.recipe.pan_cooking.PanCookingRecipe
 import com.hydroceder.hgbg.recipe.pan_cooking.PanCookingRecipeManager
 import com.hydroceder.hgbg.recipe.ModRecipeTypes
@@ -644,20 +643,12 @@ object HungerBegone : ModInitializer {
     private fun registerRecipeSyncListener() {
         // 监听服务器数据包同步事件
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register { player, joined ->
-            // 当配方数据同步时，重新构建烹饪配方缓存
-            CookingRecipeCache.buildCache(player.server)
-            // 加载锅烹饪JSON配方
             PanCookingRecipeManager.loadRecipesFromServer(player.server)
-            logger.info("Cooking recipe cache rebuilt! Cache size: {}", CookingRecipeCache.getCacheSize())
             logger.info("Pan cooking recipes loaded: {}", PanCookingRecipeManager.getAllRecipes().size)
         }
         
-        // 监听服务器启动事件，初始化缓存
         ServerLifecycleEvents.SERVER_STARTED.register { server ->
-            CookingRecipeCache.buildCache(server)
-            // 加载锅烹饪JSON配方
             PanCookingRecipeManager.loadRecipesFromServer(server)
-            logger.info("Cooking recipe cache initialized! Cache size: {}", CookingRecipeCache.getCacheSize())
             logger.info("Pan cooking recipes loaded: {}", PanCookingRecipeManager.getAllRecipes().size)
         }
     }

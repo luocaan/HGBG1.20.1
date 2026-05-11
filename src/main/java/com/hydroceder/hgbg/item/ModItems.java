@@ -71,12 +71,8 @@ public class ModItems {
         new DiamondCookieItem(new FabricItemSettings())
     );
 
-    // 奶油蘑菇汤实例
-    public static final Item CREAMY_MUSHROOM_SOUP = Registry.register(
-        Registries.ITEM,
-        id("creamy_mushroom_soup"),
-        new CreamyMushroomSoupItem(new FabricItemSettings().maxCount(1))
-    );
+    // 奶油蘑菇汤实例（在ModBlocks中作为BlockItem注册）
+    public static Item CREAMY_MUSHROOM_SOUP;
 
     // 果酱面包实例
     public static final Item JAM_BREAD = Registry.register(
@@ -354,19 +350,11 @@ public class ModItems {
         new FullSugarLemonadeItem(new FabricItemSettings().maxCount(24))
     );
 
-    // 柠檬泡菜实例
-    public static final Item LEMON_PICKLE = Registry.register(
-        Registries.ITEM,
-        id("lemon_pickle"),
-        new LemonPickleItem(new FabricItemSettings().maxCount(1))
-    );
+    // 柠檬泡菜实例（在ModBlocks中作为BlockItem注册）
+    public static Item LEMON_PICKLE;
 
-    // 奥尔良烤鸡实例
-    public static final Item ORLEANS_ROASTED_CHICKEN = Registry.register(
-        Registries.ITEM,
-        id("orleans_roasted_chicken"),
-        new OrleansRoastedChickenItem(new FabricItemSettings().maxCount(1))
-    );
+    // 奥尔良烤鸡实例（在ModBlocks中作为BlockItem注册）
+    public static Item ORLEANS_ROASTED_CHICKEN;
 
     // 柠檬鸡爪实例
     public static final Item LEMON_CHICKEN_FEET = Registry.register(
@@ -450,6 +438,13 @@ public class ModItems {
         Registries.ITEM,
         id("common_fried_shrimp_parfait"),
         new CommonFriedShrimpParfaitItem(new FabricItemSettings().maxCount(1))
+    );
+
+    // 洞穴沙拉实例
+    public static final Item CAVE_SALAD = Registry.register(
+        Registries.ITEM,
+        id("cave_salad"),
+        new CaveSaladItem(new FabricItemSettings().maxCount(1))
     );
 
     public static void register() {

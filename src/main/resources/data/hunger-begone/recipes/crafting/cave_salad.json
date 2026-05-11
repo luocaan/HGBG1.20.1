@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:glow_berries"
+    },
+    {
+      "item": "minecraft:glow_lichen"
+    },
+    {
+      "item": "hunger-begone:lemon"
+    },
+    {
+      "item": "hunger-begone:mayonnaise_bottle"
+    },
+    {
+      "item": "minecraft:bowl"
+    }
+  ],
+  "result": {
+    "item": "hunger-begone:cave_salad",
+    "count": 1
+  }
+}

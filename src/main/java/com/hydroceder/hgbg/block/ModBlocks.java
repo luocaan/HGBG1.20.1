@@ -1,5 +1,6 @@
 package com.hydroceder.hgbg.block;
 
+import com.hydroceder.hgbg.item.ModItems;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
@@ -36,6 +37,18 @@ public class ModBlocks {
     
     public static Block APPLE_FRUIT_BOWL;
     public static final Identifier APPLE_FRUIT_BOWL_ID = new Identifier("hunger-begone", "apple_fruit_bowl");
+
+    public static Block MELON_FRUIT_BOWL;
+    public static final Identifier MELON_FRUIT_BOWL_ID = new Identifier("hunger-begone", "melon_fruit_bowl");
+
+    public static Block CARROT_BOWL;
+    public static final Identifier CARROT_BOWL_ID = new Identifier("hunger-begone", "carrot_bowl");
+
+    public static Block CREAMY_MUSHROOM_SOUP_BLOCK;
+    public static final Identifier CREAMY_MUSHROOM_SOUP_BLOCK_ID = new Identifier("hunger-begone", "creamy_mushroom_soup_block");
+
+    public static Block LEMON_PICKLE_BLOCK;
+    public static final Identifier LEMON_PICKLE_BLOCK_ID = new Identifier("hunger-begone", "lemon_pickle_block");
     
     public static Block EMPTY_CUP;
     public static final Identifier EMPTY_CUP_ID = new Identifier("hunger-begone", "empty_cup");
@@ -106,8 +119,12 @@ public class ModBlocks {
                 .sounds(net.minecraft.sound.BlockSoundGroup.WOOL)
                 .nonOpaque());
         Registry.register(Registries.BLOCK, ROASTED_CHICKEN_ID, ROASTED_CHICKEN);
-        
-        // 注意：不创建 BlockItem，因为奥尔良烤鸡物品本身就是放置物
+
+        ModItems.ORLEANS_ROASTED_CHICKEN = new com.hydroceder.hgbg.item.food.OrleansRoastedChickenItem(
+            ROASTED_CHICKEN,
+            new FabricItemSettings().maxCount(1)
+        );
+        Registry.register(Registries.ITEM, new Identifier("hunger-begone", "orleans_roasted_chicken"), ModItems.ORLEANS_ROASTED_CHICKEN);
         
         // 注册紫颂果盘方块
         CHORUS_FRUIT_BOWL = new ChorusFruitBowlBlock(FabricBlockSettings.create()
@@ -128,6 +145,52 @@ public class ModBlocks {
         
         BlockItem afbItem = new BlockItem(APPLE_FRUIT_BOWL, new FabricItemSettings());
         Registry.register(Registries.ITEM, APPLE_FRUIT_BOWL_ID, afbItem);
+
+        // 注册西瓜果盘方块
+        MELON_FRUIT_BOWL = new MelonFruitBowlBlock(FabricBlockSettings.create()
+                .strength(0.1f)
+                .sounds(net.minecraft.sound.BlockSoundGroup.WOOL)
+                .nonOpaque());
+        Registry.register(Registries.BLOCK, MELON_FRUIT_BOWL_ID, MELON_FRUIT_BOWL);
+
+        BlockItem melonFruitBowlItem = new BlockItem(MELON_FRUIT_BOWL, new FabricItemSettings());
+        Registry.register(Registries.ITEM, MELON_FRUIT_BOWL_ID, melonFruitBowlItem);
+
+        // 注册胡萝卜摆盘方块
+        CARROT_BOWL = new CarrotBowlBlock(FabricBlockSettings.create()
+                .strength(0.1f)
+                .sounds(net.minecraft.sound.BlockSoundGroup.WOOL)
+                .nonOpaque());
+        Registry.register(Registries.BLOCK, CARROT_BOWL_ID, CARROT_BOWL);
+
+        BlockItem carrotBowlItem = new BlockItem(CARROT_BOWL, new FabricItemSettings());
+        Registry.register(Registries.ITEM, CARROT_BOWL_ID, carrotBowlItem);
+
+        // 注册奶油蘑菇汤方块（使用BlockItem以支持中键选取）
+        CREAMY_MUSHROOM_SOUP_BLOCK = new CreamyMushroomSoupBlock(FabricBlockSettings.create()
+                .strength(0.1f)
+                .sounds(net.minecraft.sound.BlockSoundGroup.WOOL)
+                .nonOpaque());
+        Registry.register(Registries.BLOCK, CREAMY_MUSHROOM_SOUP_BLOCK_ID, CREAMY_MUSHROOM_SOUP_BLOCK);
+
+        ModItems.CREAMY_MUSHROOM_SOUP = new com.hydroceder.hgbg.item.food.CreamyMushroomSoupItem(
+            CREAMY_MUSHROOM_SOUP_BLOCK,
+            new FabricItemSettings().maxCount(1)
+        );
+        Registry.register(Registries.ITEM, new Identifier("hunger-begone", "creamy_mushroom_soup"), ModItems.CREAMY_MUSHROOM_SOUP);
+
+        // 注册柠檬泡菜方块
+        LEMON_PICKLE_BLOCK = new LemonPickleBlock(FabricBlockSettings.create()
+                .strength(0.1f)
+                .sounds(net.minecraft.sound.BlockSoundGroup.WOOL)
+                .nonOpaque());
+        Registry.register(Registries.BLOCK, LEMON_PICKLE_BLOCK_ID, LEMON_PICKLE_BLOCK);
+
+        ModItems.LEMON_PICKLE = new com.hydroceder.hgbg.item.food.LemonPickleItem(
+            LEMON_PICKLE_BLOCK,
+            new FabricItemSettings().maxCount(1)
+        );
+        Registry.register(Registries.ITEM, new Identifier("hunger-begone", "lemon_pickle"), ModItems.LEMON_PICKLE);
         
         // 注册空杯子方块
         EMPTY_CUP = new EmptyCupBlock(FabricBlockSettings.create()

@@ -1,8 +1,10 @@
 package com.hydroceder.hgbg.block.entity;
 
 import com.hydroceder.hgbg.block.ModBlockEntityTypes;
+import com.hydroceder.hgbg.event.StoveEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
@@ -11,6 +13,8 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -110,12 +114,42 @@ public class StoveBlockEntity extends BlockEntity implements Inventory {
             if (!pan.isEmpty()) {
                 net.minecraft.util.ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), pan);
             }
-            
+
             for (ItemStack material : materials) {
                 if (!material.isEmpty()) {
                     net.minecraft.util.ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), material);
                 }
             }
+        }
+    }
+
+    private void suckInItems(World world, BlockPos pos) {
+        Box collectionBox = new Box(
+            pos.getX(), pos.getY(), pos.getZ(),
+            pos.getX() + 1.0, pos.getY() + 0.5, pos.getZ() + 1.0
+        );
+
+        java.util.List<ItemEntity> itemEntities = world.getEntitiesByClass(ItemEntity.class, collectionBox, entity -> !entity.isRemoved() && !entity.getStack().isEmpty());
+
+        for (ItemEntity itemEntity : itemEntities) {
+            ItemStack itemStack = itemEntity.getStack();
+
+            ItemStack toAdd = itemStack.copy();
+            ActionResult eventResult = StoveEvents.PLACE_ITEM.invoker().onPlaceItem(world, pos, null, toAdd);
+            if (eventResult == ActionResult.FAIL) {
+                continue;
+            }
+
+            addMaterial(toAdd);
+
+            itemStack.decrement(toAdd.getCount());
+            if (itemStack.isEmpty()) {
+                itemEntity.discard();
+            } else {
+                itemEntity.setStack(itemStack);
+            }
+
+            world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.3f, 1.2f);
         }
     }
     
@@ -181,6 +215,10 @@ public class StoveBlockEntity extends BlockEntity implements Inventory {
                 world.setBlockState(pos, state.with(com.hydroceder.hgbg.block.StoveBlock.HAS_PAN, false), 3);
             } else if (!state.get(com.hydroceder.hgbg.block.StoveBlock.HAS_PAN) && !blockEntity.pan.isEmpty()) {
                 world.setBlockState(pos, state.with(com.hydroceder.hgbg.block.StoveBlock.HAS_PAN, true), 3);
+            }
+            
+            if (state.get(com.hydroceder.hgbg.block.StoveBlock.HAS_PAN) && !blockEntity.isCooking()) {
+                blockEntity.suckInItems(world, pos);
             }
             
             if (blockEntity.isCooking) {

@@ -196,4 +196,8 @@ public class FoodProperties {
     //炸虾芭菲
     public static final int COMMON_FRIED_SHRIMP_PARFAIT_HUNGER = 20;
     public static final float COMMON_FRIED_SHRIMP_PARFAIT_SATURATION = 0.5f;
+
+    // 洞穴沙拉
+    public static final int CAVE_SALAD_HUNGER = 7;
+    public static final float CAVE_SALAD_SATURATION = 1.07f;
 }

@@ -1,0 +1,1 @@
+{"variants": {"facing=north": {"model": "hunger-begone:block/carrotbowl"}, "facing=south": {"model": "hunger-begone:block/carrotbowl", "y": 180}, "facing=east": {"model": "hunger-begone:block/carrotbowl", "y": 90}, "facing=west": {"model": "hunger-begone:block/carrotbowl", "y": 270}}}

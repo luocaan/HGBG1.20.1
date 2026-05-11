@@ -11,21 +11,31 @@ public class ModFoodComponents {
 
     public static final FoodComponent APPLE_FRUIT_BOWL = new FoodComponent.Builder()
             .hunger(16)
-            .saturationModifier(18.0f)
+            .saturationModifier(1.0f)
             .build();
 
     public static final FoodComponent BREAD_PLATE = new FoodComponent.Builder()
             .hunger(15)
-            .saturationModifier(18.0f)
+            .saturationModifier(1.0f)
             .build();
 
     public static final FoodComponent CHORUS_FRUIT_BOWL = new FoodComponent.Builder()
             .hunger(8)
-            .saturationModifier(20.0f)
+            .saturationModifier(2.0f)
             .build();
 
     public static final FoodComponent ORLEANS_ROASTED_CHICKEN = new FoodComponent.Builder()
             .hunger(5)
-            .saturationModifier(14.0f)
+            .saturationModifier(1.0f)
+            .build();
+
+    public static final FoodComponent MELON_FRUIT_BOWL = new FoodComponent.Builder()
+            .hunger(6)
+            .saturationModifier(0.5f)
+            .build();
+
+    public static final FoodComponent CARROT_BOWL = new FoodComponent.Builder()
+            .hunger(12)
+            .saturationModifier(0.625f)
             .build();
 }

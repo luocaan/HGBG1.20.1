@@ -52,15 +52,21 @@ public class ModItemGroups {
                     
                     // 添加苹果果盘到物品组
                     entries.add(ModBlocks.APPLE_FRUIT_BOWL);
+
+                    // 添加西瓜果盘到物品组
+                    entries.add(ModBlocks.MELON_FRUIT_BOWL);
+
+                    // 添加胡萝卜摆盘到物品组
+                    entries.add(ModBlocks.CARROT_BOWL);
+
+                    // 添加面包盘到物品组
+                    entries.add(ModBlocks.BREAD_PLATE);
                     
                     // 添加空杯子到物品组
                     entries.add(ModBlocks.EMPTY_CUP);
 
                     // 添加木杯到物品组
                     entries.add(ModBlocks.WOODEN_CUP);
-
-                    // 添加面包盘到物品组
-                    entries.add(ModBlocks.BREAD_PLATE);
 
                     // 添加节拍器到物品组
                     entries.add(ModBlocks.METRONOME);
@@ -97,6 +103,13 @@ public class ModItemGroups {
                     
                     // 添加柠檬鸡爪到物品组
                     entries.add(ModItems.LEMON_CHICKEN_FEET);
+
+                    // 添加更多碗装食物到物品组
+                    entries.add(ModItems.ICECREAM);
+                    entries.add(ModItems.LEMON_ICECREAM);
+                    entries.add(ModItems.FRIED_SHRIMP_PARFAIT);
+                    entries.add(ModItems.COMMON_FRIED_SHRIMP_PARFAIT);
+                    entries.add(ModItems.CAVE_SALAD);
                     
                     // 添加鸡翅和鸡腿到物品组
                     entries.add(ModItems.CHICKEN_WING);
@@ -175,19 +188,13 @@ public class ModItemGroups {
                     entries.add(ModItems.CHILI_BOTTLE);
                     
                     // 添加本模组的附魔书到物品组
-                    entries.add(EnchantedBookItem.forEnchantment(new net.minecraft.enchantment.EnchantmentLevelEntry(NourishmentEnchantment.INSTANCE, 1)));
-                    entries.add(EnchantedBookItem.forEnchantment(new net.minecraft.enchantment.EnchantmentLevelEntry(NutritionEnchantment.INSTANCE, 1)));
-                    entries.add(EnchantedBookItem.forEnchantment(new net.minecraft.enchantment.EnchantmentLevelEntry(SpeedEnchantment.INSTANCE, 1)));
+                    entries.add(EnchantedBookItem.forEnchantment(new net.minecraft.enchantment.EnchantmentLevelEntry(NourishmentEnchantment.INSTANCE, 2)));
+                    entries.add(EnchantedBookItem.forEnchantment(new net.minecraft.enchantment.EnchantmentLevelEntry(NutritionEnchantment.INSTANCE, 3)));
+                    entries.add(EnchantedBookItem.forEnchantment(new net.minecraft.enchantment.EnchantmentLevelEntry(SpeedEnchantment.INSTANCE, 3)));
                     entries.add(EnchantedBookItem.forEnchantment(new net.minecraft.enchantment.EnchantmentLevelEntry(WarmthEnchantment.INSTANCE, 1)));
                     entries.add(EnchantedBookItem.forEnchantment(new net.minecraft.enchantment.EnchantmentLevelEntry(EnthusiasmEnchantment.INSTANCE, 1)));
-                    entries.add(EnchantedBookItem.forEnchantment(new net.minecraft.enchantment.EnchantmentLevelEntry(FieldHarvesterEnchantment.INSTANCE, 1)));
-                    entries.add(EnchantedBookItem.forEnchantment(new net.minecraft.enchantment.EnchantmentLevelEntry(FieldHarvesterEnchantment.INSTANCE, 2)));
                     entries.add(EnchantedBookItem.forEnchantment(new net.minecraft.enchantment.EnchantmentLevelEntry(FieldHarvesterEnchantment.INSTANCE, 3)));
                     entries.add(ModItems.SOFA);
-                    entries.add(ModItems.ICECREAM);
-                    entries.add(ModItems.LEMON_ICECREAM);
-                    entries.add(ModItems.FRIED_SHRIMP_PARFAIT);
-                    entries.add(ModItems.COMMON_FRIED_SHRIMP_PARFAIT);
                 })
                 .build();
         

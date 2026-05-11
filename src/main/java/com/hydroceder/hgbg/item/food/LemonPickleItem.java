@@ -1,21 +1,21 @@
 package com.hydroceder.hgbg.item.food;
 
+import com.hydroceder.hgbg.block.ModBlocks;
 import com.hydroceder.hgbg.item.manager.FoodProperties;
+import net.minecraft.block.Block;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.text.Text;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 
-/**
- * 柠檬泡菜物品类
- * 食用后恢复饥饿值和饱和度，返回碗
- */
-public class LemonPickleItem extends Item {
-    public LemonPickleItem(Settings settings) {
-        super(settings.food(FoodProperties.createAlwaysEdibleFood(
+public class LemonPickleItem extends BlockItem {
+    public LemonPickleItem(Block block, Settings settings) {
+        super(block, settings.food(FoodProperties.createAlwaysEdibleFood(
             FoodProperties.LEMON_PICKLE_HUNGER,
             FoodProperties.LEMON_PICKLE_SATURATION
         ).build()));
@@ -23,10 +23,8 @@ public class LemonPickleItem extends Item {
 
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-        // 先执行默认的食物食用逻辑（恢复饥饿值和饱和度）
         ItemStack result = super.finishUsing(stack, world, user);
         
-        // 使用统一的碗返还处理
         return FoodProperties.handleBowlReturn(stack, world, user, result);
     }
     
@@ -38,5 +36,10 @@ public class LemonPickleItem extends Item {
     @Override
     public int getMaxUseTime(ItemStack stack) {
         return 32;
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, World world, java.util.List<Text> tooltip, TooltipContext context) {
+        tooltip.add(Text.translatable("item.hunger-begone.placeable.tooltip").formatted(net.minecraft.util.Formatting.GRAY));
     }
 }

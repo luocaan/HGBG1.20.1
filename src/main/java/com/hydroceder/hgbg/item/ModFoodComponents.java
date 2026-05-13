@@ -38,4 +38,14 @@ public class ModFoodComponents {
             .hunger(12)
             .saturationModifier(0.625f)
             .build();
+
+    public static final FoodComponent STARE_AT_CUBE_PIE = new FoodComponent.Builder()
+            .hunger(10)
+            .saturationModifier(0.425f)
+            .build();
+
+    public static final FoodComponent STINKY_TOFU = new FoodComponent.Builder()
+            .hunger(8)
+            .saturationModifier(0.4375f)
+            .build();
 }

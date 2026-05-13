@@ -51,7 +51,7 @@ public class MetronomeBlockEntity extends BlockEntity {
         if (newLevel != currentPower) {
             world.setBlockState(pos, state.with(MetronomeBlock.POWER, newLevel));
             entity.markDirty();
-            world.updateNeighborsAlways(pos, state.getBlock());
+            world.updateNeighbors(pos, state.getBlock());
         }
     }
 

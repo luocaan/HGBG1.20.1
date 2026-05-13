@@ -29,6 +29,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents
+import net.minecraft.entity.damage.DamageTypes
 import net.minecraft.entity.attribute.EntityAttributeModifier
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.enchantment.Enchantment
@@ -64,6 +65,20 @@ object HungerBegone : ModInitializer {
     
     // 饱食疾行修饰符UUID
     private val SPEED_MODIFIER_UUID = java.util.UUID.fromString("35023419-1981-0114-5140-350234191981")
+    
+    // 负面效果清除冷却记录
+    private val lastDebuffClearTime = HashMap<UUID, Long>()
+    private const val DEBUFF_CLEAR_COOLDOWN = 100L
+    
+    // 故乡土壤缓存
+    private val homelandDirtCache = HashMap<UUID, Boolean>()
+    private var homelandDirtCacheTickCounter = 0
+    private const val HOMELAND_DIRT_CACHE_INTERVAL = 20
+    
+    // 耕地附近缓存
+    private val farmlandNearbyCache = HashMap<UUID, Boolean>()
+    private val farmlandCheckCounter = HashMap<UUID, Int>()
+    private const val FARMLAND_CHECK_INTERVAL = 20
 
 	override fun onInitialize() {
 
@@ -230,6 +245,10 @@ object HungerBegone : ModInitializer {
         ServerLivingEntityEvents.ALLOW_DAMAGE.register(ServerLivingEntityEvents.AllowDamage {
             entity, damageSource, amount ->
             if (entity is PlayerEntity && entity.hasStatusEffect(HomesicknessEffect.INSTANCE)) {
+                if (damageSource.isOf(DamageTypes.OUT_OF_WORLD)) {
+                    return@AllowDamage true
+                }
+                
                 val playerId = entity.uuid
                 // 检查是否已经在处理伤害，避免递归
                 if (processingDamage.contains(playerId)) {
@@ -277,13 +296,16 @@ object HungerBegone : ModInitializer {
                         0.0
                     }
                     
-                    // 转换为饥饿值（取整数部分）
-                    val foodToAdd = maxHealth.toInt()
+                    // 转换为饥饿值（取整数部分），上限为20
+                    val foodToAdd = Math.min(maxHealth.toInt(), 20)
                     
                     if (foodToAdd > 0) {
-                        // 增加饥饿值和饱和度
-                        entity.hungerManager.add(foodToAdd, 1.0f)
-                        logger.info("Player {} gained {} hunger from killing {}", entity.name.string, foodToAdd, killedEntity.type.translationKey)
+                        val currentFood = entity.hungerManager.foodLevel
+                        val actualAdd = Math.min(foodToAdd, 20 - currentFood)
+                        if (actualAdd > 0) {
+                            entity.hungerManager.add(actualAdd, 1.0f)
+                            logger.info("Player {} gained {} hunger from killing {}", entity.name.string, actualAdd, killedEntity.type.translationKey)
+                        }
                     }
                 }
             }
@@ -292,6 +314,8 @@ object HungerBegone : ModInitializer {
         // 注册服务器tick事件监听器，用于检测饱和度和移除负面效果，以及处理饱食疾行附魔的速度修饰符
         ServerTickEvents.END_SERVER_TICK.register(ServerTickEvents.EndTick {
             server ->
+            homelandDirtCacheTickCounter = (homelandDirtCacheTickCounter + 1) % HOMELAND_DIRT_CACHE_INTERVAL
+            val shouldUpdateHomelandDirtCache = homelandDirtCacheTickCounter == 0
             // 遍历所有玩家
             for (player in server.playerManager.playerList) {
                 // 检查玩家装备是否有II级滋养附魔
@@ -301,10 +325,14 @@ object HungerBegone : ModInitializer {
                     
                     // 检查饱和度是否满且持续时间超过5秒
                     if (SaturationTracker.isSaturationFullForLongEnough(player)) {
-                        // 尝试移除一个负面效果
-                        if (PotionEffectRemover.removeNegativeEffect(player)) {
-                            // 移除效果后重置饱和度状态
-                            SaturationTracker.reset(player)
+                        val playerId = player.uuid
+                        val now = player.world.time
+                        val lastClear = lastDebuffClearTime[playerId] ?: 0L
+                        if (now - lastClear >= DEBUFF_CLEAR_COOLDOWN) {
+                            if (PotionEffectRemover.removeNegativeEffect(player)) {
+                                SaturationTracker.reset(player)
+                                lastDebuffClearTime[playerId] = now
+                            }
                         }
                     }
                 }
@@ -346,24 +374,37 @@ object HungerBegone : ModInitializer {
                     }
                 }
                 
-                // 处理田野收获者附魔的缓降效果
+                // 使用缓存降低耕地检查频率
                 val fieldHarvesterLevel = getFieldHarvesterEnchantmentLevel(player)
-                if (fieldHarvesterLevel > 0 && isNearFarmland(player.world, player.blockPos)) {
+                val fieldPlayerId = player.uuid
+                val counter = farmlandCheckCounter[fieldPlayerId] ?: 0
+                if (counter >= FARMLAND_CHECK_INTERVAL) {
+                    farmlandCheckCounter[fieldPlayerId] = 0
+                    farmlandNearbyCache[fieldPlayerId] = isNearFarmland(player.world, player.blockPos)
+                } else {
+                    farmlandCheckCounter[fieldPlayerId] = counter + 1
+                }
+                if (fieldHarvesterLevel > 0 && (farmlandNearbyCache[fieldPlayerId] ?: false)) {
                     // 为玩家添加缓降效果（持续1秒，等级为0）
                     player.addStatusEffect(StatusEffectInstance(StatusEffects.SLOW_FALLING, 60, 0, false, false))
                 }
                 
-                // 处理归心效果
-                var hasHomelandDirt = false
-                for (stack in player.inventory.main) {
-                    if (stack.item == ModItems.HOMELAND_DIRT) {
-                        hasHomelandDirt = true
-                        break
+                // 使用缓存检查归心效果条件
+                val playerId = player.uuid
+                if (shouldUpdateHomelandDirtCache) {
+                    var found = false
+                    for (stack in player.inventory.main) {
+                        if (stack.item == ModItems.HOMELAND_DIRT) {
+                            found = true
+                            break
+                        }
                     }
+                    if (!found && player.offHandStack.item == ModItems.HOMELAND_DIRT) {
+                        found = true
+                    }
+                    homelandDirtCache[playerId] = found
                 }
-                if (!hasHomelandDirt && player.offHandStack.item == ModItems.HOMELAND_DIRT) {
-                    hasHomelandDirt = true
-                }
+                val hasHomelandDirt = homelandDirtCache[playerId] ?: false
                 
                 // 检查坐标是否任意项大于1000，触发饱腹远行进度
                 val x = Math.abs(player.x).toInt()
@@ -825,5 +866,12 @@ object HungerBegone : ModInitializer {
         ))
         
         logger.info("Registered ${SeasoningRegistry.size()} seasonings!")
+    }
+    
+    fun cleanupPlayerData(playerId: UUID) {
+        lastDebuffClearTime.remove(playerId)
+        homelandDirtCache.remove(playerId)
+        farmlandNearbyCache.remove(playerId)
+        farmlandCheckCounter.remove(playerId)
     }
 }

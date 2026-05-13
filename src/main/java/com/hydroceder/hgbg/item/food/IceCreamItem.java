@@ -20,7 +20,7 @@ public class IceCreamItem extends Item {
 
     @Override
     public int getMaxUseTime(ItemStack stack) {
-        return 32;
+        return 24;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.hydroceder.hgbg.event;
 
+import com.hydroceder.hgbg.DebugManager;
+import com.hydroceder.hgbg.HungerBegone;
 import com.hydroceder.hgbg.effect.CalmnessEffect;
 import com.hydroceder.hgbg.util.SaturationTracker;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
@@ -21,7 +23,9 @@ public class PlayerDisconnectHandler {
 
         UUID playerId = player.getUuid();
 
+        DebugManager.cleanupPlayer(playerId);
         CalmnessEffect.cleanupPlayer(playerId);
         SaturationTracker.cleanupPlayer(playerId);
+        HungerBegone.INSTANCE.cleanupPlayerData(playerId);
     }
 }

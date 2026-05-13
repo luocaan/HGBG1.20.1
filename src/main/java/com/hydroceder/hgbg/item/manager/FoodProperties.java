@@ -171,11 +171,11 @@ public class FoodProperties {
 
     // 鸡翅
     public static final int CHICKEN_WING_HUNGER = 3;
-    public static final float CHICKEN_WING_SATURATION = 4.0f;
+    public static final float CHICKEN_WING_SATURATION = 1.2f;
 
     // 鸡腿
     public static final int CHICKEN_LEG_HUNGER = 4;
-    public static final float CHICKEN_LEG_SATURATION = 5.0f;
+    public static final float CHICKEN_LEG_SATURATION = 1.25f;
     
     // 酱油
     public static final int SOY_SAUCE_HUNGER = 2;
@@ -200,4 +200,8 @@ public class FoodProperties {
     // 洞穴沙拉
     public static final int CAVE_SALAD_HUNGER = 7;
     public static final float CAVE_SALAD_SATURATION = 1.07f;
+
+    // 仰望夜空派
+    public static final int STARE_AT_CUBE_PIE_HUNGER = 10;
+    public static final float STARE_AT_CUBE_PIE_SATURATION = 0.425f;
 }

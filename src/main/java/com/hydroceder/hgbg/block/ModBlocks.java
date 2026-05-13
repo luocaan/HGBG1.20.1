@@ -49,6 +49,12 @@ public class ModBlocks {
 
     public static Block LEMON_PICKLE_BLOCK;
     public static final Identifier LEMON_PICKLE_BLOCK_ID = new Identifier("hunger-begone", "lemon_pickle_block");
+
+    public static Block STARE_AT_CUBE_PIE;
+    public static final Identifier STARE_AT_CUBE_PIE_ID = new Identifier("hunger-begone", "stare_at_cube_pie");
+
+    public static Block STINKY_TOFU;
+    public static final Identifier STINKY_TOFU_ID = new Identifier("hunger-begone", "stinky_tofu");
     
     public static Block EMPTY_CUP;
     public static final Identifier EMPTY_CUP_ID = new Identifier("hunger-begone", "empty_cup");
@@ -191,6 +197,32 @@ public class ModBlocks {
             new FabricItemSettings().maxCount(1)
         );
         Registry.register(Registries.ITEM, new Identifier("hunger-begone", "lemon_pickle"), ModItems.LEMON_PICKLE);
+
+        // 注册仰望夜空派方块
+        STARE_AT_CUBE_PIE = new StareAtCubePieBlock(FabricBlockSettings.create()
+                .strength(0.1f)
+                .sounds(net.minecraft.sound.BlockSoundGroup.WOOL)
+                .nonOpaque());
+        Registry.register(Registries.BLOCK, STARE_AT_CUBE_PIE_ID, STARE_AT_CUBE_PIE);
+
+        ModItems.STARE_AT_CUBE_PIE = new com.hydroceder.hgbg.item.food.StareAtCubePieItem(
+            STARE_AT_CUBE_PIE,
+            new FabricItemSettings().maxCount(1)
+        );
+        Registry.register(Registries.ITEM, new Identifier("hunger-begone", "stare_at_cube_pie"), ModItems.STARE_AT_CUBE_PIE);
+
+        // 注册臭豆腐方块
+        STINKY_TOFU = new StinkyTofuBlock(FabricBlockSettings.create()
+                .strength(0.1f)
+                .sounds(net.minecraft.sound.BlockSoundGroup.WOOL)
+                .nonOpaque());
+        Registry.register(Registries.BLOCK, STINKY_TOFU_ID, STINKY_TOFU);
+
+        ModItems.STINKY_TOFU = new com.hydroceder.hgbg.item.food.StinkyTofuItem(
+            STINKY_TOFU,
+            new FabricItemSettings().maxCount(1)
+        );
+        Registry.register(Registries.ITEM, new Identifier("hunger-begone", "stinky_tofu"), ModItems.STINKY_TOFU);
         
         // 注册空杯子方块
         EMPTY_CUP = new EmptyCupBlock(FabricBlockSettings.create()

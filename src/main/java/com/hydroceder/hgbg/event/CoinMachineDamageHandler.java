@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
@@ -52,21 +53,23 @@ public class CoinMachineDamageHandler {
             net.minecraft.sound.SoundCategory.PLAYERS,
             1.0f, pitch2);
 
-        for (int i = 0; i < 2; i++) {
-            double offsetX = (random.nextDouble() - 0.5) * 0.8;
-            double offsetZ = (random.nextDouble() - 0.5) * 0.8;
-            
-            double particleX = x + offsetX;
-            double particleY = y + 0.5;
-            double particleZ = z + offsetZ;
+        if (world instanceof ServerWorld serverWorld) {
+            for (int i = 0; i < 2; i++) {
+                double offsetX = (random.nextDouble() - 0.5) * 0.8;
+                double offsetZ = (random.nextDouble() - 0.5) * 0.8;
+                
+                double particleX = x + offsetX;
+                double particleY = y + 0.5;
+                double particleZ = z + offsetZ;
 
-            ((net.minecraft.server.world.ServerWorld) world).spawnParticles(
-                net.minecraft.particle.ParticleTypes.NOTE,
-                particleX, particleY, particleZ,
-                1,
-                0.0, 0.3, 0.0,
-                0.01
-            );
+                serverWorld.spawnParticles(
+                    net.minecraft.particle.ParticleTypes.NOTE,
+                    particleX, particleY, particleZ,
+                    1,
+                    0.0, 0.3, 0.0,
+                    0.01
+                );
+            }
         }
     }
 

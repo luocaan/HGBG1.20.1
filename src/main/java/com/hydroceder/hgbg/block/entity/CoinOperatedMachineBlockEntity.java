@@ -14,7 +14,11 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
+import java.util.Random;
+
 public class CoinOperatedMachineBlockEntity extends BlockEntity {
+
+    private static final Random RANDOM = new Random();
 
     private long lastEjectTime = -1L;
     private int requiredCoins = 3 + java.util.concurrent.ThreadLocalRandom.current().nextInt(4);
@@ -66,7 +70,7 @@ public class CoinOperatedMachineBlockEntity extends BlockEntity {
             java.util.List<String> musicFiles = JukeMusicPlayer.getAvailableMusicFiles();
             
             if (!musicFiles.isEmpty()) {
-                int randomIndex = new java.util.Random().nextInt(musicFiles.size());
+                int randomIndex = RANDOM.nextInt(musicFiles.size());
                 String randomMusic = musicFiles.get(randomIndex);
                 musicPlayer.loadMusicFile(randomMusic);
                 

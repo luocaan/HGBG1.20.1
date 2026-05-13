@@ -79,8 +79,7 @@ public class PanCookingRecipeManager {
             
             for (int i = 0; i < remainingMaterials.size(); i++) {
                 ItemStack materialStack = remainingMaterials.get(i);
-                if (ItemStack.areItemsEqual(inputStack, materialStack) && 
-                    (inputStack.getNbt() == null ? materialStack.getNbt() == null : inputStack.getNbt().equals(materialStack.getNbt()))) {
+                if (inputStack.isOf(materialStack.getItem())) {
                     
                     if (materialStack.getCount() >= requiredCount) {
                         materialStack.decrement(requiredCount);

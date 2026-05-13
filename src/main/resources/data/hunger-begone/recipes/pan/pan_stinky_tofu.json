@@ -1,0 +1,24 @@
+{
+  "type": "hunger-begone:pan_cooking",
+  "inputs": [
+    {
+      "item": "minecraft:bowl",
+      "count": 1
+    },
+    {
+      "item": "minecraft:egg",
+      "count": 1
+    },
+    {
+      "item": "minecraft:nether_wart",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": "hunger-begone:stinky_tofu",
+      "count": 1
+    }
+  ],
+  "cookTime": 250
+}

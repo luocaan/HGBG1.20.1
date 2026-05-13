@@ -353,6 +353,12 @@ public class ModItems {
     // 柠檬泡菜实例（在ModBlocks中作为BlockItem注册）
     public static Item LEMON_PICKLE;
 
+    // 仰望夜空派实例（在ModBlocks中作为BlockItem注册）
+    public static Item STARE_AT_CUBE_PIE;
+
+    // 臭豆腐实例（在ModBlocks中作为BlockItem注册）
+    public static Item STINKY_TOFU;
+
     // 奥尔良烤鸡实例（在ModBlocks中作为BlockItem注册）
     public static Item ORLEANS_ROASTED_CHICKEN;
 

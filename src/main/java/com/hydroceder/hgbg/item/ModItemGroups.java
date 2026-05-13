@@ -61,6 +61,12 @@ public class ModItemGroups {
 
                     // 添加面包盘到物品组
                     entries.add(ModBlocks.BREAD_PLATE);
+
+                    // 添加仰望夜空派到物品组
+                    entries.add(ModItems.STARE_AT_CUBE_PIE);
+
+                    // 添加臭豆腐到物品组
+                    entries.add(ModItems.STINKY_TOFU);
                     
                     // 添加空杯子到物品组
                     entries.add(ModBlocks.EMPTY_CUP);

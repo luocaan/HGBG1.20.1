@@ -1,0 +1,1 @@
+{"variants": {"facing=north": {"model": "hunger-begone:block/stinky_tofu"}, "facing=south": {"model": "hunger-begone:block/stinky_tofu", "y": 180}, "facing=east": {"model": "hunger-begone:block/stinky_tofu", "y": 90}, "facing=west": {"model": "hunger-begone:block/stinky_tofu", "y": 270}}}

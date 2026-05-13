@@ -144,12 +144,18 @@ public class JukeMusicPlayer {
         }
     }
 
+    private static final int MAX_NOTES_PER_TICK = 7;
+
     private void playNotesAtTick(ServerWorld world, BlockPos pos, List<NoteData> notes) {
         double x = pos.getX() + 0.5;
         double y = pos.getY() + 0.8;
         double z = pos.getZ() + 0.5;
 
+        int played = 0;
         for (NoteData note : notes) {
+            if (played >= MAX_NOTES_PER_TICK) {
+                break;
+            }
             SoundEvent soundEvent = getSoundEventForInstrument(note.instrument);
             if (soundEvent != null) {
                 world.playSound(null, x, y, z,
@@ -159,6 +165,7 @@ public class JukeMusicPlayer {
                     note.pitch);
                 
                 world.emitGameEvent(null, GameEvent.NOTE_BLOCK_PLAY, pos);
+                played++;
             }
         }
         

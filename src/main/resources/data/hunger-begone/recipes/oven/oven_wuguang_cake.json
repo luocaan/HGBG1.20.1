@@ -1,0 +1,9 @@
+{
+  "type": "hunger-begone:oven",
+  "ingredients": [
+    {"item": "minecraft:egg"},
+    {"item": "hunger-begone:rose_jam_bottle"},
+    {"item": "minecraft:cocoa_beans"}
+  ],
+  "result": {"item": "hunger-begone:wuguang_cake", "count": 1}
+}

@@ -48,4 +48,14 @@ public class ModFoodComponents {
             .hunger(8)
             .saturationModifier(0.4375f)
             .build();
+
+    public static final FoodComponent WUGUANG_CAKE = new FoodComponent.Builder()
+            .hunger(16)
+            .saturationModifier(0.5f)
+            .build();
+
+    public static final FoodComponent WELLINGTON = new FoodComponent.Builder()
+            .hunger(10)
+            .saturationModifier(0.5f)
+            .build();
 }

@@ -34,6 +34,8 @@
   "block.hunger-begone.lemon_pickle_block": "柠檬泡菜",
   "block.hunger-begone.stare_at_cube_pie": "仰望夜空派",
   "block.hunger-begone.stinky_tofu": "臭豆腐",
+  "block.hunger-begone.wuguang_cake": "五光糕",
+  "block.hunger-begone.wellington": "惠灵顿牛排",
   "block.hunger-begone.bread_plate": "面包盘",
   "block.hunger-begone.beat": "节拍器",
   "block.hunger-begone.sea_glow_lantern": "海晶灯笼",
@@ -70,6 +72,10 @@
   "item.hunger-begone.stare_at_cube_pie.tooltip": "§7起源于16世纪的食物，穿出派皮的鱼头形成凝视效果",
   "item.hunger-begone.stinky_tofu": "臭豆腐",
   "item.hunger-begone.stinky_tofu.tooltip": "§7反直觉的黑色豆腐，闻起来有些难以接受，但并不意味着它难吃，实则恰恰相反",
+
+  "item.hunger-begone.wuguang_cake.tooltip": "§7简单的拼盘甜点，任何人都能亲自做出来",
+  "item.hunger-begone.wellington": "惠灵顿牛排",
+  "item.hunger-begone.wellington.tooltip": "§7工序繁复的菜肴，但奇怪的是将食材放进锅里面一切就处理得十分完美了",
 
   "item.hunger-begone.salt": "海盐",
   "item.hunger-begone.soy_sauce": "酱油",

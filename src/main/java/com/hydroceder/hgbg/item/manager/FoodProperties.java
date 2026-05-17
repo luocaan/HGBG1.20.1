@@ -204,4 +204,12 @@ public class FoodProperties {
     // 仰望夜空派
     public static final int STARE_AT_CUBE_PIE_HUNGER = 10;
     public static final float STARE_AT_CUBE_PIE_SATURATION = 0.425f;
+
+    // 五光糕
+    public static final int WUGUANG_CAKE_HUNGER = 16;
+    public static final float WUGUANG_CAKE_SATURATION = 0.5f;
+
+    // 惠灵顿牛排
+    public static final int WELLINGTON_HUNGER = 10;
+    public static final float WELLINGTON_SATURATION = 0.5f;
 }

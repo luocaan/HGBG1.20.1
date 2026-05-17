@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "hunger-begone:block/wellington"
+    },
+    "facing=south": {
+      "model": "hunger-begone:block/wellington",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "hunger-begone:block/wellington",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "hunger-begone:block/wellington",
+      "y": 270
+    }
+  }
+}

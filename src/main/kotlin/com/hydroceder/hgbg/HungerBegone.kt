@@ -296,16 +296,12 @@ object HungerBegone : ModInitializer {
                         0.0
                     }
                     
-                    // 转换为饥饿值（取整数部分），上限为20
-                    val foodToAdd = Math.min(maxHealth.toInt(), 20)
+                    // 转换为饥饿值（取整数部分）
+                    val foodToAdd = maxHealth.toInt()
                     
                     if (foodToAdd > 0) {
-                        val currentFood = entity.hungerManager.foodLevel
-                        val actualAdd = Math.min(foodToAdd, 20 - currentFood)
-                        if (actualAdd > 0) {
-                            entity.hungerManager.add(actualAdd, 1.0f)
-                            logger.info("Player {} gained {} hunger from killing {}", entity.name.string, actualAdd, killedEntity.type.translationKey)
-                        }
+                        entity.hungerManager.add(foodToAdd, 1.0f)
+                        logger.info("Player {} gained {} hunger from killing {}", entity.name.string, foodToAdd, killedEntity.type.translationKey)
                     }
                 }
             }

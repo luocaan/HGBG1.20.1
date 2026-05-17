@@ -359,6 +359,12 @@ public class ModItems {
     // 臭豆腐实例（在ModBlocks中作为BlockItem注册）
     public static Item STINKY_TOFU;
 
+    // 五光糕实例（在ModBlocks中作为BlockItem注册）
+    public static Item WUGUANG_CAKE;
+
+    // 惠灵顿牛排实例（在ModBlocks中作为BlockItem注册）
+    public static Item WELLINGTON;
+
     // 奥尔良烤鸡实例（在ModBlocks中作为BlockItem注册）
     public static Item ORLEANS_ROASTED_CHICKEN;
 

@@ -3,7 +3,6 @@ package com.hydroceder.hgbg.item.food;
 import com.hydroceder.hgbg.item.manager.FoodProperties;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Item;
@@ -20,18 +19,9 @@ public class LemonItem extends Item {
         super(settings.food(FoodProperties.createAlwaysEdibleFood(
             FoodProperties.LEMON_HUNGER,
             FoodProperties.LEMON_SATURATION
-        ).build()));
-    }
-
-    @Override
-    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-        ItemStack result = super.finishUsing(stack, world, user);
-
-        if (!world.isClient) {
-            user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 160, 0, false, false));
-        }
-
-        return result;
+        )
+            .statusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 160, 0), 1.0f)
+            .build()));
     }
 
     @Override

@@ -67,6 +67,9 @@ public class ModItemGroups {
 
                     // 添加臭豆腐到物品组
                     entries.add(ModItems.STINKY_TOFU);
+
+                    // 添加五光糕到物品组
+                    entries.add(ModItems.WUGUANG_CAKE);
                     
                     // 添加空杯子到物品组
                     entries.add(ModBlocks.EMPTY_CUP);
@@ -97,6 +100,9 @@ public class ModItemGroups {
                     entries.add(ModItems.COPPER_COOKIE);
                     entries.add(ModItems.IRON_COOKIE);
                     entries.add(ModItems.DIAMOND_COOKIE);
+
+                    // 添加惠灵顿牛排到物品组
+                    entries.add(ModItems.WELLINGTON);
                     
                     // 添加奶油蘑菇汤到物品组
                     entries.add(ModItems.CREAMY_MUSHROOM_SOUP);

@@ -22,7 +22,10 @@ import com.hydroceder.hgbg.item.ModFoodComponents;
 
 public class StareAtCubePieBlock extends HorizontalFacingBlock {
 
-    private static final VoxelShape SHAPE = VoxelShapes.cuboid(0.22, 0, 0.26, 0.80, 0.41, 0.89);
+    private static final VoxelShape SHAPE = VoxelShapes.cuboid(
+        3.0 / 16.0, 0.0, 3.0 / 16.0,
+        13.0 / 16.0, 5.5 / 16.0, 13.0 / 16.0
+    );
 
     public StareAtCubePieBlock(Settings settings) {
         super(settings);

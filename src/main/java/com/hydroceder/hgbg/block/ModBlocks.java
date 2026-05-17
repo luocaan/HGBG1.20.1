@@ -55,7 +55,13 @@ public class ModBlocks {
 
     public static Block STINKY_TOFU;
     public static final Identifier STINKY_TOFU_ID = new Identifier("hunger-begone", "stinky_tofu");
-    
+
+    public static Block WUGUANG_CAKE;
+    public static final Identifier WUGUANG_CAKE_ID = new Identifier("hunger-begone", "wuguang_cake");
+
+    public static Block WELLINGTON;
+    public static final Identifier WELLINGTON_ID = new Identifier("hunger-begone", "wellington");
+
     public static Block EMPTY_CUP;
     public static final Identifier EMPTY_CUP_ID = new Identifier("hunger-begone", "empty_cup");
 
@@ -223,6 +229,32 @@ public class ModBlocks {
             new FabricItemSettings().maxCount(1)
         );
         Registry.register(Registries.ITEM, new Identifier("hunger-begone", "stinky_tofu"), ModItems.STINKY_TOFU);
+
+        // 注册五光糕方块
+        WUGUANG_CAKE = new WuguangCakeBlock(FabricBlockSettings.create()
+                .strength(0.1f)
+                .sounds(net.minecraft.sound.BlockSoundGroup.WOOL)
+                .nonOpaque());
+        Registry.register(Registries.BLOCK, WUGUANG_CAKE_ID, WUGUANG_CAKE);
+
+        ModItems.WUGUANG_CAKE = new com.hydroceder.hgbg.item.food.WuguangCakeItem(
+            WUGUANG_CAKE,
+            new FabricItemSettings().maxCount(1)
+        );
+        Registry.register(Registries.ITEM, new Identifier("hunger-begone", "wuguang_cake"), ModItems.WUGUANG_CAKE);
+
+        // 注册惠灵顿牛排方块
+        WELLINGTON = new WellingtonBlock(FabricBlockSettings.create()
+                .strength(0.1f)
+                .sounds(net.minecraft.sound.BlockSoundGroup.WOOL)
+                .nonOpaque());
+        Registry.register(Registries.BLOCK, WELLINGTON_ID, WELLINGTON);
+
+        ModItems.WELLINGTON = new com.hydroceder.hgbg.item.food.WellingtonItem(
+            WELLINGTON,
+            new FabricItemSettings().maxCount(1)
+        );
+        Registry.register(Registries.ITEM, new Identifier("hunger-begone", "wellington"), ModItems.WELLINGTON);
         
         // 注册空杯子方块
         EMPTY_CUP = new EmptyCupBlock(FabricBlockSettings.create()

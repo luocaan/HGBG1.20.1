@@ -1,0 +1,32 @@
+{
+  "type": "hunger-begone:pan_cooking",
+  "inputs": [
+    {
+      "item": "minecraft:bowl",
+      "count": 1
+    },
+    {
+      "item": "minecraft:egg",
+      "count": 1
+    },
+    {
+      "item": "minecraft:beef",
+      "count": 1
+    },
+    {
+      "item": "minecraft:wheat",
+      "count": 1
+    },
+    {
+      "item": "hunger-begone:mushroom_oil_bottle",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": "hunger-begone:wellington",
+      "count": 1
+    }
+  ],
+  "cookTime": 300
+}

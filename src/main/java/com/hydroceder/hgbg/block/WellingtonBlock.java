@@ -20,14 +20,14 @@ import net.minecraft.world.World;
 import net.minecraft.item.ItemPlacementContext;
 import com.hydroceder.hgbg.item.ModFoodComponents;
 
-public class StinkyTofuBlock extends HorizontalFacingBlock {
+public class WellingtonBlock extends HorizontalFacingBlock {
 
     private static final VoxelShape SHAPE = VoxelShapes.cuboid(
         3.0 / 16.0, 0.0, 3.0 / 16.0,
         13.0 / 16.0, 5.5 / 16.0, 13.0 / 16.0
     );
 
-    public StinkyTofuBlock(Settings settings) {
+    public WellingtonBlock(Settings settings) {
         super(settings);
         setDefaultState(getStateManager().getDefaultState().with(FACING, net.minecraft.util.math.Direction.NORTH));
     }
@@ -65,8 +65,8 @@ public class StinkyTofuBlock extends HorizontalFacingBlock {
                 new ItemStack(Items.BOWL)));
 
         player.getHungerManager().add(
-            ModFoodComponents.STINKY_TOFU.getHunger(),
-            ModFoodComponents.STINKY_TOFU.getSaturationModifier()
+            ModFoodComponents.WELLINGTON.getHunger(),
+            ModFoodComponents.WELLINGTON.getSaturationModifier()
         );
 
         world.playSound(null, player.getX(), player.getY(), player.getZ(),

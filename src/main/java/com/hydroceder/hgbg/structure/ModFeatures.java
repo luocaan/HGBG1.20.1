@@ -11,6 +11,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.registry.tag.BiomeTags;
+import net.minecraft.world.biome.BiomeKeys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,17 +21,40 @@ public class ModFeatures {
     
     public static final Feature<DefaultFeatureConfig> SMALL_CAMP = new SmallCampFeature();
     
+    public static final Feature<DefaultFeatureConfig> SMALL_GARDEN = new SmallGardenFeature();
+    
     @SuppressWarnings("unchecked")
     public static final RegistryKey SMALL_CAMP_PLACED_KEY =
         RegistryKey.of(RegistryKeys.PLACED_FEATURE, new Identifier(HgbgMod.MOD_ID, "small_camp"));
     
+    @SuppressWarnings("unchecked")
+    public static final RegistryKey SMALL_GARDEN_PLACED_KEY =
+        RegistryKey.of(RegistryKeys.PLACED_FEATURE, new Identifier(HgbgMod.MOD_ID, "small_garden"));
+    
     public static void register() {
         Registry.register(Registries.FEATURE, new Identifier(HgbgMod.MOD_ID, "small_camp"), SMALL_CAMP);
+        
+        Registry.register(Registries.FEATURE, new Identifier(HgbgMod.MOD_ID, "small_garden"), SMALL_GARDEN);
         
         BiomeModifications.addFeature(
             BiomeSelectors.foundInOverworld(),
             GenerationStep.Feature.SURFACE_STRUCTURES,
             SMALL_CAMP_PLACED_KEY
+        );
+        
+        BiomeModifications.addFeature(
+            BiomeSelectors.includeByKey(
+                BiomeKeys.PLAINS,
+                BiomeKeys.SUNFLOWER_PLAINS,
+                BiomeKeys.MEADOW,
+                BiomeKeys.FOREST,
+                BiomeKeys.TAIGA,
+                BiomeKeys.FLOWER_FOREST,
+                BiomeKeys.BIRCH_FOREST,
+                BiomeKeys.OLD_GROWTH_BIRCH_FOREST
+            ),
+            GenerationStep.Feature.VEGETAL_DECORATION,
+            SMALL_GARDEN_PLACED_KEY
         );
         
         LOGGER.info("Mod features registered successfully!");

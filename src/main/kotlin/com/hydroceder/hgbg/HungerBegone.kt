@@ -120,6 +120,7 @@ object HungerBegone : ModInitializer {
         net.minecraft.advancement.criterion.Criteria.register(com.hydroceder.hgbg.advancement.BonemealOakLeavesTrigger.getInstance())
         net.minecraft.advancement.criterion.Criteria.register(com.hydroceder.hgbg.advancement.ObtainLemonTrigger.getInstance())
         net.minecraft.advancement.criterion.Criteria.register(com.hydroceder.hgbg.advancement.BonemealCrimsonTrigger.getInstance())
+        net.minecraft.advancement.criterion.Criteria.register(com.hydroceder.hgbg.advancement.PlantEggplantTrigger.getInstance())
         
         // 注册滋养附魔
         registerEnchantments()
@@ -334,39 +335,39 @@ object HungerBegone : ModInitializer {
                 }
                 
                 // 处理饱食疾行附魔的速度修饰符
-                // 检查玩家是否穿着带有饱食疾行附魔的鞋
                 val speedLevel = getSpeedEnchantmentLevel(player)
-                
+
                 // 检查玩家的饱和度是否＞0
                 val hasSaturation = player.hungerManager.saturationLevel > 0.0f
-                
+
                 // 检查玩家是否正在疾跑
                 val isSprinting = player.isSprinting
-                
+
                 // 获取速度属性
                 val speedAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)
-                
+
                 if (speedAttribute != null) {
-                    // 移除现有的修饰符
-                    speedAttribute.removeModifier(SPEED_MODIFIER_UUID)
-                    
-                    // 如果满足条件，添加速度修饰符
-                    if (speedLevel > 0 && hasSaturation && isSprinting) {
+                    val shouldApply = speedLevel > 0 && hasSaturation && isSprinting
+                    val currentlyApplied = speedAttribute.getModifier(SPEED_MODIFIER_UUID) != null
+
+                    if (shouldApply && !currentlyApplied) {
                         val speedBonus = when (speedLevel) {
-                            1 -> 0.2 // I级增加20%
-                            2 -> 0.3 // II级增加30%
-                            3 -> 0.4 // III级增加40%
+                            1 -> 0.2
+                            2 -> 0.3
+                            3 -> 0.4
                             else -> 0.0
                         }
-                        
+
                         val modifier = EntityAttributeModifier(
                             SPEED_MODIFIER_UUID,
                             "Satiated Sprint speed bonus",
                             speedBonus,
                             EntityAttributeModifier.Operation.MULTIPLY_BASE
                         )
-                        
-                        speedAttribute.addPersistentModifier(modifier)
+
+                        speedAttribute.addTemporaryModifier(modifier)
+                    } else if (!shouldApply && currentlyApplied) {
+                        speedAttribute.removeModifier(SPEED_MODIFIER_UUID)
                     }
                 }
                 

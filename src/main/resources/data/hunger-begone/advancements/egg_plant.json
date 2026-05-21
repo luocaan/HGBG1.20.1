@@ -1,0 +1,26 @@
+{
+    "parent": "hunger-begone:corruption_intensifies",
+    "display": {
+        "icon": {
+            "item": "hunger-begone:eggplant_seed"
+        },
+        "title": {
+            "translate": "advancement.hunger-begone.egg_plant.title"
+        },
+        "description": {
+            "translate": "advancement.hunger-begone.egg_plant.description"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true
+    },
+    "criteria": {
+        "plant_eggplant": {
+            "trigger": "hunger-begone:plant_eggplant_trigger"
+        }
+    },
+    "rewards": {
+        "recipes": [],
+        "experience": 15
+    }
+}

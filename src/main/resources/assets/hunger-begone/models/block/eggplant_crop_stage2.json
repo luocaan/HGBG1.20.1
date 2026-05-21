@@ -1,0 +1,6 @@
+{
+    "parent": "hunger-begone:block/crop_cross",
+    "textures": {
+        "cross": "hunger-begone:block/eggplant_3"
+    }
+}

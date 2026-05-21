@@ -1,0 +1,32 @@
+{
+    "type": "minecraft:block",
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "hunger-begone:soybean"
+                }
+            ],
+            "conditions": [
+                {
+                    "condition": "minecraft:block_state_property",
+                    "block": "hunger-begone:soybean_crop",
+                    "properties": {
+                        "age": "2"
+                    }
+                }
+            ]
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "hunger-begone:soybean_seed"
+                }
+            ]
+        }
+    ]
+}

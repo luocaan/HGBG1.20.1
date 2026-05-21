@@ -9,7 +9,8 @@
 		"SeasoningEffectMixin",
 		"PlayerHealMixin",
 		"CalmnessRemoveMixin",
-		"EndermanCoinMachineMixin"
+		"EndermanCoinMachineMixin",
+		"ThrownEggBlockHitMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

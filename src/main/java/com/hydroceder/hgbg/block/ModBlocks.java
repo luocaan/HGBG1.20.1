@@ -4,6 +4,7 @@ import com.hydroceder.hgbg.item.ModItems;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
+import net.minecraft.block.CropBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -16,6 +17,16 @@ import org.slf4j.LoggerFactory;
  */
 public class ModBlocks {
     public static final Logger LOGGER = LoggerFactory.getLogger("hunger-begone");
+    
+    private static final java.util.List<CropBlock> HGBG_CROPS = new java.util.ArrayList<>();
+    
+    public static void registerCropBlock(CropBlock crop) {
+        HGBG_CROPS.add(crop);
+    }
+    
+    public static java.util.List<CropBlock> getHgbgCrops() {
+        return java.util.Collections.unmodifiableList(HGBG_CROPS);
+    }
     
     public static Block STOVE;
     public static final Identifier STOVE_ID = new Identifier("hunger-begone", "stove");
@@ -79,6 +90,14 @@ public class ModBlocks {
 
     public static Block SEA_GLOW_LANTERN;
     public static final Identifier SEA_GLOW_LANTERN_ID = new Identifier("hunger-begone", "sea_glow_lantern");
+
+    public static Block EGGPLANT_CROP;
+    public static final Identifier EGGPLANT_CROP_ID = new Identifier("hunger-begone", "eggplant_crop");
+    public static final Identifier EGGPLANT_SEED_ID = new Identifier("hunger-begone", "eggplant_seed");
+
+    public static Block SOYBEAN_CROP;
+    public static final Identifier SOYBEAN_CROP_ID = new Identifier("hunger-begone", "soybean_crop");
+    public static final Identifier SOYBEAN_SEED_ID = new Identifier("hunger-begone", "soybean_seed");
     
     /**
      * 注册所有方块
@@ -313,7 +332,25 @@ public class ModBlocks {
 
         BlockItem coinOperatedMachineItem = new BlockItem(COIN_OPERATED_MACHINE, new FabricItemSettings());
         Registry.register(Registries.ITEM, COIN_OPERATED_MACHINE_ID, coinOperatedMachineItem);
-        
+
+        EGGPLANT_CROP = new EggplantCropBlock();
+        Registry.register(Registries.BLOCK, EGGPLANT_CROP_ID, EGGPLANT_CROP);
+        registerCropBlock((CropBlock) EGGPLANT_CROP);
+
+        ModItems.EGGPLANT_SEED = new BlockItem(EGGPLANT_CROP, new FabricItemSettings());
+        Registry.register(Registries.ITEM, EGGPLANT_SEED_ID, ModItems.EGGPLANT_SEED);
+
+        EggplantCropBlock.setSeedsItem(ModItems.EGGPLANT_SEED);
+
+        SOYBEAN_CROP = new SoybeanCropBlock();
+        Registry.register(Registries.BLOCK, SOYBEAN_CROP_ID, SOYBEAN_CROP);
+        registerCropBlock((CropBlock) SOYBEAN_CROP);
+
+        ModItems.SOYBEAN_SEED = new BlockItem(SOYBEAN_CROP, new FabricItemSettings());
+        Registry.register(Registries.ITEM, SOYBEAN_SEED_ID, ModItems.SOYBEAN_SEED);
+
+        SoybeanCropBlock.setSeedsItem(ModItems.SOYBEAN_SEED);
+
         LOGGER.info("Blocks registered successfully!");
     }
 }

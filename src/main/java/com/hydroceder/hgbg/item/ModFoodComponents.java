@@ -58,4 +58,14 @@ public class ModFoodComponents {
             .hunger(10)
             .saturationModifier(0.5f)
             .build();
+
+    public static final FoodComponent EGGPLANT = new FoodComponent.Builder()
+            .hunger(3)
+            .saturationModifier(0.6f)
+            .build();
+
+    public static final FoodComponent SOYBEAN = new FoodComponent.Builder()
+            .hunger(2)
+            .saturationModifier(0.4f)
+            .build();
 }

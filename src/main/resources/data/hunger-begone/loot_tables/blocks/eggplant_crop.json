@@ -1,0 +1,32 @@
+{
+    "type": "minecraft:block",
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "hunger-begone:eggplant"
+                }
+            ],
+            "conditions": [
+                {
+                    "condition": "minecraft:block_state_property",
+                    "block": "hunger-begone:eggplant_crop",
+                    "properties": {
+                        "age": "2"
+                    }
+                }
+            ]
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "hunger-begone:eggplant_seed"
+                }
+            ]
+        }
+    ]
+}

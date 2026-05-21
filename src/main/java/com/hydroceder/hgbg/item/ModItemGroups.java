@@ -175,6 +175,14 @@ public class ModItemGroups {
 
                     // 添加柠檬到物品组
                     entries.add(ModItems.LEMON);
+
+                    // 添加茄子作物到物品组
+                    entries.add(ModItems.EGGPLANT_SEED);
+                    entries.add(ModItems.EGGPLANT);
+
+                    // 添加大豆作物到物品组
+                    entries.add(ModItems.SOYBEAN_SEED);
+                    entries.add(ModItems.SOYBEAN);
                     
                     // 添加苔藓到物品组
                     entries.add(ModItems.MOSS);

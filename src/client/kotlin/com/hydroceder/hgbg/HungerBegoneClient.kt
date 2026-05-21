@@ -36,6 +36,10 @@ object HungerBegoneClient : ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.METRONOME, RenderLayer.getCutout())
 
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.SEA_GLOW_LANTERN, RenderLayer.getCutout())
+
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.EGGPLANT_CROP, RenderLayer.getCutout())
+
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.SOYBEAN_CROP, RenderLayer.getCutout())
         
         // 注册沙发实体模型层
         EntityModelLayerRegistry.registerModelLayer(

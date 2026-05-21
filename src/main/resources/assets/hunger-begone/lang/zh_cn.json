@@ -41,6 +41,9 @@
   "block.hunger-begone.sea_glow_lantern": "海晶灯笼",
   "block.hunger-begone.coin_operated_machine": "投币机",
 
+  "block.hunger-begone.eggplant_crop": "茄子",
+  "block.hunger-begone.soybean_crop": "大豆",
+
   "item.hunger-begone.pan": "锅",
   "item.hunger-begone.pot_charge": "锅(冲锋)",
   "item.hunger-begone.spatula": "锅铲",
@@ -49,6 +52,11 @@
   "item.hunger-begone.raw_shrimp": "生虾",
   "item.hunger-begone.cooked_shrimp": "熟的虾",
   "item.hunger-begone.lemon": "柠檬",
+  "item.hunger-begone.eggplant": "茄子",
+  "item.hunger-begone.eggplant_seed": "茄子种子",
+  "item.hunger-begone.soybean": "大豆",
+  "item.hunger-begone.soybean_seed": "大豆种子",
+  "item.hunger-begone.eggplant_advancement": "茄子进度图标",
   "item.hunger-begone.moss": "苔藓",
 
   "item.hunger-begone.bacon": "培根",
@@ -157,6 +165,8 @@
   "advancement.hunger-begone.lemon_tree.description": "催熟白桦树叶或者杜鹃丛就能得到柠檬？",
   "advancement.hunger-begone.corruption_intensifies.title": "腐化加剧",
   "advancement.hunger-begone.corruption_intensifies.description": "催熟垂泪藤试试？",
+  "advancement.hunger-begone.egg_plant.title": "鸡蛋植物",
+  "advancement.hunger-begone.egg_plant.description": "茄子？Eggplant？鸡蛋？",
   "advancement.hunger-begone.catch_shrimp.title": "嗷！扎手！",
   "advancement.hunger-begone.catch_shrimp.description": "钓上一只虾",
   "advancement.hunger-begone.eat_goodbro.title": "YOOOOOOO",

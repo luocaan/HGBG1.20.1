@@ -368,6 +368,33 @@ public class ModItems {
     // 奥尔良烤鸡实例（在ModBlocks中作为BlockItem注册）
     public static Item ORLEANS_ROASTED_CHICKEN;
 
+    // 茄子实例
+    public static final Item EGGPLANT = Registry.register(
+        Registries.ITEM,
+        id("eggplant"),
+        new Item(new FabricItemSettings().food(com.hydroceder.hgbg.item.ModFoodComponents.EGGPLANT))
+    );
+
+    // 茄子种子实例（在ModBlocks中作为BlockItem注册）
+    public static Item EGGPLANT_SEED;
+
+    // 大豆实例
+    public static final Item SOYBEAN = Registry.register(
+        Registries.ITEM,
+        id("soybean"),
+        new Item(new FabricItemSettings().food(com.hydroceder.hgbg.item.ModFoodComponents.SOYBEAN))
+    );
+
+    // 大豆种子实例（在ModBlocks中作为BlockItem注册）
+    public static Item SOYBEAN_SEED;
+
+    // 茄子进度图标物品
+    public static final Item EGGPLANT_ADVANCEMENT = Registry.register(
+        Registries.ITEM,
+        id("eggplant_advancement"),
+        new Item(new FabricItemSettings())
+    );
+
     // 柠檬鸡爪实例
     public static final Item LEMON_CHICKEN_FEET = Registry.register(
         Registries.ITEM,

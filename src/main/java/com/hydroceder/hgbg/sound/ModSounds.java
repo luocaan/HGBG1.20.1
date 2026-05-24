@@ -28,6 +28,12 @@ public class ModSounds {
     // Afternoon 唱片音效事件
     public static final SoundEvent MUSIC_DISC_AFTERNOON = SoundEvent.of(new Identifier("hunger-begone", "music_disc.afternoon"));
     
+    // 杀虫剂启动音效事件
+    public static final SoundEvent INSECTICIDE_START = SoundEvent.of(new Identifier("hunger-begone", "insecticide_start"));
+    
+    // 杀虫剂使用音效事件
+    public static final SoundEvent INSECTICIDE_USE = SoundEvent.of(new Identifier("hunger-begone", "insecticide_use"));
+    
     /**
      * 注册所有音效
      */
@@ -37,6 +43,8 @@ public class ModSounds {
         Registry.register(Registries.SOUND_EVENT, new Identifier("hunger-begone", "oven_working"), OVEN_WORKING);
         Registry.register(Registries.SOUND_EVENT, new Identifier("hunger-begone", "music_disc.the_newage"), MUSIC_DISC_THE_NEWAGE);
         Registry.register(Registries.SOUND_EVENT, new Identifier("hunger-begone", "music_disc.afternoon"), MUSIC_DISC_AFTERNOON);
+        Registry.register(Registries.SOUND_EVENT, new Identifier("hunger-begone", "insecticide_start"), INSECTICIDE_START);
+        Registry.register(Registries.SOUND_EVENT, new Identifier("hunger-begone", "insecticide_use"), INSECTICIDE_USE);
         LOGGER.info("Mod sounds registered successfully!");
     }
 }

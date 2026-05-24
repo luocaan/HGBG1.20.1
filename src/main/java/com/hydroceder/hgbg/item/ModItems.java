@@ -200,6 +200,13 @@ public class ModItems {
         new SpatulaItem(PanMaterial.INSTANCE, new FabricItemSettings())
     );
 
+    // 杀虫剂实例
+    public static final Item INSECTICIDE = Registry.register(
+        Registries.ITEM,
+        id("insecticide"),
+        new com.hydroceder.hgbg.item.tool.InsecticideItem(new FabricItemSettings().maxDamage(260))
+    );
+
     // 法棍面包实例
     public static final Item BAGUETTE = Registry.register(
         Registries.ITEM,
@@ -378,15 +385,8 @@ public class ModItems {
     // 茄子种子实例（在ModBlocks中作为BlockItem注册）
     public static Item EGGPLANT_SEED;
 
-    // 大豆实例
-    public static final Item SOYBEAN = Registry.register(
-        Registries.ITEM,
-        id("soybean"),
-        new Item(new FabricItemSettings().food(com.hydroceder.hgbg.item.ModFoodComponents.SOYBEAN))
-    );
-
-    // 大豆种子实例（在ModBlocks中作为BlockItem注册）
-    public static Item SOYBEAN_SEED;
+    // 大豆实例（在ModBlocks中作为BlockItem注册，可直接作为种子使用）
+    public static Item SOYBEAN;
 
     // 茄子进度图标物品
     public static final Item EGGPLANT_ADVANCEMENT = Registry.register(

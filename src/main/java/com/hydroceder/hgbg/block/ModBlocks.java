@@ -97,7 +97,7 @@ public class ModBlocks {
 
     public static Block SOYBEAN_CROP;
     public static final Identifier SOYBEAN_CROP_ID = new Identifier("hunger-begone", "soybean_crop");
-    public static final Identifier SOYBEAN_SEED_ID = new Identifier("hunger-begone", "soybean_seed");
+    public static final Identifier SOYBEAN_ID = new Identifier("hunger-begone", "soybean");
     
     /**
      * 注册所有方块
@@ -333,23 +333,23 @@ public class ModBlocks {
         BlockItem coinOperatedMachineItem = new BlockItem(COIN_OPERATED_MACHINE, new FabricItemSettings());
         Registry.register(Registries.ITEM, COIN_OPERATED_MACHINE_ID, coinOperatedMachineItem);
 
-        EGGPLANT_CROP = new EggplantCropBlock();
+        EGGPLANT_CROP = new EggplantCropBlock(null);
         Registry.register(Registries.BLOCK, EGGPLANT_CROP_ID, EGGPLANT_CROP);
         registerCropBlock((CropBlock) EGGPLANT_CROP);
 
         ModItems.EGGPLANT_SEED = new BlockItem(EGGPLANT_CROP, new FabricItemSettings());
         Registry.register(Registries.ITEM, EGGPLANT_SEED_ID, ModItems.EGGPLANT_SEED);
 
-        EggplantCropBlock.setSeedsItem(ModItems.EGGPLANT_SEED);
+        ((EggplantCropBlock) EGGPLANT_CROP).setSeedsItem(ModItems.EGGPLANT_SEED);
 
-        SOYBEAN_CROP = new SoybeanCropBlock();
+        SOYBEAN_CROP = new SoybeanCropBlock(null);
         Registry.register(Registries.BLOCK, SOYBEAN_CROP_ID, SOYBEAN_CROP);
         registerCropBlock((CropBlock) SOYBEAN_CROP);
 
-        ModItems.SOYBEAN_SEED = new BlockItem(SOYBEAN_CROP, new FabricItemSettings());
-        Registry.register(Registries.ITEM, SOYBEAN_SEED_ID, ModItems.SOYBEAN_SEED);
+        ModItems.SOYBEAN = new BlockItem(SOYBEAN_CROP, new FabricItemSettings().food(com.hydroceder.hgbg.item.ModFoodComponents.SOYBEAN));
+        Registry.register(Registries.ITEM, SOYBEAN_ID, ModItems.SOYBEAN);
 
-        SoybeanCropBlock.setSeedsItem(ModItems.SOYBEAN_SEED);
+        ((SoybeanCropBlock) SOYBEAN_CROP).setSeedsItem(ModItems.SOYBEAN);
 
         LOGGER.info("Blocks registered successfully!");
     }

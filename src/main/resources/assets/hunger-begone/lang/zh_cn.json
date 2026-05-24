@@ -47,6 +47,7 @@
   "item.hunger-begone.pan": "锅",
   "item.hunger-begone.pot_charge": "锅(冲锋)",
   "item.hunger-begone.spatula": "锅铲",
+  "item.hunger-begone.insecticide": "杀虫剂",
 
   "item.hunger-begone.raw_bacon": "生培根",
   "item.hunger-begone.raw_shrimp": "生虾",
@@ -55,7 +56,6 @@
   "item.hunger-begone.eggplant": "茄子",
   "item.hunger-begone.eggplant_seed": "茄子种子",
   "item.hunger-begone.soybean": "大豆",
-  "item.hunger-begone.soybean_seed": "大豆种子",
   "item.hunger-begone.eggplant_advancement": "茄子进度图标",
   "item.hunger-begone.moss": "苔藓",
 
@@ -132,6 +132,8 @@
   "subtitles.hunger-begone.hit": "锅：敲击",
   "subtitles.hunger-begone.bell": "烤箱：叮！",
   "subtitles.hunger-begone.oven_working": "烤箱：工作中",
+  "subtitles.hunger-begone.insecticide_start": "杀虫剂：启动",
+  "subtitles.hunger-begone.insecticide_use": "杀虫剂：喷洒",
 
   "advancement.hunger-begone.well_fed_journey.title": "饱腹远行",
   "advancement.hunger-begone.well_fed_journey.description": "吃饱喝足，又是一场远行",

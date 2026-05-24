@@ -22,6 +22,10 @@ public class CalmnessRemoveMixin {
         }
 
         if (effect.getEffectType() == CalmnessEffect.INSTANCE) {
+            // 如果是刷新效果导致的移除，不结算
+            if (CalmnessEffect.isRefreshing(player)) {
+                return;
+            }
             CalmnessEffect.settleCalmness(player);
         }
     }

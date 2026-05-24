@@ -12,18 +12,19 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 public class EggplantCropBlock extends CropBlock {
 
-    private static ItemConvertible seedsItem;
+    private ItemConvertible seedsItem;
 
     private static final VoxelShape SHAPE_STAGE0 = createCuboidShape(2.0, 0.0, 2.0, 14.0, 8.0, 14.0);
     private static final VoxelShape SHAPE_STAGE1 = createCuboidShape(1.0, 0.0, 1.0, 15.0, 14.0, 15.0);
     private static final VoxelShape SHAPE_STAGE2 = createCuboidShape(1.0, 0.0, 1.0, 15.0, 14.0, 15.0);
 
-    public EggplantCropBlock() {
+    public EggplantCropBlock(ItemConvertible seeds) {
         super(FabricBlockSettings.copyOf(Blocks.WHEAT));
+        this.seedsItem = seeds;
     }
 
-    public static void setSeedsItem(ItemConvertible seeds) {
-        seedsItem = seeds;
+    public void setSeedsItem(ItemConvertible seeds) {
+        this.seedsItem = seeds;
     }
 
     @Override
@@ -51,6 +52,9 @@ public class EggplantCropBlock extends CropBlock {
 
     @Override
     protected ItemConvertible getSeedsItem() {
+        if (seedsItem == null) {
+            return this;
+        }
         return seedsItem;
     }
 

@@ -48,6 +48,7 @@
   "item.hunger-begone.pot_charge": "釜(前線)",
   "item.hunger-begone.pot_charge.tooltip": "執此一釜，可破千軍",
   "item.hunger-begone.spatula": "釜铲",
+  "item.hunger-begone.insecticide": "殺蟲劑",
 
   "item.hunger-begone.raw_bacon": "生豚脍",
   "item.hunger-begone.raw_shrimp": "生虾",
@@ -56,7 +57,6 @@
   "item.hunger-begone.eggplant": "茄",
   "item.hunger-begone.eggplant_seed": "茄種",
   "item.hunger-begone.soybean": "菽",
-  "item.hunger-begone.soybean_seed": "菽種",
   "item.hunger-begone.eggplant_advancement": "茄進度圖標",
   "item.hunger-begone.moss": "苔钱",
 
@@ -134,6 +134,8 @@
   "subtitles.hunger-begone.hit": "釜：擊",
   "subtitles.hunger-begone.bell": "炙炉：叮",
   "subtitles.hunger-begone.oven_working": "炙炉：劳作",
+  "subtitles.hunger-begone.insecticide_start": "殺蟲劑：啟動",
+  "subtitles.hunger-begone.insecticide_use": "殺蟲劑：噴灑",
 
   "advancement.hunger-begone.well_fed_journey.title": "饱腹远行",
   "advancement.hunger-begone.well_fed_journey.description": "饱食啜饮，复启新程",

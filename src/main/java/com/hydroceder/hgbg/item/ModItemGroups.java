@@ -89,6 +89,9 @@ public class ModItemGroups {
                     // 添加锅铲到物品组
                     entries.add(ModItems.SPATULA);
                     
+                    // 添加杀虫剂到物品组
+                    entries.add(ModItems.INSECTICIDE);
+                    
                     // 添加法棍面包到物品组
                     entries.add(ModItems.BAGUETTE);
                     
@@ -181,7 +184,6 @@ public class ModItemGroups {
                     entries.add(ModItems.EGGPLANT);
 
                     // 添加大豆作物到物品组
-                    entries.add(ModItems.SOYBEAN_SEED);
                     entries.add(ModItems.SOYBEAN);
                     
                     // 添加苔藓到物品组

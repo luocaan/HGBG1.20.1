@@ -3,8 +3,8 @@ package com.hydroceder.hgbg.enchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 
 /**
@@ -37,13 +37,11 @@ public class SpeedEnchantment extends Enchantment {
     
     @Override
     public boolean isAcceptableItem(ItemStack stack) {
-        // 仅能附魔于鞋
-        return stack.getItem() == Items.LEATHER_BOOTS ||
-               stack.getItem() == Items.CHAINMAIL_BOOTS ||
-               stack.getItem() == Items.IRON_BOOTS ||
-               stack.getItem() == Items.GOLDEN_BOOTS ||
-               stack.getItem() == Items.DIAMOND_BOOTS ||
-               stack.getItem() == Items.NETHERITE_BOOTS;
+        if (!(stack.getItem() instanceof ArmorItem)) {
+            return false;
+        }
+        ArmorItem armor = (ArmorItem) stack.getItem();
+        return armor.getSlotType() == EquipmentSlot.FEET;
     }
 
     @Override

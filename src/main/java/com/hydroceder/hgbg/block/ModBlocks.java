@@ -98,6 +98,10 @@ public class ModBlocks {
     public static Block SOYBEAN_CROP;
     public static final Identifier SOYBEAN_CROP_ID = new Identifier("hunger-begone", "soybean_crop");
     public static final Identifier SOYBEAN_ID = new Identifier("hunger-begone", "soybean");
+
+    // 炖锅实例
+    public static Block STEW_POT;
+    public static final Identifier STEW_POT_ID = new Identifier("hunger-begone", "stew_pot");
     
     /**
      * 注册所有方块
@@ -350,6 +354,13 @@ public class ModBlocks {
         Registry.register(Registries.ITEM, SOYBEAN_ID, ModItems.SOYBEAN);
 
         ((SoybeanCropBlock) SOYBEAN_CROP).setSeedsItem(ModItems.SOYBEAN);
+
+        STEW_POT = new StewPotBlock(FabricBlockSettings.create()
+                .strength(1.0f)
+                .nonOpaque()
+                .sounds(net.minecraft.sound.BlockSoundGroup.WOOD));
+        Registry.register(Registries.BLOCK, STEW_POT_ID, STEW_POT);
+        Registry.register(Registries.ITEM, STEW_POT_ID, new BlockItem(STEW_POT, new FabricItemSettings()));
 
         LOGGER.info("Blocks registered successfully!");
     }

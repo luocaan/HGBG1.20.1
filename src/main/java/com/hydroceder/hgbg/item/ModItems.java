@@ -207,6 +207,13 @@ public class ModItems {
         new com.hydroceder.hgbg.item.tool.InsecticideItem(new FabricItemSettings().maxDamage(260))
     );
 
+    // 篮子实例
+    public static final Item BASKET = Registry.register(
+        Registries.ITEM,
+        id("basket"),
+        new com.hydroceder.hgbg.item.tool.BasketItem(new FabricItemSettings().maxCount(1))
+    );
+
     // 法棍面包实例
     public static final Item BAGUETTE = Registry.register(
         Registries.ITEM,

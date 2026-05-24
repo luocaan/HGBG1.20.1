@@ -92,6 +92,12 @@ public class ModItemGroups {
                     // 添加杀虫剂到物品组
                     entries.add(ModItems.INSECTICIDE);
                     
+                    // 添加篮子到物品组
+                    entries.add(ModItems.BASKET);
+
+                    // 添加炖锅到物品组
+                    entries.add(ModBlocks.STEW_POT);
+                    
                     // 添加法棍面包到物品组
                     entries.add(ModItems.BAGUETTE);
                     

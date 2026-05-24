@@ -7,6 +7,7 @@ import com.hydroceder.hgbg.block.entity.ShelfBlockEntity;
 import com.hydroceder.hgbg.block.entity.CupBlockEntity;
 import com.hydroceder.hgbg.block.entity.WoodenCupBlockEntity;
 import com.hydroceder.hgbg.block.entity.MetronomeBlockEntity;
+import com.hydroceder.hgbg.block.entity.StewPotBlockEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.registry.Registries;
@@ -44,6 +45,9 @@ public class ModBlockEntityTypes {
 
     public static BlockEntityType<com.hydroceder.hgbg.block.entity.CoinOperatedMachineBlockEntity> COIN_OPERATED_MACHINE_BLOCK_ENTITY;
     public static final Identifier COIN_OPERATED_MACHINE_BLOCK_ENTITY_ID = new Identifier("hunger-begone", "coin_operated_machine");
+
+    public static BlockEntityType<StewPotBlockEntity> STEW_POT_BLOCK_ENTITY;
+    public static final Identifier STEW_POT_BLOCK_ENTITY_ID = new Identifier("hunger-begone", "stew_pot");
     
     /**
      * 注册所有方块实体类型
@@ -96,7 +100,13 @@ public class ModBlockEntityTypes {
             COIN_OPERATED_MACHINE_BLOCK_ENTITY_ID,
             FabricBlockEntityTypeBuilder.create(com.hydroceder.hgbg.block.entity.CoinOperatedMachineBlockEntity::new, ModBlocks.COIN_OPERATED_MACHINE).build()
         );
-        
+
+        STEW_POT_BLOCK_ENTITY = Registry.register(
+            Registries.BLOCK_ENTITY_TYPE,
+            STEW_POT_BLOCK_ENTITY_ID,
+            FabricBlockEntityTypeBuilder.create(StewPotBlockEntity::new, ModBlocks.STEW_POT).build()
+        );
+
         LOGGER.info("Block entity types registered successfully!");
     }
 }

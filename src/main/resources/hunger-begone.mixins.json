@@ -10,7 +10,8 @@
 		"PlayerHealMixin",
 		"CalmnessRemoveMixin",
 		"EndermanCoinMachineMixin",
-		"ThrownEggBlockHitMixin"
+		"ThrownEggBlockHitMixin",
+		"InsecticideEnchantmentMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

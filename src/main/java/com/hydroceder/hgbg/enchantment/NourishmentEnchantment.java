@@ -55,6 +55,16 @@ public class NourishmentEnchantment extends Enchantment {
         return 2;
     }
 
+    @Override
+    public int getMinPower(int level) {
+        return 5 + (level - 1) * 10;
+    }
+
+    @Override
+    public int getMaxPower(int level) {
+        return this.getMinPower(level) + 25;
+    }
+
     /**
      * 检查是否为宝藏附魔
      * @return 总是返回false，不是宝藏附魔

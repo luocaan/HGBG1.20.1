@@ -6,6 +6,8 @@ import com.hydroceder.hgbg.enchantment.SpeedEnchantment
 import com.hydroceder.hgbg.enchantment.WarmthEnchantment
 import com.hydroceder.hgbg.enchantment.EnthusiasmEnchantment
 import com.hydroceder.hgbg.enchantment.FieldHarvesterEnchantment
+import com.hydroceder.hgbg.enchantment.EnhancedInsecticideEnchantment
+import com.hydroceder.hgbg.enchantment.NozzleImprovementEnchantment
 import com.hydroceder.hgbg.seasoning.SeasoningRegistry
 import com.hydroceder.hgbg.seasoning.SimpleSeasoning
 import com.hydroceder.hgbg.effect.ModEffects
@@ -21,12 +23,14 @@ import com.hydroceder.hgbg.item.ModItems
 import com.hydroceder.hgbg.item.material.HomelandDirtItem
 import com.hydroceder.hgbg.command.HgbgCommand
 import com.hydroceder.hgbg.structure.ModFeatures
+import net.minecraft.block.Blocks
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
+import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents
 import net.minecraft.entity.damage.DamageTypes
@@ -191,6 +195,17 @@ object HungerBegone : ModInitializer {
         FieldHarvesterEnchantment.INSTANCE = FieldHarvesterEnchantment()
         Registry.register(Registries.ENCHANTMENT, FieldHarvesterEnchantment.ID, FieldHarvesterEnchantment.INSTANCE)
         logger.info("Field Harvester enchantment registered successfully!")
+        
+        EnhancedInsecticideEnchantment.INSTANCE = EnhancedInsecticideEnchantment()
+        Registry.register(Registries.ENCHANTMENT, EnhancedInsecticideEnchantment.ID, EnhancedInsecticideEnchantment.INSTANCE)
+        logger.info("Enhanced Insecticide enchantment registered successfully!")
+
+        FlammableBlockRegistry.getDefaultInstance().add(Blocks.COBWEB, 100, 60)
+        logger.info("Cobweb registered as flammable block!")
+
+        NozzleImprovementEnchantment.INSTANCE = NozzleImprovementEnchantment()
+        Registry.register(Registries.ENCHANTMENT, NozzleImprovementEnchantment.ID, NozzleImprovementEnchantment.INSTANCE)
+        logger.info("Nozzle Improvement enchantment registered successfully!")
     }
     
     private fun registerEvents() {

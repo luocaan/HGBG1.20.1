@@ -3,6 +3,7 @@ package com.hydroceder.hgbg.recipe;
 import com.hydroceder.hgbg.recipe.oven.OvenRecipe;
 import com.hydroceder.hgbg.recipe.mortar.MortarAndPestleRecipe;
 import com.hydroceder.hgbg.recipe.pan_cooking.PanCookingRecipe;
+import com.hydroceder.hgbg.recipe.stew_pot_cooking.StewPotCookingRecipe;
 import net.minecraft.recipe.book.CookingRecipeCategory;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
@@ -47,6 +48,17 @@ public class ModRecipeTypes {
     
     public static final CookingRecipeCategory PAN_COOKING_CATEGORY = CookingRecipeCategory.MISC;
     
+    public static final RecipeType<StewPotCookingRecipe> STEW_POT_COOKING_RECIPE_TYPE = new RecipeType<StewPotCookingRecipe>() {
+        @Override
+        public String toString() {
+            return "hunger-begone:stew_pot_cooking";
+        }
+    };
+    
+    public static final RecipeSerializer<StewPotCookingRecipe> STEW_POT_COOKING_SERIALIZER = new StewPotCookingRecipe.Serializer();
+    
+    public static final CookingRecipeCategory STEW_POT_CATEGORY = CookingRecipeCategory.MISC;
+    
     /**
      * 注册所有配方类型
      */
@@ -59,5 +71,8 @@ public class ModRecipeTypes {
         
         Registry.register(Registries.RECIPE_TYPE, new Identifier("hunger-begone", "pan_cooking"), PAN_COOKING_RECIPE_TYPE);
         Registry.register(Registries.RECIPE_SERIALIZER, new Identifier("hunger-begone", "pan_cooking"), PAN_COOKING_SERIALIZER);
+        
+        Registry.register(Registries.RECIPE_TYPE, new Identifier("hunger-begone", "stew_pot_cooking"), STEW_POT_COOKING_RECIPE_TYPE);
+        Registry.register(Registries.RECIPE_SERIALIZER, new Identifier("hunger-begone", "stew_pot_cooking"), STEW_POT_COOKING_SERIALIZER);
     }
 }

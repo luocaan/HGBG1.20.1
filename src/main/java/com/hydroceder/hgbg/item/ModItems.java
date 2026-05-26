@@ -214,6 +214,13 @@ public class ModItems {
         new com.hydroceder.hgbg.item.tool.BasketItem(new FabricItemSettings().maxCount(1))
     );
 
+    // 锅盖实例
+    public static final Item POT_LID = Registry.register(
+        Registries.ITEM,
+        id("pot_lid"),
+        new com.hydroceder.hgbg.item.tool.PotLidItem(new FabricItemSettings().maxCount(1))
+    );
+
     // 法棍面包实例
     public static final Item BAGUETTE = Registry.register(
         Registries.ITEM,

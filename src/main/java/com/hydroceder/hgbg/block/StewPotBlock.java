@@ -1,25 +1,22 @@
 package com.hydroceder.hgbg.block;
 
 import com.hydroceder.hgbg.block.entity.StewPotBlockEntity;
-import com.hydroceder.hgbg.item.ModItems;
-import com.hydroceder.hgbg.item.tool.BasketItem;
+import com.hydroceder.hgbg.item.tool.PotLidItem;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ShovelItem;
+import net.minecraft.item.Items;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -37,13 +34,30 @@ import org.jetbrains.annotations.Nullable;
 public class StewPotBlock extends BlockWithEntity {
 
     public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
-    public static final BooleanProperty HAS_CONTENTS = BooleanProperty.of("has_contents");
+    public static final EnumProperty<StewState> STEW_STATE = EnumProperty.of("stew_state", StewState.class);
     public static final EnumProperty<PotType> POT_TYPE = EnumProperty.of("pot_type", PotType.class);
 
     private static final VoxelShape SHAPE = VoxelShapes.cuboid(
         2.0 / 16.0, 0.0, 2.0 / 16.0,
         14.0 / 16.0, 9.0 / 16.0, 14.0 / 16.0
     );
+
+    public enum StewState implements StringIdentifiable {
+        EMPTY("empty"),
+        HAS_WATER("has_water"),
+        COOKING("cooking");
+
+        private final String name;
+
+        StewState(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String asString() {
+            return name;
+        }
+    }
 
     public enum PotType implements StringIdentifiable {
         ONGROUND("onground"),
@@ -65,7 +79,7 @@ public class StewPotBlock extends BlockWithEntity {
         super(settings);
         setDefaultState(getStateManager().getDefaultState()
             .with(FACING, Direction.NORTH)
-            .with(HAS_CONTENTS, false)
+            .with(STEW_STATE, StewState.EMPTY)
             .with(POT_TYPE, PotType.ONGROUND));
     }
 
@@ -76,7 +90,7 @@ public class StewPotBlock extends BlockWithEntity {
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(FACING, HAS_CONTENTS, POT_TYPE);
+        builder.add(FACING, STEW_STATE, POT_TYPE);
     }
 
     @Nullable
@@ -93,8 +107,10 @@ public class StewPotBlock extends BlockWithEntity {
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
         if (placer != null) {
-            world.setBlockState(pos, state.with(FACING, placer.getHorizontalFacing().getOpposite())
-                .with(POT_TYPE, detectPotType(world, pos)), 3);
+            world.setBlockState(pos, state
+                .with(FACING, placer.getHorizontalFacing().getOpposite())
+                .with(POT_TYPE, detectPotType(world, pos))
+                .with(STEW_STATE, StewState.EMPTY), 3);
         }
     }
 
@@ -149,37 +165,64 @@ public class StewPotBlock extends BlockWithEntity {
 
         StewPotBlockEntity potBE = (StewPotBlockEntity) blockEntity;
         ItemStack heldStack = player.getStackInHand(hand);
+        StewState currentState = state.get(STEW_STATE);
 
-        if (!heldStack.isEmpty() && heldStack.getItem() instanceof BasketItem) {
-            if (potBE.isCooking()) {
-                return ActionResult.SUCCESS;
+        // 1. 水桶 → EMPTY 状态加水
+        if (!heldStack.isEmpty() && heldStack.isOf(Items.WATER_BUCKET) && currentState == StewState.EMPTY) {
+            if (!player.isCreative()) {
+                heldStack.decrement(1);
+                player.giveItemStack(new ItemStack(Items.BUCKET));
             }
-            potBE.addBasket(heldStack);
-            heldStack.decrement(1);
-            world.playSound(null, pos, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_ON,
-                SoundCategory.BLOCKS, 0.8f, 1.0f);
+            world.setBlockState(pos, state.with(STEW_STATE, StewState.HAS_WATER), 3);
+            world.playSound(null, pos, SoundEvents.ITEM_BUCKET_EMPTY,
+                SoundCategory.BLOCKS, 1.0f, 1.0f);
+            for (int i = 0; i < 10; i++) {
+                double dx = world.random.nextGaussian() * 0.1;
+                double dy = world.random.nextDouble() * 0.2 + 0.1;
+                double dz = world.random.nextGaussian() * 0.1;
+                world.addParticle(ParticleTypes.SPLASH,
+                    pos.getX() + 0.5 + dx, pos.getY() + 0.7, pos.getZ() + 0.5 + dz,
+                    0.0, 0.0, 0.0);
+            }
             return ActionResult.SUCCESS;
         }
 
-        if (!heldStack.isEmpty() && heldStack.getItem() instanceof ShovelItem) {
-            if (potBE.isCooking() || !potBE.hasBaskets()) {
-                return ActionResult.SUCCESS;
-            }
+        // 2. 放入材料 → HAS_WATER 状态（非水桶非锅盖）
+        if (!heldStack.isEmpty()
+            && !heldStack.isOf(Items.WATER_BUCKET)
+            && !(heldStack.getItem() instanceof PotLidItem)
+            && currentState == StewState.HAS_WATER) {
+            ItemStack singleItem = heldStack.copy();
+            singleItem.setCount(1);
+            potBE.addMaterial(singleItem);
+            heldStack.decrement(1);
+            world.playSound(null, pos, SoundEvents.BLOCK_WATER_AMBIENT,
+                SoundCategory.BLOCKS, 0.5f, 1.0f);
+            return ActionResult.SUCCESS;
+        }
+
+        // 3. 锅盖 → HAS_WATER 状态开始烹饪
+        if (!heldStack.isEmpty() && heldStack.getItem() instanceof PotLidItem && currentState == StewState.HAS_WATER) {
+            potBE.addLid();
+            heldStack.decrement(1);
+            world.setBlockState(pos, state.with(STEW_STATE, StewState.COOKING), 3);
             potBE.startCooking(player.getUuid());
             world.playSound(null, pos, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE,
                 SoundCategory.BLOCKS, 1.0f, 1.0f);
             return ActionResult.SUCCESS;
         }
 
-        if (heldStack.isEmpty() && !potBE.isCooking()) {
-            if (potBE.hasBaskets()) {
-                potBE.dropItems();
-                potBE.clearBaskets();
-                world.playSound(null, pos, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC,
-                    SoundCategory.BLOCKS, 1.0f, 1.0f);
-            } else {
-                player.sendMessage(Text.translatable("stewpot.no_basket"), true);
-            }
+        // 4. 空手 + EMPTY + 有材料 → 取出所有
+        if (heldStack.isEmpty() && currentState == StewState.EMPTY && potBE.hasMaterialsOrLid()) {
+            potBE.dropItems();
+            potBE.clearMaterials();
+            world.playSound(null, pos, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC,
+                SoundCategory.BLOCKS, 1.0f, 1.0f);
+            return ActionResult.SUCCESS;
+        }
+
+        // 5. 烹饪中 → 不可操作
+        if (currentState == StewState.COOKING) {
             return ActionResult.SUCCESS;
         }
 

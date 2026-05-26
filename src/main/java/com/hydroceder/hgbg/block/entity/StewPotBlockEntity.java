@@ -2,11 +2,13 @@ package com.hydroceder.hgbg.block.entity;
 
 import com.hydroceder.hgbg.block.ModBlockEntityTypes;
 import com.hydroceder.hgbg.block.StewPotBlock;
-import com.hydroceder.hgbg.item.tool.BasketItem;
-import com.hydroceder.hgbg.recipe.pan_cooking.PanCookingRecipeManager;
+import com.hydroceder.hgbg.item.ModItems;
+import com.hydroceder.hgbg.item.tool.PotLidItem;
+import com.hydroceder.hgbg.recipe.stew_pot_cooking.StewPotCookingRecipe;
+import com.hydroceder.hgbg.recipe.stew_pot_cooking.StewPotRecipeManager;
+import com.hydroceder.hgbg.util.SeasoningNBT;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -25,81 +27,105 @@ import java.util.UUID;
 
 public class StewPotBlockEntity extends BlockEntity {
 
-    private NbtList baskets = new NbtList();
+    private NbtList materials = new NbtList();
+    private boolean hasLid = false;
     private boolean isCooking = false;
     private int cookTime = 0;
-    private static final int TOTAL_COOK_TIME = 200;
+    private int totalCookTime = 0;
+    private StewPotCookingRecipe matchedRecipe = null;
     private UUID cookingPlayerUuid = null;
 
     public StewPotBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntityTypes.STEW_POT_BLOCK_ENTITY, pos, state);
     }
 
-    public void addBasket(ItemStack basketStack) {
-        if (basketStack.isEmpty() || !(basketStack.getItem() instanceof BasketItem)) {
-            return;
-        }
-        NbtCompound basketNbt = basketStack.getNbt();
-        if (basketNbt != null && basketNbt.contains(BasketItem.getStoredKey())) {
-            baskets.add(0, basketNbt.copy());
-        } else {
-            NbtCompound emptyBasket = new NbtCompound();
-            baskets.add(0, emptyBasket);
-        }
+    public void addMaterial(ItemStack stack) {
+        if (stack.isEmpty()) return;
+        NbtCompound itemNbt = new NbtCompound();
+        stack.writeNbt(itemNbt);
+        materials.add(itemNbt);
         markDirty();
-        updateContentsState();
     }
 
-    public int getBasketCount() {
-        return baskets.size();
-    }
-
-    public boolean hasBaskets() {
-        return !baskets.isEmpty();
-    }
-
-    public void clearBaskets() {
-        baskets.clear();
+    public void addLid() {
+        hasLid = true;
         markDirty();
-        updateContentsState();
+    }
+
+    public boolean hasLid() {
+        return hasLid;
     }
 
     public boolean isCooking() {
         return isCooking;
     }
 
+    public void clearMaterials() {
+        materials.clear();
+        hasLid = false;
+        markDirty();
+    }
+
+    public boolean hasMaterialsOrLid() {
+        return !materials.isEmpty() || hasLid;
+    }
+
     public void startCooking(UUID playerUuid) {
         this.isCooking = true;
         this.cookTime = 0;
         this.cookingPlayerUuid = playerUuid;
+        matchAndSetRecipe();
         markDirty();
+    }
+
+    private void matchAndSetRecipe() {
+        List<ItemStack> rawMaterials = new ArrayList<>();
+        for (int i = 0; i < materials.size(); i++) {
+            ItemStack item = ItemStack.fromNbt(materials.getCompound(i));
+            if (!item.isEmpty()) {
+                rawMaterials.add(item);
+            }
+        }
+
+        if (rawMaterials.isEmpty()) {
+            this.totalCookTime = 1;
+            this.matchedRecipe = null;
+            return;
+        }
+
+        StewPotRecipeManager.MatchResult matchResult =
+            StewPotRecipeManager.findRecipe(rawMaterials).orElse(null);
+
+        if (matchResult != null && matchResult.recipe != null) {
+            this.totalCookTime = matchResult.recipe.getCookTime();
+            this.matchedRecipe = matchResult.recipe;
+        } else {
+            this.totalCookTime = 200;
+            this.matchedRecipe = null;
+        }
     }
 
     public void stopCooking() {
         this.isCooking = false;
         this.cookTime = 0;
+        this.totalCookTime = 0;
+        this.matchedRecipe = null;
         this.cookingPlayerUuid = null;
         markDirty();
     }
 
     public void dropItems() {
-        if (world != null && !world.isClient && !baskets.isEmpty()) {
-            for (int i = 0; i < baskets.size(); i++) {
-                ItemStack basketStack = new ItemStack(com.hydroceder.hgbg.item.ModItems.BASKET);
-                NbtCompound basketData = baskets.getCompound(i);
-                if (!basketData.isEmpty()) {
-                    basketStack.setNbt(basketData);
-                }
-                ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), basketStack);
-            }
-        }
-    }
-
-    private void updateContentsState() {
         if (world != null && !world.isClient) {
-            BlockState state = getCachedState();
-            boolean hasContents = !baskets.isEmpty();
-            world.setBlockState(pos, state.with(StewPotBlock.HAS_CONTENTS, hasContents), 3);
+            for (int i = 0; i < materials.size(); i++) {
+                ItemStack item = ItemStack.fromNbt(materials.getCompound(i));
+                if (!item.isEmpty()) {
+                    ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), item);
+                }
+            }
+            if (hasLid) {
+                ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(),
+                    new ItemStack(ModItems.POT_LID));
+            }
         }
     }
 
@@ -114,7 +140,8 @@ public class StewPotBlockEntity extends BlockEntity {
                     SoundCategory.BLOCKS, 1.2f, 1.0f);
             }
 
-            int remainingSeconds = (TOTAL_COOK_TIME - be.cookTime + 19) / 20;
+            int remainingTicks = be.totalCookTime - be.cookTime;
+            int remainingSeconds = Math.max(0, (remainingTicks + 19) / 20);
             if (be.cookingPlayerUuid != null) {
                 PlayerEntity cookingPlayer = world.getPlayerByUuid(be.cookingPlayerUuid);
                 if (cookingPlayer != null) {
@@ -123,7 +150,7 @@ public class StewPotBlockEntity extends BlockEntity {
                 }
             }
 
-            if (be.cookTime >= TOTAL_COOK_TIME) {
+            if (be.cookTime >= be.totalCookTime) {
                 finishCooking(world, pos, state, be);
                 be.stopCooking();
             }
@@ -132,76 +159,75 @@ public class StewPotBlockEntity extends BlockEntity {
     }
 
     private static void finishCooking(World world, BlockPos pos, BlockState state, StewPotBlockEntity be) {
-        List<ItemStack> outputs = new ArrayList<>();
-        List<ItemStack> emptyBaskets = new ArrayList<>();
-
-        for (int i = 0; i < be.baskets.size(); i++) {
-            NbtCompound basketData = be.baskets.getCompound(i);
-
-            emptyBaskets.add(new ItemStack(com.hydroceder.hgbg.item.ModItems.BASKET));
-
-            if (basketData.isEmpty()) {
-                outputs.add(new ItemStack(Items.CHARCOAL));
-                continue;
+        List<ItemStack> rawMaterials = new ArrayList<>();
+        for (int i = 0; i < be.materials.size(); i++) {
+            ItemStack item = ItemStack.fromNbt(be.materials.getCompound(i));
+            if (!item.isEmpty() && !(item.getItem() instanceof PotLidItem)) {
+                rawMaterials.add(item);
             }
+        }
 
-            List<ItemStack> materials = extractMaterialsFromBasket(basketData);
-            if (materials.isEmpty()) {
-                outputs.add(new ItemStack(Items.CHARCOAL));
-                continue;
+        if (rawMaterials.isEmpty()) {
+            if (be.hasLid) {
+                ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(),
+                    new ItemStack(ModItems.POT_LID));
             }
+            be.materials.clear();
+            be.hasLid = false;
+            be.matchedRecipe = null;
+            world.setBlockState(pos, state.with(StewPotBlock.STEW_STATE, StewPotBlock.StewState.EMPTY), 3);
+            world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH,
+                SoundCategory.BLOCKS, 1.0f, 1.0f);
+            be.markDirty();
+            return;
+        }
 
-            PanCookingRecipeManager.MatchResult matchResult =
-                PanCookingRecipeManager.findRecipe(materials).orElse(null);
+        StewPotRecipeManager.MatchResult matchResult = null;
+        if (be.matchedRecipe != null) {
+            SeasoningNBT.SeparationResult sep = SeasoningNBT.separateSeasonings(rawMaterials);
+            matchResult = new StewPotRecipeManager.MatchResult(be.matchedRecipe, 1, sep.seasoningIds);
+        } else {
+            matchResult = StewPotRecipeManager.findRecipe(rawMaterials).orElse(null);
+        }
 
-            if (matchResult != null && matchResult.recipe != null) {
-                outputs.addAll(matchResult.recipe.getOutputs(matchResult.scaleFactor));
-                if (!matchResult.seasoningIds.isEmpty()) {
-                    for (ItemStack output : outputs) {
-                        com.hydroceder.hgbg.util.SeasoningNBT
-                            .addSeasonings(output, matchResult.seasoningIds);
-                    }
+        if (matchResult != null && matchResult.recipe != null) {
+            List<ItemStack> outputs = matchResult.recipe.getOutputs(matchResult.scaleFactor);
+            if (!matchResult.seasoningIds.isEmpty()) {
+                for (ItemStack output : outputs) {
+                    SeasoningNBT.addSeasonings(output, matchResult.seasoningIds);
                 }
-            } else {
-                outputs.add(new ItemStack(Items.CHARCOAL));
             }
+            for (ItemStack output : outputs) {
+                ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(),
+                    output.copy());
+            }
+        } else {
+            ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(),
+                new ItemStack(Items.SUSPICIOUS_STEW));
         }
 
-        for (ItemStack output : outputs) {
-            ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), output.copy());
-        }
-        for (ItemStack emptyBasket : emptyBaskets) {
-            ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), emptyBasket);
+        if (be.hasLid) {
+            ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(),
+                new ItemStack(ModItems.POT_LID));
         }
 
-        be.baskets.clear();
-        world.setBlockState(pos, state.with(StewPotBlock.HAS_CONTENTS, false), 3);
+        be.materials.clear();
+        be.hasLid = false;
+        be.matchedRecipe = null;
+        world.setBlockState(pos, state.with(StewPotBlock.STEW_STATE, StewPotBlock.StewState.EMPTY), 3);
         world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH,
             SoundCategory.BLOCKS, 1.0f, 1.0f);
         be.markDirty();
     }
 
-    private static List<ItemStack> extractMaterialsFromBasket(NbtCompound basketData) {
-        List<ItemStack> materials = new ArrayList<>();
-        if (!basketData.contains(BasketItem.getStoredKey())) {
-            return materials;
-        }
-        NbtList storedList = basketData.getList(BasketItem.getStoredKey(), 10);
-        for (int i = 0; i < storedList.size(); i++) {
-            ItemStack item = ItemStack.fromNbt(storedList.getCompound(i));
-            if (!item.isEmpty()) {
-                materials.add(item);
-            }
-        }
-        return materials;
-    }
-
     @Override
-    protected void writeNbt(NbtCompound nbt) {
+    public void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
-        nbt.put("Baskets", baskets);
+        nbt.put("Materials", materials);
+        nbt.putBoolean("HasLid", hasLid);
         nbt.putBoolean("IsCooking", isCooking);
         nbt.putInt("CookTime", cookTime);
+        nbt.putInt("TotalCookTime", totalCookTime);
         if (cookingPlayerUuid != null) {
             nbt.putUuid("CookingPlayerUuid", cookingPlayerUuid);
         }
@@ -210,13 +236,15 @@ public class StewPotBlockEntity extends BlockEntity {
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
-        if (nbt.contains("Baskets")) {
-            baskets = nbt.getList("Baskets", 10);
+        if (nbt.contains("Materials")) {
+            materials = nbt.getList("Materials", 10);
         } else {
-            baskets = new NbtList();
+            materials = new NbtList();
         }
+        hasLid = nbt.getBoolean("HasLid");
         isCooking = nbt.getBoolean("IsCooking");
         cookTime = nbt.getInt("CookTime");
+        totalCookTime = nbt.getInt("TotalCookTime");
         if (nbt.contains("CookingPlayerUuid")) {
             cookingPlayerUuid = nbt.getUuid("CookingPlayerUuid");
         }

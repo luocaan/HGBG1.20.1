@@ -58,7 +58,7 @@
   "item.hunger-begone.stew_pot": "炖锅",
   "block.hunger-begone.stew_pot": "炖锅",
   "stewpot.cooking": "烹饪中... 剩余 %d 秒",
-  "stewpot.no_basket": "炖锅中没有篮子",
+  "item.hunger-begone.pot_lid": "锅盖",
 
   "item.hunger-begone.raw_bacon": "生培根",
   "item.hunger-begone.raw_shrimp": "生虾",

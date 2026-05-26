@@ -57,7 +57,7 @@
   "item.hunger-begone.stew_pot": "Stew Pot",
   "block.hunger-begone.stew_pot": "Stew Pot",
   "stewpot.cooking": "Cooking... %d seconds remaining",
-  "stewpot.no_basket": "No baskets in the pot",
+  "item.hunger-begone.pot_lid": "Pot Lid",
   "item.hunger-begone.baguette": "Baguette",
   "item.hunger-begone.baguette.too_hard": "Too hard! Oh! My teeth!",
   "item.hunger-begone.raw_shrimp": "Raw Shrimp",

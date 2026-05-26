@@ -1,0 +1,24 @@
+{
+  "type": "hunger-begone:stew_pot_cooking",
+  "inputs": [
+    {
+      "item": "minecraft:potato",
+      "count": 1
+    },
+    {
+      "item": "hunger-begone:mushroom_oil_bottle",
+      "count": 1
+    },
+    {
+      "item": "minecraft:paper",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": "hunger-begone:chips",
+      "count": 2
+    }
+  ],
+  "cookTime": 300
+}

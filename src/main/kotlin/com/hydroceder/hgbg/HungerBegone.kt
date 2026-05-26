@@ -698,11 +698,15 @@ object HungerBegone : ModInitializer {
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register { player, joined ->
             PanCookingRecipeManager.loadRecipesFromServer(player.server)
             logger.info("Pan cooking recipes loaded: {}", PanCookingRecipeManager.getAllRecipes().size)
+            com.hydroceder.hgbg.recipe.stew_pot_cooking.StewPotRecipeManager.loadRecipesFromServer(player.server)
+            logger.info("Stew pot cooking recipes loaded: {}", com.hydroceder.hgbg.recipe.stew_pot_cooking.StewPotRecipeManager.getAllRecipes().size)
         }
         
         ServerLifecycleEvents.SERVER_STARTED.register { server ->
             PanCookingRecipeManager.loadRecipesFromServer(server)
             logger.info("Pan cooking recipes loaded: {}", PanCookingRecipeManager.getAllRecipes().size)
+            com.hydroceder.hgbg.recipe.stew_pot_cooking.StewPotRecipeManager.loadRecipesFromServer(server)
+            logger.info("Stew pot cooking recipes loaded: {}", com.hydroceder.hgbg.recipe.stew_pot_cooking.StewPotRecipeManager.getAllRecipes().size)
         }
     }
     

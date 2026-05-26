@@ -1,62 +1,92 @@
 {
     "variants": {
-        "facing=north,has_contents=false,pot_type=onground": {
+        "facing=north,stew_state=empty,pot_type=onground": {
             "model": "hunger-begone:block/cookblock_stew_pot_onground"
         },
-        "facing=north,has_contents=true,pot_type=onground": {
+        "facing=north,stew_state=has_water,pot_type=onground": {
+            "model": "hunger-begone:block/cookblock_stew_pot_onground_haswater"
+        },
+        "facing=north,stew_state=cooking,pot_type=onground": {
             "model": "hunger-begone:block/cookblock_stew_pot_onground_hashat"
         },
-        "facing=south,has_contents=false,pot_type=onground": {
+        "facing=south,stew_state=empty,pot_type=onground": {
             "model": "hunger-begone:block/cookblock_stew_pot_onground",
             "y": 180
         },
-        "facing=south,has_contents=true,pot_type=onground": {
+        "facing=south,stew_state=has_water,pot_type=onground": {
+            "model": "hunger-begone:block/cookblock_stew_pot_onground_haswater",
+            "y": 180
+        },
+        "facing=south,stew_state=cooking,pot_type=onground": {
             "model": "hunger-begone:block/cookblock_stew_pot_onground_hashat",
             "y": 180
         },
-        "facing=east,has_contents=false,pot_type=onground": {
+        "facing=east,stew_state=empty,pot_type=onground": {
             "model": "hunger-begone:block/cookblock_stew_pot_onground",
             "y": 90
         },
-        "facing=east,has_contents=true,pot_type=onground": {
+        "facing=east,stew_state=has_water,pot_type=onground": {
+            "model": "hunger-begone:block/cookblock_stew_pot_onground_haswater",
+            "y": 90
+        },
+        "facing=east,stew_state=cooking,pot_type=onground": {
             "model": "hunger-begone:block/cookblock_stew_pot_onground_hashat",
             "y": 90
         },
-        "facing=west,has_contents=false,pot_type=onground": {
+        "facing=west,stew_state=empty,pot_type=onground": {
             "model": "hunger-begone:block/cookblock_stew_pot_onground",
             "y": 270
         },
-        "facing=west,has_contents=true,pot_type=onground": {
+        "facing=west,stew_state=has_water,pot_type=onground": {
+            "model": "hunger-begone:block/cookblock_stew_pot_onground_haswater",
+            "y": 270
+        },
+        "facing=west,stew_state=cooking,pot_type=onground": {
             "model": "hunger-begone:block/cookblock_stew_pot_onground_hashat",
             "y": 270
         },
-        "facing=north,has_contents=false,pot_type=onrod": {
+        "facing=north,stew_state=empty,pot_type=onrod": {
             "model": "hunger-begone:block/cookblock_stew_pot_onrod"
         },
-        "facing=north,has_contents=true,pot_type=onrod": {
+        "facing=north,stew_state=has_water,pot_type=onrod": {
+            "model": "hunger-begone:block/cookblock_stew_pot_onrod_haswater"
+        },
+        "facing=north,stew_state=cooking,pot_type=onrod": {
             "model": "hunger-begone:block/cookblock_stew_pot_onrod_hashat"
         },
-        "facing=south,has_contents=false,pot_type=onrod": {
+        "facing=south,stew_state=empty,pot_type=onrod": {
             "model": "hunger-begone:block/cookblock_stew_pot_onrod",
             "y": 180
         },
-        "facing=south,has_contents=true,pot_type=onrod": {
+        "facing=south,stew_state=has_water,pot_type=onrod": {
+            "model": "hunger-begone:block/cookblock_stew_pot_onrod_haswater",
+            "y": 180
+        },
+        "facing=south,stew_state=cooking,pot_type=onrod": {
             "model": "hunger-begone:block/cookblock_stew_pot_onrod_hashat",
             "y": 180
         },
-        "facing=east,has_contents=false,pot_type=onrod": {
+        "facing=east,stew_state=empty,pot_type=onrod": {
             "model": "hunger-begone:block/cookblock_stew_pot_onrod",
             "y": 90
         },
-        "facing=east,has_contents=true,pot_type=onrod": {
+        "facing=east,stew_state=has_water,pot_type=onrod": {
+            "model": "hunger-begone:block/cookblock_stew_pot_onrod_haswater",
+            "y": 90
+        },
+        "facing=east,stew_state=cooking,pot_type=onrod": {
             "model": "hunger-begone:block/cookblock_stew_pot_onrod_hashat",
             "y": 90
         },
-        "facing=west,has_contents=false,pot_type=onrod": {
+        "facing=west,stew_state=empty,pot_type=onrod": {
             "model": "hunger-begone:block/cookblock_stew_pot_onrod",
             "y": 270
         },
-        "facing=west,has_contents=true,pot_type=onrod": {
+        "facing=west,stew_state=has_water,pot_type=onrod": {
+            "model": "hunger-begone:block/cookblock_stew_pot_onrod_haswater",
+            "y": 270
+        },
+        "facing=west,stew_state=cooking,pot_type=onrod": {
             "model": "hunger-begone:block/cookblock_stew_pot_onrod_hashat",
             "y": 270
         }

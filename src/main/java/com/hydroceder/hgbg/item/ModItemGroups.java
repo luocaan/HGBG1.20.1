@@ -95,6 +95,9 @@ public class ModItemGroups {
                     // 添加篮子到物品组
                     entries.add(ModItems.BASKET);
 
+                    // 添加锅盖到物品组
+                    entries.add(ModItems.POT_LID);
+
                     // 添加炖锅到物品组
                     entries.add(ModBlocks.STEW_POT);
                     

@@ -1,0 +1,89 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"texture_size": [32, 32],
+	"textures": {
+		"2": "hunger-begone:block/cookblock_stew_pot_hat"
+	},
+	"elements": [
+		{
+			"from": [1, 0, 1],
+			"to": [15, 1, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 1.25, 8]},
+			"faces": {
+				"north": {"uv": [7, 0, 14, 0.5], "texture": "#2"},
+				"east": {"uv": [7, 0.5, 14, 1], "texture": "#2"},
+				"south": {"uv": [7, 1, 14, 1.5], "texture": "#2"},
+				"west": {"uv": [7, 1.5, 14, 2], "texture": "#2"},
+				"up": {"uv": [7, 7, 0, 0], "texture": "#2"},
+				"down": {"uv": [7, 7, 0, 14], "texture": "#2"}
+			}
+		},
+		{
+			"from": [7.25, 1, 7.25],
+			"to": [8.75, 1.5, 8.75],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 1.25, 8]},
+			"faces": {
+				"north": {"uv": [8, 6, 9, 6.5], "texture": "#2"},
+				"east": {"uv": [8, 6.5, 9, 7], "texture": "#2"},
+				"south": {"uv": [7, 8, 8, 8.5], "texture": "#2"},
+				"west": {"uv": [8, 8, 9, 8.5], "texture": "#2"},
+				"up": {"uv": [8, 6, 7, 5], "texture": "#2"},
+				"down": {"uv": [8, 6, 7, 7], "texture": "#2"}
+			}
+		},
+		{
+			"from": [6.5, 1.5, 6.5],
+			"to": [9.5, 2.5, 9.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 1.25, 8]},
+			"faces": {
+				"north": {"uv": [7, 7, 8.5, 7.5], "texture": "#2"},
+				"east": {"uv": [7, 7.5, 8.5, 8], "texture": "#2"},
+				"south": {"uv": [8, 5, 9.5, 5.5], "texture": "#2"},
+				"west": {"uv": [8, 5.5, 9.5, 6], "texture": "#2"},
+				"up": {"uv": [8.5, 3.5, 7, 2], "texture": "#2"},
+				"down": {"uv": [8.5, 3.5, 7, 5], "texture": "#2"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [59.75, 0, 0],
+			"translation": [0, 4.5, 4.5],
+			"scale": [0.7, 0.72, 0.69]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [59.75, 0, 0],
+			"translation": [0, 4.5, 4.5],
+			"scale": [0.7, 0.72, 0.69]
+		},
+		"firstperson_righthand": {
+			"rotation": [30.5, 0, 0],
+			"translation": [0, 6, 2.25],
+			"scale": [0.7, 0.72, 0.69]
+		},
+		"firstperson_lefthand": {
+			"rotation": [30.5, 0, 0],
+			"translation": [0, 6, 2.25],
+			"scale": [0.7, 0.72, 0.69]
+		},
+		"ground": {
+			"translation": [0, 4, 0],
+			"scale": [0.59, 0.6, 0.6]
+		},
+		"gui": {
+			"rotation": [64.93, -44.43, 23.81],
+			"translation": [-1.75, 3.75, 0],
+			"scale": [0.76, 0.78, 0.77]
+		}
+	},
+	"groups": [
+		{
+			"name": "pot_hat",
+			"origin": [8, 8, 8],
+			"scope": 0,
+			"color": 0,
+			"children": [0, 1, 2]
+		}
+	]
+}

@@ -358,7 +358,7 @@ public class ModBlocks {
         STEW_POT = new StewPotBlock(FabricBlockSettings.create()
                 .strength(1.0f)
                 .nonOpaque()
-                .sounds(net.minecraft.sound.BlockSoundGroup.WOOD));
+                .sounds(net.minecraft.sound.BlockSoundGroup.METAL));
         Registry.register(Registries.BLOCK, STEW_POT_ID, STEW_POT);
         Registry.register(Registries.ITEM, STEW_POT_ID, new BlockItem(STEW_POT, new FabricItemSettings()));
 

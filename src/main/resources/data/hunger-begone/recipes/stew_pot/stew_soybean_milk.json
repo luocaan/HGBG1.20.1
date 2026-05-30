@@ -1,0 +1,1 @@
+{"type": "hunger-begone:stew_pot_cooking", "inputs": [{"item": "hunger-begone:soybean"}, {"item": "minecraft:sugar"}, {"item": "minecraft:bowl"}], "outputs": [{"item": "hunger-begone:soybean_milk", "count": 1}], "cookTime": 200}

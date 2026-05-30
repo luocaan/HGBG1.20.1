@@ -30,11 +30,11 @@ import net.minecraft.world.World;
 
 /**
  * 烤箱方块类
- * 支持存储3个物品，具有4种视觉状态
+ * 支持存储6个物品，具有4种视觉状态
  */
 public class OvenBlock extends BlockWithEntity {
     public static final BooleanProperty OPEN = BooleanProperty.of("open");
-    public static final IntProperty ITEM_COUNT = IntProperty.of("item_count", 0, 3);
+    public static final IntProperty ITEM_COUNT = IntProperty.of("item_count", 0, 6);
     public static final DirectionProperty FACING = DirectionProperty.of("facing", Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST);
     
     // 碰撞箱：高度9像素(9/16)，前后向内缩3像素(3/16)
@@ -145,7 +145,7 @@ public class OvenBlock extends BlockWithEntity {
                 return ActionResult.SUCCESS;
             }
             // 满_开 + 手持物品 → 关门开始烤制
-            else if (isOpen && itemCount >= 3) {
+            else if (isOpen && itemCount >= 6) {
                 ActionResult eventResult = OvenEvents.CLOSE.invoker().onOvenDoor(world, pos, player);
                 if (eventResult == ActionResult.FAIL) {
                     return ActionResult.PASS;
@@ -155,8 +155,8 @@ public class OvenBlock extends BlockWithEntity {
                 return ActionResult.SUCCESS;
             }
             // 开状态下可以放入物品
-            else if (isOpen && itemCount < 3) {
-                for (int i = 0; i < 3; i++) {
+            else if (isOpen && itemCount < 6) {
+                for (int i = 0; i < 6; i++) {
                     if (ovenEntity.getItem(i).isEmpty()) {
                         // 只放入1个物品，而不是整个堆叠
                         ItemStack singleItem = heldStack.copy();

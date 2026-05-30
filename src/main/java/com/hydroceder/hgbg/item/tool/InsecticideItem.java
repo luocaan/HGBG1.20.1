@@ -11,6 +11,8 @@ import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.BatEntity;
 import net.minecraft.entity.mob.SlimeEntity;
 import net.minecraft.entity.passive.FrogEntity;
+import net.minecraft.entity.passive.FoxEntity;
+import net.minecraft.entity.Tameable;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -31,18 +33,45 @@ import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.Blocks;
 import net.minecraft.world.World;
 
+import net.minecraft.advancement.Advancement;
+import net.minecraft.advancement.AdvancementProgress;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.Identifier;
+
 import com.hydroceder.hgbg.enchantment.EnhancedInsecticideEnchantment;
 import com.hydroceder.hgbg.enchantment.NozzleImprovementEnchantment;
+import com.hydroceder.hgbg.enchantment.RecipeImprovementEnchantment;
+import com.hydroceder.hgbg.effect.CalmnessEffect;
 import com.hydroceder.hgbg.sound.ModSounds;
 
 import java.util.List;
+import java.util.UUID;
+import java.util.Map;
+import java.util.HashMap;
 
 public class InsecticideItem extends Item {
 
     private static final int TICK_INTERVAL = 20;
     private static final float BASE_DAMAGE = 7.0f;
     private static final double RADIUS = 4.0;
-    private static final double RAY_RANGE = 8.0;
+    private static final double RAY_RANGE = 11.0;
+    private static final int MUTATION_THRESHOLD = 600;
+    private static final int MUTATION_RESET_TICKS = 200;
+    private static final int BUFF_DURATION = 12000;
+
+    private static class MutationData {
+        int sprayTicks;
+        long lastSprayTick;
+        boolean triggered;
+
+        MutationData() {
+            this.sprayTicks = 0;
+            this.lastSprayTick = -1;
+            this.triggered = false;
+        }
+    }
+
+    private static final Map<UUID, MutationData> mutationTrackers = new HashMap<>();
 
     public InsecticideItem(Settings settings) {
         super(settings);
@@ -140,14 +169,15 @@ public class InsecticideItem extends Item {
 
         if (!world.isClient && remainingUseTicks % TICK_INTERVAL == 0) {
             boolean hasEnhanced = EnchantmentHelper.getLevel(EnhancedInsecticideEnchantment.INSTANCE, stack) > 0;
+            boolean hasRecipeImprove = EnchantmentHelper.getLevel(RecipeImprovementEnchantment.INSTANCE, stack) > 0;
             int flameLevel = EnchantmentHelper.getLevel(Enchantments.FIRE_ASPECT, stack);
             int baneLevel = EnchantmentHelper.getLevel(Enchantments.BANE_OF_ARTHROPODS, stack);
             int smiteLevel = EnchantmentHelper.getLevel(Enchantments.SMITE, stack);
 
             if (hasNozzle) {
-                applyRayDamage(world, player, stack, hasEnhanced, flameLevel, baneLevel, smiteLevel, lookVec);
+                applyRayDamage(world, player, stack, hasEnhanced, hasRecipeImprove, flameLevel, baneLevel, smiteLevel, lookVec);
             } else {
-                applyAoeDamage(world, player, stack, hasEnhanced, flameLevel, baneLevel, smiteLevel);
+                applyAoeDamage(world, player, stack, hasEnhanced, hasRecipeImprove, flameLevel, baneLevel, smiteLevel);
             }
 
             stack.damage(1, player, p -> p.sendToolBreakStatus(player.getActiveHand()));
@@ -155,7 +185,7 @@ public class InsecticideItem extends Item {
     }
 
     private void applyAoeDamage(World world, PlayerEntity player, ItemStack stack,
-                                  boolean hasEnhanced, int flameLevel, int baneLevel, int smiteLevel) {
+                                  boolean hasEnhanced, boolean hasRecipeImprove, int flameLevel, int baneLevel, int smiteLevel) {
         List<LivingEntity> targets = world.getEntitiesByClass(
             LivingEntity.class,
             new Box(
@@ -163,12 +193,16 @@ public class InsecticideItem extends Item {
                 player.getX() + RADIUS, player.getY() + RADIUS, player.getZ() + RADIUS
             ),
             e -> e.isAlive()
-                && !(e instanceof PlayerEntity)
-                && (hasEnhanced || (e instanceof HostileEntity
+                && e != player
+                && !(hasRecipeImprove && e instanceof Tameable && ((Tameable) e).getOwnerUuid() != null)
+                && !(hasRecipeImprove && e instanceof FoxEntity)
+                && (!hasRecipeImprove || !(e instanceof PlayerEntity))
+                && (hasEnhanced || (!(e instanceof PlayerEntity)
+                    && (e instanceof HostileEntity
                     || e instanceof BeeEntity
                     || e instanceof BatEntity
                     || e instanceof SlimeEntity
-                    || e instanceof FrogEntity))
+                    || e instanceof FrogEntity)))
         );
 
         for (LivingEntity target : targets) {
@@ -176,6 +210,12 @@ public class InsecticideItem extends Item {
             applyEnchantmentEffects(target, damage, baneLevel, smiteLevel, flameLevel, player);
 
             target.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 120, 0));
+            if (hasEnhanced) {
+                target.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 60, 0));
+                target.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 60, 0));
+            }
+
+            trackMutation(world, target, player);
         }
 
         if (flameLevel > 0) {
@@ -189,7 +229,7 @@ public class InsecticideItem extends Item {
     }
 
     private void applyRayDamage(World world, PlayerEntity player, ItemStack stack,
-                                 boolean hasEnhanced, int flameLevel, int baneLevel, int smiteLevel,
+                                 boolean hasEnhanced, boolean hasRecipeImprove, int flameLevel, int baneLevel, int smiteLevel,
                                  Vec3d lookVec) {
         Vec3d start = player.getEyePos();
         Vec3d end = start.add(lookVec.multiply(RAY_RANGE));
@@ -213,12 +253,16 @@ public class InsecticideItem extends Item {
             LivingEntity.class,
             new Box(min.x, min.y, min.z, max.x, max.y, max.z).expand(1.0),
             e -> e.isAlive()
-                && !(e instanceof PlayerEntity)
-                && (hasEnhanced || (e instanceof HostileEntity
+                && e != player
+                && !(hasRecipeImprove && e instanceof Tameable && ((Tameable) e).getOwnerUuid() != null)
+                && !(hasRecipeImprove && e instanceof FoxEntity)
+                && (!hasRecipeImprove || !(e instanceof PlayerEntity))
+                && (hasEnhanced || (!(e instanceof PlayerEntity)
+                    && (e instanceof HostileEntity
                     || e instanceof BeeEntity
                     || e instanceof BatEntity
                     || e instanceof SlimeEntity
-                    || e instanceof FrogEntity))
+                    || e instanceof FrogEntity)))
         );
 
         for (LivingEntity target : entitiesAlongRay) {
@@ -230,6 +274,12 @@ public class InsecticideItem extends Item {
             applyEnchantmentEffects(target, damage, baneLevel, smiteLevel, flameLevel, player);
 
             target.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 120, 0));
+            if (hasEnhanced) {
+                target.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 60, 0));
+                target.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 60, 0));
+            }
+
+            trackMutation(world, target, player);
         }
 
         if (flameLevel > 0) {
@@ -270,6 +320,55 @@ public class InsecticideItem extends Item {
                         AbstractFireBlock.getState(world, neighbor), 11);
                     break;
                 }
+            }
+        }
+    }
+
+    private void trackMutation(World world, LivingEntity target, PlayerEntity player) {
+        UUID uuid = target.getUuid();
+        MutationData data = mutationTrackers.computeIfAbsent(uuid, k -> new MutationData());
+
+        if (!target.isAlive()) {
+            mutationTrackers.remove(uuid);
+            return;
+        }
+
+        long currentTick = world.getTime();
+
+        if (data.lastSprayTick >= 0 && (currentTick - data.lastSprayTick) > MUTATION_RESET_TICKS) {
+            data.sprayTicks = 0;
+            data.triggered = false;
+        }
+
+        if (data.triggered) return;
+
+        data.lastSprayTick = currentTick;
+        data.sprayTicks += TICK_INTERVAL;
+
+        if (data.sprayTicks >= MUTATION_THRESHOLD) {
+            data.triggered = true;
+            applyMutationBuffs(target);
+
+            if (target instanceof ServerPlayerEntity serverPlayer) {
+                grantMutationAchievement(serverPlayer);
+            }
+        }
+    }
+
+    private void applyMutationBuffs(LivingEntity target) {
+        target.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, BUFF_DURATION, 2));
+        target.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, BUFF_DURATION, 2));
+        target.addStatusEffect(new StatusEffectInstance(StatusEffects.SATURATION, BUFF_DURATION, 0));
+        target.addStatusEffect(new StatusEffectInstance(CalmnessEffect.INSTANCE, BUFF_DURATION, 0));
+    }
+
+    private void grantMutationAchievement(ServerPlayerEntity player) {
+        Advancement advancement = player.server.getAdvancementLoader()
+            .get(new Identifier("hunger-begone", "mutation"));
+        if (advancement != null) {
+            AdvancementProgress progress = player.getAdvancementTracker().getProgress(advancement);
+            if (!progress.isDone()) {
+                player.getAdvancementTracker().grantCriterion(advancement, "mutation");
             }
         }
     }

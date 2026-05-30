@@ -1,0 +1,1 @@
+{"type": "hunger-begone:stew_pot_cooking", "inputs": [{"item": "minecraft:beef"}, {"item": "minecraft:potato"}, {"item": "farmersdelight:onion"}, {"item": "farmersdelight:tomato"}, {"item": "farmersdelight:cabbage"}, {"item": "minecraft:bowl"}], "outputs": [{"item": "hunger-begone:russian_soup", "count": 1}], "cookTime": 600}

@@ -1,0 +1,32 @@
+{
+  "type": "hunger-begone:stew_pot_cooking",
+  "inputs": [
+    {
+      "item": "minecraft:bowl",
+      "count": 1
+    },
+    {
+      "item": "minecraft:milk_bucket",
+      "count": 1
+    },
+    {
+      "item": "minecraft:brown_mushroom",
+      "count": 1
+    },
+    {
+      "item": "minecraft:red_mushroom",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": "hunger-begone:creamy_mushroom_soup",
+      "count": 1
+    },
+    {
+      "item": "minecraft:bucket",
+      "count": 1
+    }
+  ],
+  "cookTime": 400
+}

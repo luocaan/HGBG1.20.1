@@ -1,0 +1,1 @@
+{"type": "hunger-begone:stew_pot_cooking", "inputs": [{"item": "minecraft:glow_lichen"}, {"tag": "c:raw_meats"}, {"item": "minecraft:bowl"}], "outputs": [{"item": "hunger-begone:glow_lichen_meat_soup", "count": 1}], "cookTime": 280}

@@ -17,6 +17,7 @@ import java.util.List;
 public class BasketItem extends Item {
 
     private static final String STORED_KEY = "StoredItems";
+    private static final int MAX_CAPACITY = 6;
 
     public static String getStoredKey() {
         return STORED_KEY;
@@ -47,12 +48,23 @@ public class BasketItem extends Item {
         if (world.isClient) {
             return TypedActionResult.success(basketStack);
         }
+
+        if (itemStack.getItem() instanceof BasketItem) {
+            user.sendMessage(Text.translatable("item.hunger-begone.basket.cannot_store_basket").formatted(Formatting.RED), true);
+            return TypedActionResult.fail(basketStack);
+        }
+
         NbtCompound nbt = basketStack.getOrCreateNbt();
         NbtList storedList;
         if (nbt.contains(STORED_KEY)) {
             storedList = nbt.getList(STORED_KEY, 10);
         } else {
             storedList = new NbtList();
+        }
+
+        if (storedList.size() >= MAX_CAPACITY) {
+            user.sendMessage(Text.translatable("item.hunger-begone.basket.full").formatted(Formatting.RED), true);
+            return TypedActionResult.fail(basketStack);
         }
 
         NbtCompound itemNbt = new NbtCompound();

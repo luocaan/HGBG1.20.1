@@ -16,6 +16,8 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.entry.RegistryEntryList;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
@@ -31,23 +33,23 @@ import java.util.List;
  * 用于定义锅专属的烹饪配方
  * 支持多材料输入和多物品输出
  * 支持可缩放配方（scalable=true：1:1 基础配方，自动缩放数量）
+ * 支持tag作为输入材料（使用"tag"字段替代"item"字段）
  */
 public class PanCookingRecipe implements Recipe<Inventory> {
     private static final Logger LOGGER = LoggerFactory.getLogger(PanCookingRecipe.class);
-    
+
     private final Identifier id;
-    private final List<ItemStack> inputs;
+    private final List<RecipeInput> inputs;
     private final List<ItemStack> outputs;
-    private final int cookTime; // 烹饪时间（刻）
-    private final boolean scalable; // 是否支持数量缩放
-    
-    public PanCookingRecipe(Identifier id, List<ItemStack> inputs, List<ItemStack> outputs, int cookTime, boolean scalable) {
+    private final int cookTime;
+    private final boolean scalable;
+
+    public PanCookingRecipe(Identifier id, List<RecipeInput> inputs, List<ItemStack> outputs, int cookTime, boolean scalable) {
         this.id = id;
         this.inputs = inputs;
         this.outputs = outputs;
         this.cookTime = cookTime;
-        
-        // 验证：只有单个输入的配方才能设置 scalable=true
+
         if (scalable && inputs.size() != 1) {
             LOGGER.warn("Recipe {} has scalable=true but has {} inputs. Only recipes with 1 input can be scalable. Ignoring scalable flag.", id, inputs.size());
             this.scalable = false;
@@ -55,31 +57,79 @@ public class PanCookingRecipe implements Recipe<Inventory> {
             this.scalable = scalable;
         }
     }
-    
-    public PanCookingRecipe(Identifier id, List<ItemStack> inputs, List<ItemStack> outputs, int cookTime) {
+
+    public PanCookingRecipe(Identifier id, List<RecipeInput> inputs, List<ItemStack> outputs, int cookTime) {
         this(id, inputs, outputs, cookTime, false);
     }
-    
-    public PanCookingRecipe(List<ItemStack> inputs, List<ItemStack> outputs, int cookTime) {
-        this(new Identifier("hunger-begone", "pan_cooking"), inputs, outputs, cookTime, false);
+
+    /**
+     * 配方输入项，可以是具体物品或tag
+     */
+    public static class RecipeInput {
+        private final ItemStack itemStack;
+        private final TagKey<net.minecraft.item.Item> tag;
+        private final int count;
+
+        public RecipeInput(ItemStack itemStack) {
+            this.itemStack = itemStack;
+            this.tag = null;
+            this.count = itemStack.getCount();
+        }
+
+        public RecipeInput(TagKey<net.minecraft.item.Item> tag, int count) {
+            this.itemStack = null;
+            this.tag = tag;
+            this.count = count;
+        }
+
+        public boolean isTag() {
+            return tag != null;
+        }
+
+        public ItemStack getItemStack() {
+            return itemStack;
+        }
+
+        public TagKey<net.minecraft.item.Item> getTag() {
+            return tag;
+        }
+
+        public int getCount() {
+            return count;
+        }
+
+        /**
+         * 检查给定的物品栈是否匹配此输入项
+         */
+        public boolean matches(ItemStack stack) {
+            if (isTag()) {
+                return stack.isIn(tag);
+            } else {
+                return ItemStack.areItemsEqual(itemStack, stack) &&
+                    (itemStack.getNbt() == null ? stack.getNbt() == null : itemStack.getNbt().equals(stack.getNbt()));
+            }
+        }
     }
     
     /**
-     * 将 ItemStack 列表转换为 Ingredient 列表
+     * 将 RecipeInput 列表转换为 Ingredient 列表
      */
-    private static DefaultedList<Ingredient> convertToIngredients(List<ItemStack> itemStacks) {
+    private static DefaultedList<Ingredient> convertToIngredients(List<RecipeInput> recipeInputs) {
         DefaultedList<Ingredient> ingredients = DefaultedList.of();
-        for (ItemStack stack : itemStacks) {
-            ItemStack ingredientStack = stack.copy();
-            ingredientStack.setCount(1);
-            ingredients.add(Ingredient.ofStacks(ingredientStack));
+        for (RecipeInput input : recipeInputs) {
+            if (input.isTag()) {
+                ingredients.add(Ingredient.fromTag(input.getTag()));
+            } else {
+                ItemStack ingredientStack = input.getItemStack().copy();
+                ingredientStack.setCount(1);
+                ingredients.add(Ingredient.ofStacks(ingredientStack));
+            }
         }
         return ingredients;
     }
-    
+
     @Override
     public boolean matches(Inventory inventory, net.minecraft.world.World world) {
-        // 将 Inventory 转换为 ItemStack 列表
         List<ItemStack> inventoryItems = new ArrayList<>();
         for (int i = 0; i < inventory.size(); i++) {
             ItemStack stack = inventory.getStack(i);
@@ -134,64 +184,60 @@ public class PanCookingRecipe implements Recipe<Inventory> {
      * 检查材料列表是否匹配此配方（宽松匹配：只要材料足够即可）
      */
     public boolean matches(List<ItemStack> materials) {
-        // 检查每种输入材料是否在材料列表中存在足够数量
-        for (ItemStack inputStack : inputs) {
-            int requiredCount = inputStack.getCount();
+        for (RecipeInput input : inputs) {
+            int requiredCount = input.getCount();
             int availableCount = 0;
-            
+
             for (ItemStack materialStack : materials) {
-                if (ItemStack.areItemsEqual(inputStack, materialStack) && (inputStack.getNbt() == null ? materialStack.getNbt() == null : inputStack.getNbt().equals(materialStack.getNbt()))) {
+                if (input.matches(materialStack)) {
                     availableCount += materialStack.getCount();
                     if (availableCount >= requiredCount) {
                         break;
                     }
                 }
             }
-            
+
             if (availableCount < requiredCount) {
                 return false;
             }
         }
-        
+
         return true;
     }
-    
+
     /**
      * 检查材料列表是否严格匹配此配方（材料数量必须正好匹配）
      */
     public boolean matchesStrictly(List<ItemStack> materials) {
-        // 计算每种材料的总数量
         int totalInputCount = 0;
-        for (ItemStack inputStack : inputs) {
-            totalInputCount += inputStack.getCount();
+        for (RecipeInput input : inputs) {
+            totalInputCount += input.getCount();
         }
-        
+
         int totalMaterialCount = 0;
         for (ItemStack materialStack : materials) {
             totalMaterialCount += materialStack.getCount();
         }
-        
-        // 首先检查总数量是否一致
+
         if (totalInputCount != totalMaterialCount) {
             return false;
         }
-        
-        // 然后检查每种输入材料是否正好匹配
-        for (ItemStack inputStack : inputs) {
-            int requiredCount = inputStack.getCount();
+
+        for (RecipeInput input : inputs) {
+            int requiredCount = input.getCount();
             int availableCount = 0;
-            
+
             for (ItemStack materialStack : materials) {
-                if (ItemStack.areItemsEqual(inputStack, materialStack) && (inputStack.getNbt() == null ? materialStack.getNbt() == null : inputStack.getNbt().equals(materialStack.getNbt()))) {
+                if (input.matches(materialStack)) {
                     availableCount += materialStack.getCount();
                 }
             }
-            
+
             if (availableCount != requiredCount) {
                 return false;
             }
         }
-        
+
         return true;
     }
     
@@ -199,12 +245,12 @@ public class PanCookingRecipe implements Recipe<Inventory> {
      * 从材料列表中消耗配方所需的材料（带缩放）
      */
     public void consumeMaterials(List<ItemStack> materials, int scaleFactor) {
-        for (ItemStack inputStack : inputs) {
-            int requiredCount = inputStack.getCount() * scaleFactor;
-            
+        for (RecipeInput input : inputs) {
+            int requiredCount = input.getCount() * scaleFactor;
+
             for (int i = 0; i < materials.size(); i++) {
                 ItemStack materialStack = materials.get(i);
-                if (ItemStack.areItemsEqual(inputStack, materialStack) && (inputStack.getNbt() == null ? materialStack.getNbt() == null : inputStack.getNbt().equals(materialStack.getNbt()))) {
+                if (input.matches(materialStack)) {
                     if (materialStack.getCount() > requiredCount) {
                         materialStack.decrement(requiredCount);
                         requiredCount = 0;
@@ -213,7 +259,7 @@ public class PanCookingRecipe implements Recipe<Inventory> {
                         materials.remove(i);
                         i--;
                     }
-                    
+
                     if (requiredCount == 0) {
                         break;
                     }
@@ -221,46 +267,43 @@ public class PanCookingRecipe implements Recipe<Inventory> {
             }
         }
     }
-    
+
     /**
      * 从材料列表中消耗配方所需的材料（默认不缩放）
      */
     public void consumeMaterials(List<ItemStack> materials) {
         consumeMaterials(materials, 1);
     }
-    
+
     /**
      * 计算配方可以缩放的倍数
-     * 对于可缩放配方，返回最大的倍数
-     * 对于不可缩放配方，返回 1
      */
     public int calculateScaleFactor(List<ItemStack> materials) {
         if (!scalable) {
             return 1;
         }
-        
+
         int maxFactor = Integer.MAX_VALUE;
-        for (ItemStack inputStack : inputs) {
-            int requiredCount = inputStack.getCount();
+        for (RecipeInput input : inputs) {
+            int requiredCount = input.getCount();
             int availableCount = 0;
-            
+
             for (ItemStack materialStack : materials) {
-                if (ItemStack.areItemsEqual(inputStack, materialStack) && 
-                    (inputStack.getNbt() == null ? materialStack.getNbt() == null : inputStack.getNbt().equals(materialStack.getNbt()))) {
+                if (input.matches(materialStack)) {
                     availableCount += materialStack.getCount();
                 }
             }
-            
+
             if (availableCount < requiredCount) {
-                return 0; // 材料不足
+                return 0;
             }
-            
+
             int factor = availableCount / requiredCount;
             if (factor < maxFactor) {
                 maxFactor = factor;
             }
         }
-        
+
         return maxFactor;
     }
     
@@ -299,53 +342,70 @@ public class PanCookingRecipe implements Recipe<Inventory> {
     }
     
     /**
-     * 获取输入物品列表
+     * 获取输入列表
      */
-    public List<ItemStack> getInputs() {
-        List<ItemStack> result = new ArrayList<>(inputs.size());
-        for (ItemStack stack : inputs) {
-            result.add(stack.copy());
-        }
-        return result;
+    public List<RecipeInput> getInputs() {
+        return new ArrayList<>(inputs);
     }
-    
+
+    /**
+     * 获取输入物品栈列表（用于显示等用途，tag输入返回空栈）
+     */
+    public List<ItemStack> getInputStacks() {
+        List<ItemStack> stacks = new ArrayList<>();
+        for (RecipeInput input : inputs) {
+            if (input.isTag()) {
+                stacks.add(ItemStack.EMPTY);
+            } else {
+                stacks.add(input.getItemStack());
+            }
+        }
+        return stacks;
+    }
+
     /**
      * 锅烹饪配方序列化器
      */
     public static class Serializer implements RecipeSerializer<PanCookingRecipe> {
         @Override
         public PanCookingRecipe read(Identifier id, JsonObject json) {
-            List<ItemStack> inputs = new ArrayList<>();
+            List<RecipeInput> inputs = new ArrayList<>();
             List<ItemStack> outputs = new ArrayList<>();
-            
-            // 读取输入材料
+
             JsonArray inputsArray = JsonHelper.getArray(json, "inputs");
             for (JsonElement element : inputsArray) {
                 JsonObject inputObject = element.getAsJsonObject();
-                String itemId = JsonHelper.getString(inputObject, "item");
                 int count = JsonHelper.getInt(inputObject, "count", 1);
-                net.minecraft.item.Item item = Registries.ITEM.get(new Identifier(itemId));
-                ItemStack stack = new ItemStack(item, count);
-                
-                // 如果JSON中有nbt字段，读取并解析NBT数据
-                if (inputObject.has("nbt")) {
-                    try {
-                        String nbtString = JsonHelper.getString(inputObject, "nbt");
-                        NbtCompound nbt = StringNbtReader.parse(nbtString);
-                        stack.setNbt(nbt);
-                    } catch (Exception e) {
-                        throw new JsonParseException("Failed to parse NBT data for input: " + e.getMessage(), e);
+
+                if (inputObject.has("tag")) {
+                    String tagId = JsonHelper.getString(inputObject, "tag");
+                    TagKey<net.minecraft.item.Item> tag = TagKey.of(Registries.ITEM.getKey(), new Identifier(tagId));
+                    inputs.add(new RecipeInput(tag, count));
+                } else if (inputObject.has("item")) {
+                    String itemId = JsonHelper.getString(inputObject, "item");
+                    net.minecraft.item.Item item = Registries.ITEM.get(new Identifier(itemId));
+                    ItemStack stack = new ItemStack(item, count);
+
+                    if (inputObject.has("nbt")) {
+                        try {
+                            String nbtString = JsonHelper.getString(inputObject, "nbt");
+                            NbtCompound nbt = StringNbtReader.parse(nbtString);
+                            stack.setNbt(nbt);
+                        } catch (Exception e) {
+                            throw new JsonParseException("Failed to parse NBT data for input: " + e.getMessage(), e);
+                        }
                     }
+
+                    inputs.add(new RecipeInput(stack));
+                } else {
+                    throw new JsonParseException("Input must have either 'item' or 'tag' field");
                 }
-                
-                inputs.add(stack);
             }
-            
+
             if (inputs.isEmpty()) {
                 throw new JsonParseException("No inputs for pan cooking recipe");
             }
-            
-            // 读取输出物品
+
             JsonArray outputsArray = JsonHelper.getArray(json, "outputs");
             for (JsonElement element : outputsArray) {
                 JsonObject outputObject = element.getAsJsonObject();
@@ -353,8 +413,7 @@ public class PanCookingRecipe implements Recipe<Inventory> {
                 int count = JsonHelper.getInt(outputObject, "count", 1);
                 net.minecraft.item.Item item = Registries.ITEM.get(new Identifier(itemId));
                 ItemStack stack = new ItemStack(item, count);
-                
-                // 如果JSON中有nbt字段，读取并解析NBT数据
+
                 if (outputObject.has("nbt")) {
                     try {
                         String nbtString = JsonHelper.getString(outputObject, "nbt");
@@ -364,67 +423,69 @@ public class PanCookingRecipe implements Recipe<Inventory> {
                         throw new JsonParseException("Failed to parse NBT data for output: " + e.getMessage(), e);
                     }
                 }
-                
+
                 outputs.add(stack);
             }
-            
+
             if (outputs.isEmpty()) {
                 throw new JsonParseException("No outputs for pan cooking recipe");
             }
-            
-            // 读取烹饪时间
+
             int cookTime = JsonHelper.getInt(json, "cookTime", 200);
-            
-            // 读取是否支持缩放（默认 false）
             boolean scalable = JsonHelper.getBoolean(json, "scalable", false);
-            
+
             return new PanCookingRecipe(id, inputs, outputs, cookTime, scalable);
         }
-        
+
         @Override
         public PanCookingRecipe read(Identifier id, PacketByteBuf buf) {
-            List<ItemStack> inputs = new ArrayList<>();
+            List<RecipeInput> inputs = new ArrayList<>();
             List<ItemStack> outputs = new ArrayList<>();
-            
-            // 读取输入材料数量
+
             int inputCount = buf.readVarInt();
             for (int i = 0; i < inputCount; i++) {
-                inputs.add(buf.readItemStack());
+                boolean isTag = buf.readBoolean();
+                if (isTag) {
+                    Identifier tagId = buf.readIdentifier();
+                    TagKey<net.minecraft.item.Item> tag = TagKey.of(Registries.ITEM.getKey(), tagId);
+                    int count = buf.readVarInt();
+                    inputs.add(new RecipeInput(tag, count));
+                } else {
+                    ItemStack stack = buf.readItemStack();
+                    inputs.add(new RecipeInput(stack));
+                }
             }
-            
-            // 读取输出物品数量
+
             int outputCount = buf.readVarInt();
             for (int i = 0; i < outputCount; i++) {
                 outputs.add(buf.readItemStack());
             }
-            
-            // 读取烹饪时间
+
             int cookTime = buf.readVarInt();
-            
-            // 读取是否支持缩放
             boolean scalable = buf.readBoolean();
-            
+
             return new PanCookingRecipe(id, inputs, outputs, cookTime, scalable);
         }
-        
+
         @Override
         public void write(PacketByteBuf buf, PanCookingRecipe recipe) {
-            // 写入输入材料数量
             buf.writeVarInt(recipe.inputs.size());
-            for (ItemStack input : recipe.inputs) {
-                buf.writeItemStack(input);
+            for (RecipeInput input : recipe.inputs) {
+                buf.writeBoolean(input.isTag());
+                if (input.isTag()) {
+                    buf.writeIdentifier(input.getTag().id());
+                    buf.writeVarInt(input.getCount());
+                } else {
+                    buf.writeItemStack(input.getItemStack());
+                }
             }
-            
-            // 写入输出物品数量
+
             buf.writeVarInt(recipe.outputs.size());
             for (ItemStack output : recipe.outputs) {
                 buf.writeItemStack(output);
             }
-            
-            // 写入烹饪时间
+
             buf.writeVarInt(recipe.cookTime);
-            
-            // 写入是否支持缩放
             buf.writeBoolean(recipe.scalable);
         }
     }

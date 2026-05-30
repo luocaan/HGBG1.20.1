@@ -3,7 +3,8 @@
   "ingredients": [
     {"item": "minecraft:egg"},
     {"item": "hunger-begone:rose_jam_bottle"},
-    {"item": "minecraft:cocoa_beans"}
+    {"item": "minecraft:cocoa_beans"},
+    {"item": "minecraft:bowl"}
   ],
   "result": {"item": "hunger-begone:wuguang_cake", "count": 1}
 }

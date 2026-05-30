@@ -458,6 +458,55 @@ public class ModItems {
         new com.hydroceder.hgbg.item.food.CinnamonItem(new FabricItemSettings())
     );
 
+    // 大豆油实例
+    public static final Item SOYBEAN_OIL = Registry.register(
+        Registries.ITEM,
+        id("soybean_oil"),
+        new Item(new FabricItemSettings())
+    );
+
+    // 豆腐实例
+    public static final Item TOFU = Registry.register(
+        Registries.ITEM,
+        id("tofu"),
+        new TofuItem(new FabricItemSettings())
+    );
+
+    // 豆浆实例
+    public static final Item SOYBEAN_MILK = Registry.register(
+        Registries.ITEM,
+        id("soybean_milk"),
+        new SoybeanMilkItem(new FabricItemSettings().maxCount(1))
+    );
+
+    // 罗宋汤实例
+    public static final Item RUSSIAN_SOUP = Registry.register(
+        Registries.ITEM,
+        id("russian_soup"),
+        new RussianSoupItem(new FabricItemSettings().maxCount(1))
+    );
+
+    // 地衣肉汤实例
+    public static final Item GLOW_LICHEN_MEAT_SOUP = Registry.register(
+        Registries.ITEM,
+        id("glow_lichen_meat_soup"),
+        new GlowLichenMeatSoupItem(new FabricItemSettings().maxCount(1))
+    );
+
+    // 炖菜杂烩实例
+    public static final Item STEW_HOTCHPOTCH = Registry.register(
+        Registries.ITEM,
+        id("stew_hotchpotch"),
+        new StewHotchpotchItem(new FabricItemSettings().maxCount(1))
+    );
+
+    // 肉沫烧茄子实例
+    public static final Item MINCED_MEAT_EGGPLANT = Registry.register(
+        Registries.ITEM,
+        id("minced_meat_eggplant"),
+        new MincedMeatEggplantItem(new FabricItemSettings())
+    );
+
     // 沙发实例
     public static final Item SOFA = Registry.register(
         Registries.ITEM,

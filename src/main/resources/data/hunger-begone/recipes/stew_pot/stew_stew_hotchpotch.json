@@ -1,0 +1,1 @@
+{"type": "hunger-begone:stew_pot_cooking", "inputs": [{"item": "minecraft:kelp"}, {"tag": "c:raw_meats"}, {"item": "minecraft:brown_mushroom"}, {"item": "minecraft:bowl"}], "outputs": [{"item": "hunger-begone:stew_hotchpotch", "count": 1}], "cookTime": 320}

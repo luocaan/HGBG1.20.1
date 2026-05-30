@@ -1,0 +1,1 @@
+{"type": "minecraft:crafting_shaped", "pattern": [" A ", "XXX"], "key": {"X": {"item": "minecraft:iron_nugget"}, "A": {"tag": "minecraft:wooden_slabs"}}, "result": {"item": "hunger-begone:pot_lid", "count": 1}}

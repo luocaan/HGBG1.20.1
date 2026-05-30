@@ -36,7 +36,7 @@ import java.util.Random;
 public class OvenBlockEntity extends BlockEntity implements Inventory {
     private static final Random random = new Random();
     
-    private final DefaultedList<ItemStack> items = DefaultedList.ofSize(3, ItemStack.EMPTY);
+    private final DefaultedList<ItemStack> items = DefaultedList.ofSize(6, ItemStack.EMPTY);
     private int cookTime = 0;
     private static final int COOK_TIME_TOTAL = 200; // 10秒 = 200 ticks
     
@@ -45,14 +45,14 @@ public class OvenBlockEntity extends BlockEntity implements Inventory {
     }
     
     public ItemStack getItem(int slot) {
-        if (slot >= 0 && slot < 3) {
+        if (slot >= 0 && slot < 6) {
             return items.get(slot);
         }
         return ItemStack.EMPTY;
     }
     
     public void setItem(int slot, ItemStack stack) {
-        if (slot >= 0 && slot < 3) {
+        if (slot >= 0 && slot < 6) {
             items.set(slot, stack);
             markDirty();
         }

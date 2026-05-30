@@ -26,6 +26,9 @@
 				"value": "com.hydroceder.hgbg.HungerBegoneClient",
 				"adapter": "kotlin"
 			}
+		],
+		"rei_client": [
+			"com.hydroceder.hgbg.integration.rei.HgbgModREI"
 		]
 	},
 	"mixins": [

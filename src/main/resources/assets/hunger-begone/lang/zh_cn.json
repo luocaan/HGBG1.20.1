@@ -20,6 +20,8 @@
   "enchantment.hunger-begone.enhanced_insecticide.desc": "杀虫剂专属附魔，提升基础伤害至14点，可对所有实体造成伤害",
   "enchantment.hunger-begone.nozzle_improvement": "喷头改良",
   "enchantment.hunger-begone.nozzle_improvement.desc": "杀虫剂专属附魔，将范围伤害改为8格定向射线攻击，穿透力更强",
+  "enchantment.hunger-begone.recipe_improvement": "配方改良",
+  "enchantment.hunger-begone.recipe_improvement.desc": "杀虫剂专属附魔，使杀虫剂不再误伤玩家与已驯服生物，持续折磨可诱发变异",
 
   "effect.hunger-begone.slowness_effect": "迟滞",
   "effect.hunger-begone.calmness": "冷静",
@@ -55,8 +57,11 @@
   "item.hunger-begone.basket": "篮子",
   "item.hunger-begone.basket.stored_header": "存储 (%d 件):",
   "item.hunger-begone.basket.empty": "空",
+  "item.hunger-begone.basket.full": "篮子已满！",
+  "item.hunger-begone.basket.cannot_store_basket": "不能把篮子放进篮子里！",
   "item.hunger-begone.stew_pot": "炖锅",
   "block.hunger-begone.stew_pot": "炖锅",
+  "block.hunger-begone.stew_pot.no_water": "我不能在没有水的情况下煮汤",
   "stewpot.cooking": "烹饪中... 剩余 %d 秒",
   "item.hunger-begone.pot_lid": "锅盖",
 
@@ -100,6 +105,14 @@
   "item.hunger-begone.soy_sauce": "酱油",
   "item.hunger-begone.chili_bottle": "辣椒酱",
   "item.hunger-begone.cinnamon": "肉桂粉",
+  "item.hunger-begone.soybean_oil": "大豆油",
+  "item.hunger-begone.tofu": "豆腐",
+  "item.hunger-begone.soybean_milk": "豆浆",
+  "item.hunger-begone.russian_soup": "罗宋汤",
+  "item.hunger-begone.glow_lichen_meat_soup": "地衣肉汤",
+  "item.hunger-begone.stew_hotchpotch": "炖菜杂烩",
+
+  "item.hunger-begone.minced_meat_eggplant": "肉沫烧茄子",
 
   "item.hunger-begone.shiny_berry_jam_bottle": "发光果酱瓶",
   "item.hunger-begone.mushroom_oil_bottle": "菌油瓶",
@@ -148,6 +161,8 @@
 
   "advancement.hunger-begone.well_fed_journey.title": "饱腹远行",
   "advancement.hunger-begone.well_fed_journey.description": "吃饱喝足，又是一场远行",
+  "advancement.hunger-begone.mutation.title": "变异",
+  "advancement.hunger-begone.mutation.description": "在长达半分钟的折磨下毅然存活的勇士",
   "advancement.hunger-begone.shelf_recipe.title": "是啊，吃什么？",
   "advancement.hunger-begone.shelf_recipe.description": "放入物品到置物台来思考配方",
   "advancement.hunger-begone.stove_recipe.title": "我好像造不起厨具...",
@@ -222,6 +237,7 @@
   "shelf.tool.oven": "烤箱",
   "shelf.tool.pan": "锅",
   "shelf.tool.mortar": "研钵和杵",
+  "shelf.tool.stew_pot": "炖锅",
 
   "entity.hunger-begone.sofa": "沙发",
 
@@ -234,5 +250,12 @@
   "block.hunger-begone.cup.has_seasoning": "杯子中已有调味料",
   "block.hunger-begone.wooden_cup.added": "已添加木杯",
   "block.hunger-begone.wooden_cup.full": "无法添加更多木杯（最多3个）",
-  "block.hunger-begone.mortar.needs_container": "需要容器才能取出结果"
+  "block.hunger-begone.mortar.needs_container": "需要容器才能取出结果",
+
+  "rei.hunger-begone.oven": "烤箱",
+  "rei.hunger-begone.mortar": "研钵和杵",
+  "rei.hunger-begone.mortar.container": "所需容器",
+  "rei.hunger-begone.pan_cooking": "煎锅烹饪",
+  "rei.hunger-begone.stew_pot_cooking": "炖锅烹饪",
+  "rei.hunger-begone.scalable": "可缩放配方"
 }

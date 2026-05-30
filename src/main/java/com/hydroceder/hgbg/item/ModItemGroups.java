@@ -218,13 +218,27 @@ public class ModItemGroups {
                     entries.add(ModItems.SOY_SAUCE);
                     entries.add(ModItems.CHILI_BOTTLE);
                     
-                    // 添加本模组的附魔书到物品组
-                    entries.add(EnchantedBookItem.forEnchantment(new net.minecraft.enchantment.EnchantmentLevelEntry(NourishmentEnchantment.INSTANCE, 2)));
-                    entries.add(EnchantedBookItem.forEnchantment(new net.minecraft.enchantment.EnchantmentLevelEntry(NutritionEnchantment.INSTANCE, 3)));
-                    entries.add(EnchantedBookItem.forEnchantment(new net.minecraft.enchantment.EnchantmentLevelEntry(SpeedEnchantment.INSTANCE, 3)));
-                    entries.add(EnchantedBookItem.forEnchantment(new net.minecraft.enchantment.EnchantmentLevelEntry(WarmthEnchantment.INSTANCE, 1)));
-                    entries.add(EnchantedBookItem.forEnchantment(new net.minecraft.enchantment.EnchantmentLevelEntry(EnthusiasmEnchantment.INSTANCE, 1)));
-                    entries.add(EnchantedBookItem.forEnchantment(new net.minecraft.enchantment.EnchantmentLevelEntry(FieldHarvesterEnchantment.INSTANCE, 3)));
+                    // 添加大豆油到物品组
+                    entries.add(ModItems.SOYBEAN_OIL);
+
+                    // 添加豆腐到物品组
+                    entries.add(ModItems.TOFU);
+
+                    // 添加豆浆到物品组
+                    entries.add(ModItems.SOYBEAN_MILK);
+
+                    // 添加罗宋汤到物品组
+                    entries.add(ModItems.RUSSIAN_SOUP);
+
+                    // 添加地衣肉汤到物品组
+                    entries.add(ModItems.GLOW_LICHEN_MEAT_SOUP);
+
+                    // 添加炖菜杂烩到物品组
+                    entries.add(ModItems.STEW_HOTCHPOTCH);
+
+                    // 添加肉沫烧茄子到物品组
+                    entries.add(ModItems.MINCED_MEAT_EGGPLANT);
+
                     entries.add(ModItems.SOFA);
                 })
                 .build();

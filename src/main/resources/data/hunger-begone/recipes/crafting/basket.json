@@ -1,0 +1,1 @@
+{"type": "minecraft:crafting_shaped", "pattern": ["D D", "ABA"], "key": {"D": {"item": "minecraft:stick"}, "A": {"tag": "minecraft:planks"}, "B": {"item": "minecraft:hopper"}}, "result": {"item": "hunger-begone:basket", "count": 1}}

@@ -1,0 +1,36 @@
+{
+  "type": "hunger-begone:stew_pot_cooking",
+  "inputs": [
+    {
+      "item": "minecraft:bowl",
+      "count": 1
+    },
+    {
+      "item": "minecraft:beetroot",
+      "count": 1
+    },
+    {
+      "item": "minecraft:beetroot",
+      "count": 1
+    },
+    {
+      "item": "minecraft:beetroot",
+      "count": 1
+    },
+    {
+      "item": "minecraft:beetroot",
+      "count": 1
+    },
+    {
+      "item": "minecraft:beetroot",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": "minecraft:beetroot_soup",
+      "count": 1
+    }
+  ],
+  "cookTime": 250
+}

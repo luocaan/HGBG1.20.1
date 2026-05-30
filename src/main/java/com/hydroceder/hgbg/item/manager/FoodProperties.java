@@ -212,4 +212,28 @@ public class FoodProperties {
     // 惠灵顿牛排
     public static final int WELLINGTON_HUNGER = 10;
     public static final float WELLINGTON_SATURATION = 0.5f;
+
+    // 豆腐
+    public static final int TOFU_HUNGER = 1;
+    public static final float TOFU_SATURATION = 0.1f;
+
+    // 豆浆
+    public static final int SOYBEAN_MILK_HUNGER = 2;
+    public static final float SOYBEAN_MILK_SATURATION = 0.4f;
+
+    // 罗宋汤
+    public static final int RUSSIAN_SOUP_HUNGER = 14;
+    public static final float RUSSIAN_SOUP_SATURATION = 1.0f;
+
+    // 地衣肉汤
+    public static final int GLOW_LICHEN_MEAT_SOUP_HUNGER = 11;
+    public static final float GLOW_LICHEN_MEAT_SOUP_SATURATION = 1.0f;
+
+    // 炖菜杂烩
+    public static final int STEW_HOTCHPOTCH_HUNGER = 7;
+    public static final float STEW_HOTCHPOTCH_SATURATION = 0.5f;
+
+    // 肉沫烧茄子
+    public static final int MINCED_MEAT_EGGPLANT_HUNGER = 6;
+    public static final float MINCED_MEAT_EGGPLANT_SATURATION = 1.0f;
 }

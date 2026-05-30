@@ -63,51 +63,6 @@ public class PanCookingRecipeManager {
     }
     
     /**
-     * 检查两个材料列表是否完全一致（材料类型和数量都必须匹配）
-     */
-    private static boolean areMaterialsExactlyMatching(List<ItemStack> recipeInputs, List<ItemStack> materials) {
-        // 先创建副本，避免修改原数据
-        List<ItemStack> remainingMaterials = new ArrayList<>();
-        for (ItemStack stack : materials) {
-            remainingMaterials.add(stack.copy());
-        }
-        
-        // 检查每种配方输入材料
-        for (ItemStack inputStack : recipeInputs) {
-            int requiredCount = inputStack.getCount();
-            boolean found = false;
-            
-            for (int i = 0; i < remainingMaterials.size(); i++) {
-                ItemStack materialStack = remainingMaterials.get(i);
-                if (inputStack.isOf(materialStack.getItem())) {
-                    
-                    if (materialStack.getCount() >= requiredCount) {
-                        materialStack.decrement(requiredCount);
-                        if (materialStack.isEmpty()) {
-                            remainingMaterials.remove(i);
-                        }
-                        found = true;
-                        break;
-                    }
-                }
-            }
-            
-            if (!found) {
-                return false;
-            }
-        }
-        
-        // 检查是否有剩余材料
-        for (ItemStack stack : remainingMaterials) {
-            if (!stack.isEmpty()) {
-                return false;
-            }
-        }
-        
-        return true;
-    }
-    
-    /**
      * 查找匹配的配方
      * 优先级：
      * 1. 完全精准匹配的不可缩放配方（材料类型和数量完全一致）
@@ -116,17 +71,15 @@ public class PanCookingRecipeManager {
      * 注意：调味料会被自动分离，不计入配方匹配
      */
     public static Optional<MatchResult> findRecipe(List<ItemStack> materials) {
-        // 先分离调味料和食材
         com.hydroceder.hgbg.util.SeasoningNBT.SeparationResult separationResult = 
             com.hydroceder.hgbg.util.SeasoningNBT.separateSeasonings(materials);
         List<ItemStack> nonSeasoningMaterials = separationResult.nonSeasoningMaterials;
         List<String> seasoningIds = separationResult.seasoningIds;
         
-        // 第一阶段：寻找完全精准匹配的不可缩放配方
         List<PanCookingRecipe> exactMatches = new ArrayList<>();
         
         for (PanCookingRecipe recipe : recipes) {
-            if (!recipe.isScalable() && areMaterialsExactlyMatching(recipe.getInputs(), nonSeasoningMaterials)) {
+            if (!recipe.isScalable() && recipe.matchesStrictly(nonSeasoningMaterials)) {
                 exactMatches.add(recipe);
             }
         }

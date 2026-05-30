@@ -54,8 +54,11 @@
   "item.hunger-begone.basket": "Basket",
   "item.hunger-begone.basket.stored_header": "Stored (%d items):",
   "item.hunger-begone.basket.empty": "Empty",
+  "item.hunger-begone.basket.full": "Basket is full!",
+  "item.hunger-begone.basket.cannot_store_basket": "Cannot store a basket inside a basket!",
   "item.hunger-begone.stew_pot": "Stew Pot",
   "block.hunger-begone.stew_pot": "Stew Pot",
+  "block.hunger-begone.stew_pot.no_water": "I can't cook soup without water",
   "stewpot.cooking": "Cooking... %d seconds remaining",
   "item.hunger-begone.pot_lid": "Pot Lid",
   "item.hunger-begone.baguette": "Baguette",
@@ -85,6 +88,8 @@
   "effect.hunger-begone.homesickness": "Homesickness",
   "advancement.hunger-begone.well_fed_journey.title": "Well-Fed Journey",
   "advancement.hunger-begone.well_fed_journey.description": "Well-fed and ready for another journey",
+  "advancement.hunger-begone.mutation.title": "Mutation",
+  "advancement.hunger-begone.mutation.description": "Survived half a minute of torment",
   "advancement.hunger-begone.shelf_recipe.title": "Hmm, what to eat?",
   "advancement.hunger-begone.shelf_recipe.description": "Place items on the shelf to think about recipes",
   "advancement.hunger-begone.stove_recipe.title": "I can't afford kitchenware...",
@@ -143,6 +148,10 @@
   "shelf.hint.no_recipe": "Not a great idea",
   "shelf.hint.full_recipe": "Try putting these in %s?",
   "shelf.hint.missing_item": "Try adding a %s?",
+  "shelf.tool.oven": "Oven",
+  "shelf.tool.pan": "Pan",
+  "shelf.tool.mortar": "Mortar & Pestle",
+  "shelf.tool.stew_pot": "Stew Pot",
   "modmenu.nameTranslation.hunger-begone": "Hunger Begone",
   "modmenu.descriptionTranslation.hunger-begone": "Well fed and watered, a new journey begins.",
   "enchantment.hunger-begone.field_harvester": "Field Harvester",
@@ -151,6 +160,8 @@
   "enchantment.hunger-begone.enhanced_insecticide.desc": "Insecticide-only enchantment, increases base damage to 14 and damages all entities",
   "enchantment.hunger-begone.nozzle_improvement": "Nozzle Improvement",
   "enchantment.hunger-begone.nozzle_improvement.desc": "Insecticide-only enchantment, changes AOE to 8-block directional ray attack",
+  "enchantment.hunger-begone.recipe_improvement": "Recipe Improvement",
+  "enchantment.hunger-begone.recipe_improvement.desc": "Insecticide-only enchantment, prevents damage to players and tamed entities; prolonged exposure may trigger mutation",
   "item.hunger-begone.homeland_dirt": "Homeland Soil",
   "item.hunger-begone.sofa": "Sofa",
   "entity.hunger-begone.sofa": "Sofa",
@@ -203,7 +214,15 @@
   "item.hunger-begone.soy_sauce": "Soy Sauce",
   "item.hunger-begone.chili_bottle": "Chili Sauce",
   "item.hunger-begone.cinnamon": "Cinnamon",
-  
+  "item.hunger-begone.soybean_oil": "Soybean Oil",
+  "item.hunger-begone.tofu": "Tofu",
+  "item.hunger-begone.soybean_milk": "Soybean Milk",
+  "item.hunger-begone.russian_soup": "Russian Soup",
+  "item.hunger-begone.glow_lichen_meat_soup": "Glow Lichen Meat Soup",
+  "item.hunger-begone.stew_hotchpotch": "Stew Hotchpotch",
+
+  "item.hunger-begone.minced_meat_eggplant": "Minced Meat Eggplant",
+
   "item.hunger-begone.flower_tea": "Honey Flower Tea",
   
   "stove.cooking": "Cooking... about %s seconds remaining",
@@ -218,5 +237,12 @@
   "block.hunger-begone.cup.has_seasoning": "Cup already contains seasoning",
   "block.hunger-begone.wooden_cup.added": "Wooden cup added",
   "block.hunger-begone.wooden_cup.full": "Cannot add more cups (max 3)",
-  "block.hunger-begone.mortar.needs_container": "Need container to take out result"
+  "block.hunger-begone.mortar.needs_container": "Need container to take out result",
+
+  "rei.hunger-begone.oven": "Oven",
+  "rei.hunger-begone.mortar": "Mortar & Pestle",
+  "rei.hunger-begone.mortar.container": "Container Required",
+  "rei.hunger-begone.pan_cooking": "Pan Cooking",
+  "rei.hunger-begone.stew_pot_cooking": "Stew Pot Cooking",
+  "rei.hunger-begone.scalable": "Scalable"
 }

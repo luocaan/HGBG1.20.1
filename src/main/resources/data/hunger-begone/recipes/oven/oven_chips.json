@@ -1,1 +1,1 @@
-{"type": "hunger-begone:oven", "ingredients": [{"item": "minecraft:potato"}, {"item": "hunger-begone:mushroom_oil_bottle"}, {"item": "minecraft:paper"}], "result": {"item": "hunger-begone:chips", "count": 2}}
+{"type": "hunger-begone:oven", "ingredients": [{"item": "minecraft:potato"}, {"item": "hunger-begone:soybean_oil"}, {"item": "minecraft:paper"}], "result": {"item": "hunger-begone:chips", "count": 2}}

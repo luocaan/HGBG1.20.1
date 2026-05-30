@@ -8,7 +8,13 @@
     "facing=north,open=true,item_count=2": { "model": "hunger-begone:block/oven_full_open" },
     "facing=north,open=false,item_count=3": { "model": "hunger-begone:block/oven_full_close" },
     "facing=north,open=true,item_count=3": { "model": "hunger-begone:block/oven_full_open" },
-    
+    "facing=north,open=false,item_count=4": { "model": "hunger-begone:block/oven_full_close" },
+    "facing=north,open=true,item_count=4": { "model": "hunger-begone:block/oven_full_open" },
+    "facing=north,open=false,item_count=5": { "model": "hunger-begone:block/oven_full_close" },
+    "facing=north,open=true,item_count=5": { "model": "hunger-begone:block/oven_full_open" },
+    "facing=north,open=false,item_count=6": { "model": "hunger-begone:block/oven_full_close" },
+    "facing=north,open=true,item_count=6": { "model": "hunger-begone:block/oven_full_open" },
+
     "facing=south,open=false,item_count=0": { "model": "hunger-begone:block/oven_empty_close", "y": 180 },
     "facing=south,open=true,item_count=0": { "model": "hunger-begone:block/oven_empty_open", "y": 180 },
     "facing=south,open=false,item_count=1": { "model": "hunger-begone:block/oven_full_close", "y": 180 },
@@ -17,7 +23,13 @@
     "facing=south,open=true,item_count=2": { "model": "hunger-begone:block/oven_full_open", "y": 180 },
     "facing=south,open=false,item_count=3": { "model": "hunger-begone:block/oven_full_close", "y": 180 },
     "facing=south,open=true,item_count=3": { "model": "hunger-begone:block/oven_full_open", "y": 180 },
-    
+    "facing=south,open=false,item_count=4": { "model": "hunger-begone:block/oven_full_close", "y": 180 },
+    "facing=south,open=true,item_count=4": { "model": "hunger-begone:block/oven_full_open", "y": 180 },
+    "facing=south,open=false,item_count=5": { "model": "hunger-begone:block/oven_full_close", "y": 180 },
+    "facing=south,open=true,item_count=5": { "model": "hunger-begone:block/oven_full_open", "y": 180 },
+    "facing=south,open=false,item_count=6": { "model": "hunger-begone:block/oven_full_close", "y": 180 },
+    "facing=south,open=true,item_count=6": { "model": "hunger-begone:block/oven_full_open", "y": 180 },
+
     "facing=east,open=false,item_count=0": { "model": "hunger-begone:block/oven_empty_close", "y": 90 },
     "facing=east,open=true,item_count=0": { "model": "hunger-begone:block/oven_empty_open", "y": 90 },
     "facing=east,open=false,item_count=1": { "model": "hunger-begone:block/oven_full_close", "y": 90 },
@@ -26,7 +38,13 @@
     "facing=east,open=true,item_count=2": { "model": "hunger-begone:block/oven_full_open", "y": 90 },
     "facing=east,open=false,item_count=3": { "model": "hunger-begone:block/oven_full_close", "y": 90 },
     "facing=east,open=true,item_count=3": { "model": "hunger-begone:block/oven_full_open", "y": 90 },
-    
+    "facing=east,open=false,item_count=4": { "model": "hunger-begone:block/oven_full_close", "y": 90 },
+    "facing=east,open=true,item_count=4": { "model": "hunger-begone:block/oven_full_open", "y": 90 },
+    "facing=east,open=false,item_count=5": { "model": "hunger-begone:block/oven_full_close", "y": 90 },
+    "facing=east,open=true,item_count=5": { "model": "hunger-begone:block/oven_full_open", "y": 90 },
+    "facing=east,open=false,item_count=6": { "model": "hunger-begone:block/oven_full_close", "y": 90 },
+    "facing=east,open=true,item_count=6": { "model": "hunger-begone:block/oven_full_open", "y": 90 },
+
     "facing=west,open=false,item_count=0": { "model": "hunger-begone:block/oven_empty_close", "y": 270 },
     "facing=west,open=true,item_count=0": { "model": "hunger-begone:block/oven_empty_open", "y": 270 },
     "facing=west,open=false,item_count=1": { "model": "hunger-begone:block/oven_full_close", "y": 270 },
@@ -34,6 +52,12 @@
     "facing=west,open=false,item_count=2": { "model": "hunger-begone:block/oven_full_close", "y": 270 },
     "facing=west,open=true,item_count=2": { "model": "hunger-begone:block/oven_full_open", "y": 270 },
     "facing=west,open=false,item_count=3": { "model": "hunger-begone:block/oven_full_close", "y": 270 },
-    "facing=west,open=true,item_count=3": { "model": "hunger-begone:block/oven_full_open", "y": 270 }
+    "facing=west,open=true,item_count=3": { "model": "hunger-begone:block/oven_full_open", "y": 270 },
+    "facing=west,open=false,item_count=4": { "model": "hunger-begone:block/oven_full_close", "y": 270 },
+    "facing=west,open=true,item_count=4": { "model": "hunger-begone:block/oven_full_open", "y": 270 },
+    "facing=west,open=false,item_count=5": { "model": "hunger-begone:block/oven_full_close", "y": 270 },
+    "facing=west,open=true,item_count=5": { "model": "hunger-begone:block/oven_full_open", "y": 270 },
+    "facing=west,open=false,item_count=6": { "model": "hunger-begone:block/oven_full_close", "y": 270 },
+    "facing=west,open=true,item_count=6": { "model": "hunger-begone:block/oven_full_open", "y": 270 }
   }
 }

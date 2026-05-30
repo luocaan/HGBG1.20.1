@@ -20,6 +20,8 @@
   "enchantment.hunger-begone.enhanced_insecticide.desc": "殺蟲劑專屬附魔，增基礎傷害至十四點，可傷萬物",
   "enchantment.hunger-begone.nozzle_improvement": "噴頭改良",
   "enchantment.hunger-begone.nozzle_improvement.desc": "殺蟲劑專屬附魔，改範圍傷為八格定向射線攻擊",
+  "enchantment.hunger-begone.recipe_improvement": "配方改良",
+  "enchantment.hunger-begone.recipe_improvement.desc": "殺蟲劑專屬附魔，免傷玩家及馴服之生靈，久遭折磨或致變異",
 
   "effect.hunger-begone.slowness_effect": "迟滞",
   "effect.hunger-begone.homesickness": "归心",
@@ -56,8 +58,11 @@
   "item.hunger-begone.basket": "籃",
   "item.hunger-begone.basket.stored_header": "儲存 (%d 件):",
   "item.hunger-begone.basket.empty": "空",
+  "item.hunger-begone.basket.full": "籃已滿！",
+  "item.hunger-begone.basket.cannot_store_basket": "不可納籃於籃中！",
   "item.hunger-begone.stew_pot": "镬",
   "block.hunger-begone.stew_pot": "镬",
+  "block.hunger-begone.stew_pot.no_water": "吾不能無水而烹湯",
   "stewpot.cooking": "烹飪中… 餘 %d 秒",
   "item.hunger-begone.pot_lid": "鍋蓋",
 
@@ -101,6 +106,12 @@
   "item.hunger-begone.soy_sauce": "醬油",
   "item.hunger-begone.chili_bottle": "辣醬",
   "item.hunger-begone.cinnamon": "桂皮粉",
+  "item.hunger-begone.soybean_oil": "大豆油",
+  "item.hunger-begone.tofu": "豆腐",
+  "item.hunger-begone.soybean_milk": "豆漿",
+  "item.hunger-begone.russian_soup": "羅宋湯",
+  "item.hunger-begone.glow_lichen_meat_soup": "地衣肉羹",
+  "item.hunger-begone.stew_hotchpotch": "燉雜爚",
 
   "item.hunger-begone.shiny_berry_jam_bottle": "荧果酱",
   "item.hunger-begone.mushroom_oil_bottle": "菌油",
@@ -150,6 +161,8 @@
 
   "advancement.hunger-begone.well_fed_journey.title": "饱腹远行",
   "advancement.hunger-begone.well_fed_journey.description": "饱食啜饮，复启新程",
+  "advancement.hunger-begone.mutation.title": "变异",
+  "advancement.hunger-begone.mutation.description": "历半刻之极刑而毅然独存之勇士",
   "advancement.hunger-begone.shelf_recipe.title": "然，食何物？",
   "advancement.hunger-begone.shelf_recipe.description": "置物食架，冥思食谱",
   "advancement.hunger-begone.stove_recipe.title": "家贫难置炊具",
@@ -223,6 +236,7 @@
   "shelf.tool.oven": "焙爐",
   "shelf.tool.pan": "釜",
   "shelf.tool.mortar": "研缽",
+  "shelf.tool.stew_pot": "鑊",
 
   "entity.hunger-begone.sofa": "長椅",
 

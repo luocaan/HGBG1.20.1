@@ -1,0 +1,32 @@
+{
+  "type": "hunger-begone:stew_pot_cooking",
+  "inputs": [
+    {
+      "item": "minecraft:bowl",
+      "count": 1
+    },
+    {
+      "item": "minecraft:baked_potato",
+      "count": 1
+    },
+    {
+      "item": "minecraft:raw_rabbit",
+      "count": 1
+    },
+    {
+      "item": "minecraft:carrot",
+      "count": 1
+    },
+    {
+      "item": "minecraft:red_mushroom",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": "minecraft:rabbit_stew",
+      "count": 1
+    }
+  ],
+  "cookTime": 250
+}

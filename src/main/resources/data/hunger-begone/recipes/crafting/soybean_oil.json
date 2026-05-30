@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "hunger-begone:soybean"
+    }
+  ],
+  "result": {
+    "item": "hunger-begone:soybean_oil",
+    "count": 1
+  }
+}

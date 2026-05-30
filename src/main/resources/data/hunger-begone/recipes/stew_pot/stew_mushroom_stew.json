@@ -1,0 +1,24 @@
+{
+  "type": "hunger-begone:stew_pot_cooking",
+  "inputs": [
+    {
+      "item": "minecraft:bowl",
+      "count": 1
+    },
+    {
+      "item": "minecraft:brown_mushroom",
+      "count": 1
+    },
+    {
+      "item": "minecraft:red_mushroom",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": "minecraft:mushroom_stew",
+      "count": 1
+    }
+  ],
+  "cookTime": 100
+}

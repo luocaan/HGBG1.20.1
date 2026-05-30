@@ -6,6 +6,8 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -20,6 +22,7 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -194,11 +197,12 @@ public class StewPotBlock extends BlockWithEntity {
             && currentState == StewState.HAS_WATER) {
             ItemStack singleItem = heldStack.copy();
             singleItem.setCount(1);
-            potBE.addMaterial(singleItem);
-            heldStack.decrement(1);
-            world.playSound(null, pos, SoundEvents.BLOCK_WATER_AMBIENT,
-                SoundCategory.BLOCKS, 0.5f, 1.0f);
-            return ActionResult.SUCCESS;
+            if (potBE.addMaterial(singleItem)) {
+                heldStack.decrement(1);
+                world.playSound(null, pos, SoundEvents.BLOCK_WATER_AMBIENT,
+                    SoundCategory.BLOCKS, 0.5f, 1.0f);
+                return ActionResult.SUCCESS;
+            }
         }
 
         // 3. 锅盖 → HAS_WATER 状态开始烹饪
@@ -226,6 +230,12 @@ public class StewPotBlock extends BlockWithEntity {
             return ActionResult.SUCCESS;
         }
 
+        // 6. 手持物品 + 无水 → 提示
+        if (!heldStack.isEmpty() && currentState == StewState.EMPTY) {
+            player.sendMessage(Text.translatable("block.hunger-begone.stew_pot.no_water"), true);
+            return ActionResult.FAIL;
+        }
+
         return ActionResult.PASS;
     }
 
@@ -237,5 +247,31 @@ public class StewPotBlock extends BlockWithEntity {
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return SHAPE;
+    }
+
+    @Override
+    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+        if (world.isClient) return;
+        if (!(entity instanceof ItemEntity itemEntity)) return;
+        if (state.get(STEW_STATE) != StewState.HAS_WATER) return;
+
+        ItemStack droppedStack = itemEntity.getStack();
+        if (droppedStack.isEmpty()) return;
+        if (droppedStack.isOf(Items.WATER_BUCKET)) return;
+        if (droppedStack.getItem() instanceof PotLidItem) return;
+
+        BlockEntity be = world.getBlockEntity(pos);
+        if (!(be instanceof StewPotBlockEntity potBE)) return;
+
+        ItemStack singleItem = droppedStack.copy();
+        singleItem.setCount(1);
+        if (potBE.addMaterial(singleItem)) {
+            droppedStack.decrement(1);
+            if (droppedStack.isEmpty()) {
+                itemEntity.discard();
+            }
+            world.playSound(null, pos, SoundEvents.BLOCK_WATER_AMBIENT,
+                SoundCategory.BLOCKS, 0.5f, 1.0f);
+        }
     }
 }

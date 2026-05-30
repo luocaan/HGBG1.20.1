@@ -4,6 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -57,6 +59,10 @@ public class WuguangCakeBlock extends HorizontalFacingBlock {
         }
 
         world.removeBlock(pos, false);
+
+        world.spawnEntity(new net.minecraft.entity.ItemEntity(world,
+                pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5,
+                new ItemStack(Items.BOWL)));
 
         player.getHungerManager().add(
             ModFoodComponents.WUGUANG_CAKE.getHunger(),

@@ -5,6 +5,7 @@ import com.hydroceder.hgbg.recipe.ModRecipeTypes;
 import com.hydroceder.hgbg.recipe.oven.OvenRecipe;
 import com.hydroceder.hgbg.recipe.mortar.MortarAndPestleRecipe;
 import com.hydroceder.hgbg.recipe.pan_cooking.PanCookingRecipe;
+import com.hydroceder.hgbg.recipe.stew_pot_cooking.StewPotCookingRecipe;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -26,9 +27,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public class ShelfBlockEntity extends BlockEntity implements Inventory {
@@ -109,6 +108,7 @@ public class ShelfBlockEntity extends BlockEntity implements Inventory {
         allRecipes.addAll(world.getRecipeManager().listAllOfType(ModRecipeTypes.OVEN_RECIPE_TYPE));
         allRecipes.addAll(world.getRecipeManager().listAllOfType(ModRecipeTypes.PAN_COOKING_RECIPE_TYPE));
         allRecipes.addAll(world.getRecipeManager().listAllOfType(ModRecipeTypes.MORTAR_AND_PESTLE_RECIPE_TYPE));
+        allRecipes.addAll(world.getRecipeManager().listAllOfType(ModRecipeTypes.STEW_POT_COOKING_RECIPE_TYPE));
         
         List<Recipe<?>> matchingRecipes = new ArrayList<>();
         
@@ -169,15 +169,49 @@ public class ShelfBlockEntity extends BlockEntity implements Inventory {
             return true;
         } else if (recipe instanceof PanCookingRecipe) {
             PanCookingRecipe panRecipe = (PanCookingRecipe) recipe;
-            List<ItemStack> requiredInputs = panRecipe.getInputs();
-            Map<Item, Integer> requiredCounts = toCountMap(requiredInputs);
-            Map<Item, Integer> currentCounts = toCountMap(currentItems);
+            List<PanCookingRecipe.RecipeInput> recipeInputs = panRecipe.getInputs();
+            int[] matchedCounts = new int[recipeInputs.size()];
             
-            for (Map.Entry<Item, Integer> entry : currentCounts.entrySet()) {
-                Item item = entry.getKey();
-                int current = entry.getValue();
-                int required = requiredCounts.getOrDefault(item, 0);
-                if (current > required) {
+            for (ItemStack currentItem : currentItems) {
+                boolean found = false;
+                for (int i = 0; i < recipeInputs.size(); i++) {
+                    PanCookingRecipe.RecipeInput input = recipeInputs.get(i);
+                    if (input.matches(currentItem) && matchedCounts[i] < input.getCount()) {
+                        matchedCounts[i]++;
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    return false;
+                }
+            }
+            return true;
+        } else if (recipe instanceof StewPotCookingRecipe) {
+            StewPotCookingRecipe stewRecipe = (StewPotCookingRecipe) recipe;
+            List<ItemStack> recipeInputStacks = stewRecipe.getInputs();
+            int[] matchedCounts = new int[recipeInputStacks.size()];
+            
+            for (ItemStack currentItem : currentItems) {
+                boolean found = false;
+                for (int i = 0; i < recipeInputStacks.size(); i++) {
+                    if (stewRecipe.hasTag(i)) {
+                        if (currentItem.isIn(stewRecipe.getInputTag(i)) && matchedCounts[i] < recipeInputStacks.get(i).getCount()) {
+                            matchedCounts[i]++;
+                            found = true;
+                            break;
+                        }
+                    } else {
+                        if (ItemStack.areItemsEqual(recipeInputStacks.get(i), currentItem) &&
+                            (recipeInputStacks.get(i).getNbt() == null ? currentItem.getNbt() == null : recipeInputStacks.get(i).getNbt().equals(currentItem.getNbt()))
+                            && matchedCounts[i] < recipeInputStacks.get(i).getCount()) {
+                            matchedCounts[i]++;
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+                if (!found) {
                     return false;
                 }
             }
@@ -221,23 +255,66 @@ public class ShelfBlockEntity extends BlockEntity implements Inventory {
             }
         } else if (recipe instanceof PanCookingRecipe) {
             PanCookingRecipe panRecipe = (PanCookingRecipe) recipe;
-            List<ItemStack> requiredInputs = panRecipe.getInputs();
-            Map<Item, Integer> requiredCounts = toCountMap(requiredInputs);
-            Map<Item, Integer> currentCounts = toCountMap(currentItems);
-            List<Item> missingItems = new ArrayList<>();
+            List<PanCookingRecipe.RecipeInput> inputs = panRecipe.getInputs();
+            int[] matchedCounts = new int[inputs.size()];
             
-            for (Map.Entry<Item, Integer> entry : requiredCounts.entrySet()) {
-                Item item = entry.getKey();
-                int need = entry.getValue();
-                int have = currentCounts.getOrDefault(item, 0);
-                for (int i = 0; i < need - have; i++) {
-                    missingItems.add(item);
+            for (ItemStack item : currentItems) {
+                for (int i = 0; i < inputs.size(); i++) {
+                    PanCookingRecipe.RecipeInput input = inputs.get(i);
+                    if (input.matches(item) && matchedCounts[i] < input.getCount()) {
+                        matchedCounts[i]++;
+                        break;
+                    }
                 }
             }
             
-            if (!missingItems.isEmpty()) {
-                Item item = missingItems.get(random.nextInt(missingItems.size()));
-                return new ItemStack(item);
+            for (int i = 0; i < inputs.size(); i++) {
+                PanCookingRecipe.RecipeInput input = inputs.get(i);
+                if (matchedCounts[i] < input.getCount()) {
+                    if (input.isTag()) {
+                        net.minecraft.registry.entry.RegistryEntryList<net.minecraft.item.Item> entries =
+                            net.minecraft.registry.Registries.ITEM.getEntryList(input.getTag()).orElse(null);
+                        if (entries != null && entries.size() > 0) {
+                            return entries.get(0).value().getDefaultStack();
+                        }
+                    } else {
+                        return input.getItemStack().copy();
+                    }
+                }
+            }
+        } else if (recipe instanceof StewPotCookingRecipe) {
+            StewPotCookingRecipe stewRecipe = (StewPotCookingRecipe) recipe;
+            List<ItemStack> recipeInputs = stewRecipe.getInputs();
+            int[] matchedCounts = new int[recipeInputs.size()];
+            
+            for (ItemStack item : currentItems) {
+                for (int i = 0; i < recipeInputs.size(); i++) {
+                    boolean match = false;
+                    if (stewRecipe.hasTag(i)) {
+                        match = item.isIn(stewRecipe.getInputTag(i));
+                    } else {
+                        match = ItemStack.areItemsEqual(recipeInputs.get(i), item) &&
+                            (recipeInputs.get(i).getNbt() == null ? item.getNbt() == null : recipeInputs.get(i).getNbt().equals(item.getNbt()));
+                    }
+                    if (match && matchedCounts[i] < recipeInputs.get(i).getCount()) {
+                        matchedCounts[i]++;
+                        break;
+                    }
+                }
+            }
+            
+            for (int i = 0; i < recipeInputs.size(); i++) {
+                if (matchedCounts[i] < recipeInputs.get(i).getCount()) {
+                    if (stewRecipe.hasTag(i)) {
+                        net.minecraft.registry.entry.RegistryEntryList<net.minecraft.item.Item> entries =
+                            net.minecraft.registry.Registries.ITEM.getEntryList(stewRecipe.getInputTag(i)).orElse(null);
+                        if (entries != null && entries.size() > 0) {
+                            return entries.get(0).value().getDefaultStack();
+                        }
+                    } else {
+                        return recipeInputs.get(i).copy();
+                    }
+                }
             }
         } else if (recipe instanceof MortarAndPestleRecipe) {
             MortarAndPestleRecipe mortarRecipe = (MortarAndPestleRecipe) recipe;
@@ -265,7 +342,39 @@ public class ShelfBlockEntity extends BlockEntity implements Inventory {
             }
             return inputs;
         } else if (recipe instanceof PanCookingRecipe) {
-            return ((PanCookingRecipe) recipe).getInputs();
+            List<ItemStack> inputs = new ArrayList<>();
+            PanCookingRecipe panRecipe = (PanCookingRecipe) recipe;
+            for (PanCookingRecipe.RecipeInput input : panRecipe.getInputs()) {
+                if (input.isTag()) {
+                    net.minecraft.registry.entry.RegistryEntryList<net.minecraft.item.Item> entries =
+                        net.minecraft.registry.Registries.ITEM.getEntryList(input.getTag()).orElse(null);
+                    if (entries != null && entries.size() > 0) {
+                        ItemStack rep = entries.get(0).value().getDefaultStack();
+                        rep.setCount(input.getCount());
+                        inputs.add(rep);
+                    }
+                } else {
+                    inputs.add(input.getItemStack().copy());
+                }
+            }
+            return inputs;
+        } else if (recipe instanceof StewPotCookingRecipe) {
+            List<ItemStack> inputs = new ArrayList<>();
+            StewPotCookingRecipe stewRecipe = (StewPotCookingRecipe) recipe;
+            for (int i = 0; i < stewRecipe.getInputs().size(); i++) {
+                if (stewRecipe.hasTag(i)) {
+                    net.minecraft.registry.entry.RegistryEntryList<net.minecraft.item.Item> entries =
+                        net.minecraft.registry.Registries.ITEM.getEntryList(stewRecipe.getInputTag(i)).orElse(null);
+                    if (entries != null && entries.size() > 0) {
+                        ItemStack rep = entries.get(0).value().getDefaultStack();
+                        rep.setCount(stewRecipe.getInputs().get(i).getCount());
+                        inputs.add(rep);
+                    }
+                } else {
+                    inputs.add(stewRecipe.getInputs().get(i).copy());
+                }
+            }
+            return inputs;
         } else if (recipe instanceof MortarAndPestleRecipe) {
             List<ItemStack> inputs = new ArrayList<>();
             MortarAndPestleRecipe mortarRecipe = (MortarAndPestleRecipe) recipe;
@@ -285,20 +394,12 @@ public class ShelfBlockEntity extends BlockEntity implements Inventory {
             return Text.translatable("shelf.tool.oven").getString();
         } else if (recipe instanceof PanCookingRecipe) {
             return Text.translatable("shelf.tool.pan").getString();
+        } else if (recipe instanceof StewPotCookingRecipe) {
+            return Text.translatable("shelf.tool.stew_pot").getString();
         } else if (recipe instanceof MortarAndPestleRecipe) {
             return Text.translatable("shelf.tool.mortar").getString();
         }
         return "厨具";
-    }
-    
-    private Map<Item, Integer> toCountMap(List<ItemStack> items) {
-        Map<Item, Integer> map = new HashMap<>();
-        for (ItemStack stack : items) {
-            if (!stack.isEmpty()) {
-                map.merge(stack.getItem(), 1, Integer::sum);
-            }
-        }
-        return map;
     }
     
     @Override

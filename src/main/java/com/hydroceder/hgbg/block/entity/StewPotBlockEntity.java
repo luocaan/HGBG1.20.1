@@ -10,41 +10,58 @@ import com.hydroceder.hgbg.util.SeasoningNBT;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.registry.Registries;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.ItemScatterer;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class StewPotBlockEntity extends BlockEntity {
+public class StewPotBlockEntity extends BlockEntity implements Inventory {
 
-    private NbtList materials = new NbtList();
+    private static final int MAX_MATERIAL_SLOTS = 16;
+    private final DefaultedList<ItemStack> inventoryItems = DefaultedList.ofSize(MAX_MATERIAL_SLOTS, ItemStack.EMPTY);
     private boolean hasLid = false;
     private boolean isCooking = false;
     private int cookTime = 0;
     private int totalCookTime = 0;
     private StewPotCookingRecipe matchedRecipe = null;
+    private String matchedRecipeId = null;
     private UUID cookingPlayerUuid = null;
 
     public StewPotBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntityTypes.STEW_POT_BLOCK_ENTITY, pos, state);
     }
 
-    public void addMaterial(ItemStack stack) {
-        if (stack.isEmpty()) return;
-        NbtCompound itemNbt = new NbtCompound();
-        stack.writeNbt(itemNbt);
-        materials.add(itemNbt);
-        markDirty();
+    public boolean addMaterial(ItemStack stack) {
+        if (stack.isEmpty()) return false;
+        for (int i = 0; i < MAX_MATERIAL_SLOTS; i++) {
+            if (inventoryItems.get(i).isEmpty()) {
+                inventoryItems.set(i, stack.copy());
+                markDirty();
+                return true;
+            }
+        }
+        return false;
     }
 
     public void addLid() {
@@ -61,13 +78,16 @@ public class StewPotBlockEntity extends BlockEntity {
     }
 
     public void clearMaterials() {
-        materials.clear();
+        inventoryItems.clear();
         hasLid = false;
         markDirty();
     }
 
     public boolean hasMaterialsOrLid() {
-        return !materials.isEmpty() || hasLid;
+        for (ItemStack stack : inventoryItems) {
+            if (!stack.isEmpty()) return true;
+        }
+        return hasLid;
     }
 
     public void startCooking(UUID playerUuid) {
@@ -80,16 +100,17 @@ public class StewPotBlockEntity extends BlockEntity {
 
     private void matchAndSetRecipe() {
         List<ItemStack> rawMaterials = new ArrayList<>();
-        for (int i = 0; i < materials.size(); i++) {
-            ItemStack item = ItemStack.fromNbt(materials.getCompound(i));
+        for (int i = 0; i < inventoryItems.size(); i++) {
+            ItemStack item = inventoryItems.get(i);
             if (!item.isEmpty()) {
-                rawMaterials.add(item);
+                rawMaterials.add(item.copy());
             }
         }
 
         if (rawMaterials.isEmpty()) {
             this.totalCookTime = 1;
             this.matchedRecipe = null;
+            this.matchedRecipeId = null;
             return;
         }
 
@@ -99,9 +120,11 @@ public class StewPotBlockEntity extends BlockEntity {
         if (matchResult != null && matchResult.recipe != null) {
             this.totalCookTime = matchResult.recipe.getCookTime();
             this.matchedRecipe = matchResult.recipe;
+            this.matchedRecipeId = matchResult.recipe.getId().toString();
         } else {
             this.totalCookTime = 200;
             this.matchedRecipe = null;
+            this.matchedRecipeId = null;
         }
     }
 
@@ -110,16 +133,17 @@ public class StewPotBlockEntity extends BlockEntity {
         this.cookTime = 0;
         this.totalCookTime = 0;
         this.matchedRecipe = null;
+        this.matchedRecipeId = null;
         this.cookingPlayerUuid = null;
         markDirty();
     }
 
     public void dropItems() {
         if (world != null && !world.isClient) {
-            for (int i = 0; i < materials.size(); i++) {
-                ItemStack item = ItemStack.fromNbt(materials.getCompound(i));
+            for (int i = 0; i < inventoryItems.size(); i++) {
+                ItemStack item = inventoryItems.get(i);
                 if (!item.isEmpty()) {
-                    ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), item);
+                    ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), item.copy());
                 }
             }
             if (hasLid) {
@@ -160,10 +184,10 @@ public class StewPotBlockEntity extends BlockEntity {
 
     private static void finishCooking(World world, BlockPos pos, BlockState state, StewPotBlockEntity be) {
         List<ItemStack> rawMaterials = new ArrayList<>();
-        for (int i = 0; i < be.materials.size(); i++) {
-            ItemStack item = ItemStack.fromNbt(be.materials.getCompound(i));
+        for (int i = 0; i < be.inventoryItems.size(); i++) {
+            ItemStack item = be.inventoryItems.get(i);
             if (!item.isEmpty() && !(item.getItem() instanceof PotLidItem)) {
-                rawMaterials.add(item);
+                rawMaterials.add(item.copy());
             }
         }
 
@@ -172,9 +196,10 @@ public class StewPotBlockEntity extends BlockEntity {
                 ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(),
                     new ItemStack(ModItems.POT_LID));
             }
-            be.materials.clear();
+            be.inventoryItems.clear();
             be.hasLid = false;
             be.matchedRecipe = null;
+            be.matchedRecipeId = null;
             world.setBlockState(pos, state.with(StewPotBlock.STEW_STATE, StewPotBlock.StewState.EMPTY), 3);
             world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH,
                 SoundCategory.BLOCKS, 1.0f, 1.0f);
@@ -203,7 +228,7 @@ public class StewPotBlockEntity extends BlockEntity {
             }
         } else {
             ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(),
-                new ItemStack(Items.SUSPICIOUS_STEW));
+                createSuspiciousStewWithEffects(world));
         }
 
         if (be.hasLid) {
@@ -211,23 +236,79 @@ public class StewPotBlockEntity extends BlockEntity {
                 new ItemStack(ModItems.POT_LID));
         }
 
-        be.materials.clear();
+        be.inventoryItems.clear();
         be.hasLid = false;
         be.matchedRecipe = null;
+        be.matchedRecipeId = null;
         world.setBlockState(pos, state.with(StewPotBlock.STEW_STATE, StewPotBlock.StewState.EMPTY), 3);
         world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH,
             SoundCategory.BLOCKS, 1.0f, 1.0f);
         be.markDirty();
     }
 
+    private static final StatusEffect[][] SUSPICIOUS_STEW_EFFECTS = {
+        {StatusEffects.NIGHT_VISION},
+        {StatusEffects.JUMP_BOOST},
+        {StatusEffects.WEAKNESS},
+        {StatusEffects.BLINDNESS},
+        {StatusEffects.POISON},
+        {StatusEffects.SATURATION},
+        {StatusEffects.FIRE_RESISTANCE},
+        {StatusEffects.REGENERATION}
+    };
+
+    private static final int[] SUSPICIOUS_STEW_DURATIONS = {
+        160,
+        160,
+        400,
+        120,
+        320,
+        160,
+        160,
+        200
+    };
+
+    private static ItemStack createSuspiciousStewWithEffects(World world) {
+        ItemStack stew = new ItemStack(Items.SUSPICIOUS_STEW);
+        NbtCompound nbt = new NbtCompound();
+        NbtList effects = new NbtList();
+
+        int effectCount = 1 + world.random.nextInt(2);
+        List<Integer> availableIndices = new ArrayList<>();
+        for (int i = 0; i < SUSPICIOUS_STEW_EFFECTS.length; i++) {
+            availableIndices.add(i);
+        }
+
+        for (int i = 0; i < effectCount && !availableIndices.isEmpty(); i++) {
+            int idx = world.random.nextInt(availableIndices.size());
+            int chosenIndex = availableIndices.remove(idx);
+
+            NbtCompound effectEntry = new NbtCompound();
+            effectEntry.putString("id",
+                Registries.STATUS_EFFECT.getId(SUSPICIOUS_STEW_EFFECTS[chosenIndex][0]).toString());
+            effectEntry.putInt("duration", SUSPICIOUS_STEW_DURATIONS[chosenIndex]);
+            effects.add(effectEntry);
+        }
+
+        if (!effects.isEmpty()) {
+            nbt.put("effects", effects);
+            stew.setNbt(nbt);
+        }
+
+        return stew;
+    }
+
     @Override
-    public void writeNbt(NbtCompound nbt) {
+    protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
-        nbt.put("Materials", materials);
+        Inventories.writeNbt(nbt, inventoryItems);
         nbt.putBoolean("HasLid", hasLid);
         nbt.putBoolean("IsCooking", isCooking);
         nbt.putInt("CookTime", cookTime);
         nbt.putInt("TotalCookTime", totalCookTime);
+        if (matchedRecipeId != null) {
+            nbt.putString("MatchedRecipeId", matchedRecipeId);
+        }
         if (cookingPlayerUuid != null) {
             nbt.putUuid("CookingPlayerUuid", cookingPlayerUuid);
         }
@@ -236,17 +317,86 @@ public class StewPotBlockEntity extends BlockEntity {
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
-        if (nbt.contains("Materials")) {
-            materials = nbt.getList("Materials", 10);
-        } else {
-            materials = new NbtList();
-        }
+        inventoryItems.clear();
+        Inventories.readNbt(nbt, inventoryItems);
         hasLid = nbt.getBoolean("HasLid");
         isCooking = nbt.getBoolean("IsCooking");
         cookTime = nbt.getInt("CookTime");
         totalCookTime = nbt.getInt("TotalCookTime");
+        if (nbt.contains("MatchedRecipeId")) {
+            matchedRecipeId = nbt.getString("MatchedRecipeId");
+            StewPotRecipeManager.getRecipeById(new net.minecraft.util.Identifier(matchedRecipeId))
+                .ifPresent(recipe -> this.matchedRecipe = recipe);
+        }
         if (nbt.contains("CookingPlayerUuid")) {
             cookingPlayerUuid = nbt.getUuid("CookingPlayerUuid");
         }
+    }
+
+    @Nullable
+    @Override
+    public Packet<ClientPlayPacketListener> toUpdatePacket() {
+        return BlockEntityUpdateS2CPacket.create(this);
+    }
+
+    @Override
+    public NbtCompound toInitialChunkDataNbt() {
+        return createNbt();
+    }
+
+    @Override
+    public int size() {
+        return inventoryItems.size();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        for (ItemStack stack : inventoryItems) {
+            if (!stack.isEmpty()) return false;
+        }
+        return true;
+    }
+
+    @Override
+    public ItemStack getStack(int slot) {
+        if (slot >= 0 && slot < inventoryItems.size()) {
+            return inventoryItems.get(slot);
+        }
+        return ItemStack.EMPTY;
+    }
+
+    @Override
+    public ItemStack removeStack(int slot, int amount) {
+        return Inventories.splitStack(inventoryItems, slot, amount);
+    }
+
+    @Override
+    public ItemStack removeStack(int slot) {
+        return Inventories.removeStack(inventoryItems, slot);
+    }
+
+    @Override
+    public void setStack(int slot, ItemStack stack) {
+        if (slot >= 0 && slot < inventoryItems.size()) {
+            inventoryItems.set(slot, stack);
+            if (stack.getCount() > getMaxCountPerStack()) {
+                stack.setCount(getMaxCountPerStack());
+            }
+            markDirty();
+        }
+    }
+
+    @Override
+    public boolean canPlayerUse(PlayerEntity player) {
+        if (world == null || world.getBlockEntity(pos) != this) {
+            return false;
+        }
+        return player.squaredDistanceTo(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) <= 64.0;
+    }
+
+    @Override
+    public void clear() {
+        inventoryItems.clear();
+        markDirty();
     }
 }

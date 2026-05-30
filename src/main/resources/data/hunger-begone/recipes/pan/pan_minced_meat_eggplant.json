@@ -1,0 +1,24 @@
+{
+  "type": "hunger-begone:pan_cooking",
+  "inputs": [
+    {
+      "item": "hunger-begone:eggplant",
+      "count": 1
+    },
+    {
+      "tag": "c:raw_meats",
+      "count": 1
+    },
+    {
+      "item": "hunger-begone:soybean_oil",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": "hunger-begone:minced_meat_eggplant",
+      "count": 1
+    }
+  ],
+  "cookTime": 150
+}

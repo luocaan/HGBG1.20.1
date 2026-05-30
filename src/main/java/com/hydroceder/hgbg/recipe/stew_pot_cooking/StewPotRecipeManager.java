@@ -4,6 +4,7 @@ import com.hydroceder.hgbg.recipe.ModRecipeTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.recipe.RecipeManager;
+import net.minecraft.util.Identifier;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,45 +50,6 @@ public class StewPotRecipeManager {
         LOGGER.info("Loaded {} stew pot cooking recipes from server", count);
     }
     
-    private static boolean areMaterialsExactlyMatching(List<ItemStack> recipeInputs, List<ItemStack> materials) {
-        List<ItemStack> remainingMaterials = new ArrayList<>();
-        for (ItemStack stack : materials) {
-            remainingMaterials.add(stack.copy());
-        }
-        
-        for (ItemStack inputStack : recipeInputs) {
-            int requiredCount = inputStack.getCount();
-            boolean found = false;
-            
-            for (int i = 0; i < remainingMaterials.size(); i++) {
-                ItemStack materialStack = remainingMaterials.get(i);
-                if (inputStack.isOf(materialStack.getItem())) {
-                    
-                    if (materialStack.getCount() >= requiredCount) {
-                        materialStack.decrement(requiredCount);
-                        if (materialStack.isEmpty()) {
-                            remainingMaterials.remove(i);
-                        }
-                        found = true;
-                        break;
-                    }
-                }
-            }
-            
-            if (!found) {
-                return false;
-            }
-        }
-        
-        for (ItemStack stack : remainingMaterials) {
-            if (!stack.isEmpty()) {
-                return false;
-            }
-        }
-        
-        return true;
-    }
-    
     public static Optional<MatchResult> findRecipe(List<ItemStack> materials) {
         com.hydroceder.hgbg.util.SeasoningNBT.SeparationResult separationResult = 
             com.hydroceder.hgbg.util.SeasoningNBT.separateSeasonings(materials);
@@ -97,7 +59,7 @@ public class StewPotRecipeManager {
         List<StewPotCookingRecipe> exactMatches = new ArrayList<>();
         
         for (StewPotCookingRecipe recipe : recipes) {
-            if (!recipe.isScalable() && areMaterialsExactlyMatching(recipe.getInputs(), nonSeasoningMaterials)) {
+            if (!recipe.isScalable() && recipe.matchesStrictly(nonSeasoningMaterials)) {
                 exactMatches.add(recipe);
             }
         }
@@ -133,5 +95,14 @@ public class StewPotRecipeManager {
     
     public static void clear() {
         recipes.clear();
+    }
+    
+    public static Optional<StewPotCookingRecipe> getRecipeById(Identifier id) {
+        for (StewPotCookingRecipe recipe : recipes) {
+            if (recipe.getId().equals(id)) {
+                return Optional.of(recipe);
+            }
+        }
+        return Optional.empty();
     }
 }

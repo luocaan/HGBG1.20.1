@@ -5,7 +5,6 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -34,70 +33,71 @@ public class CalmnessEffect extends StatusEffect {
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        if (!(entity instanceof ServerPlayerEntity player)) {
-            return;
+        boolean isPlayer = entity instanceof PlayerEntity;
+
+        // 玩家专属：饱和度低于1时停止续期，让效果自然消失
+        if (isPlayer) {
+            PlayerEntity player = (PlayerEntity) entity;
+            if (player.getHungerManager().getSaturationLevel() < 1.0f) {
+                return;
+            }
+
+            // 每5 tick增加20疲劳值（仅玩家）
+            if (entity.age % 5 == 0) {
+                player.getHungerManager().addExhaustion(20.0f);
+            }
         }
 
-        // 如果饱和度低于1，停止给予效果，让其自然消失
-        if (player.getHungerManager().getSaturationLevel() < 1.0f) {
-            return;
-        }
-
-        // 每5 tick增加20疲劳值
-        if (entity.age % 5 == 0) {
-            player.getHungerManager().addExhaustion(20.0f);
-        }
-
-        // 持续给予2秒冷静效果，使其不会消失
-        StatusEffectInstance current = player.getStatusEffect(INSTANCE);
+        // 持续给予2秒冷静效果，使其不会消失（所有生物通用）
+        StatusEffectInstance current = entity.getStatusEffect(INSTANCE);
         if (current != null && current.getDuration() <= 20) {
-            refreshingPlayers.add(player.getUuid());
+            refreshingPlayers.add(entity.getUuid());
             try {
-                player.addStatusEffect(new StatusEffectInstance(INSTANCE, 40, 0, false, false, true));
+                entity.addStatusEffect(new StatusEffectInstance(INSTANCE, 40, 0, false, false, true));
             } finally {
-                refreshingPlayers.remove(player.getUuid());
+                refreshingPlayers.remove(entity.getUuid());
             }
         }
     }
 
-    public static boolean isRefreshing(PlayerEntity player) {
-        return refreshingPlayers.contains(player.getUuid());
+    public static boolean isRefreshing(LivingEntity entity) {
+        return refreshingPlayers.contains(entity.getUuid());
     }
 
-    public static boolean hasCalmness(PlayerEntity player) {
-        return player.hasStatusEffect(INSTANCE);
+    public static boolean hasCalmness(LivingEntity entity) {
+        return entity.hasStatusEffect(INSTANCE);
     }
 
-    public static boolean isSettling(PlayerEntity player) {
-        return settlingPlayers.contains(player.getUuid());
+    public static boolean isSettling(LivingEntity entity) {
+        return settlingPlayers.contains(entity.getUuid());
     }
 
-    public static double getAccumulatedDamage(PlayerEntity player) {
-        return accumulatedDamageMap.getOrDefault(player.getUuid(), 0.0);
+    public static double getAccumulatedDamage(LivingEntity entity) {
+        return accumulatedDamageMap.getOrDefault(entity.getUuid(), 0.0);
     }
 
-    public static void addAccumulatedDamage(PlayerEntity player, double damage) {
-        UUID uuid = player.getUuid();
-        accumulatedDamageMap.put(uuid, getAccumulatedDamage(player) + damage);
+    public static void addAccumulatedDamage(LivingEntity entity, double damage) {
+        UUID uuid = entity.getUuid();
+        accumulatedDamageMap.put(uuid, getAccumulatedDamage(entity) + damage);
     }
 
-    public static double getAccumulatedHeal(PlayerEntity player) {
-        return accumulatedHealMap.getOrDefault(player.getUuid(), 0.0);
+    public static double getAccumulatedHeal(LivingEntity entity) {
+        return accumulatedHealMap.getOrDefault(entity.getUuid(), 0.0);
     }
 
-    public static void addAccumulatedHeal(PlayerEntity player, double heal) {
-        UUID uuid = player.getUuid();
-        accumulatedHealMap.put(uuid, getAccumulatedHeal(player) + heal);
+    public static void addAccumulatedHeal(LivingEntity entity, double heal) {
+        UUID uuid = entity.getUuid();
+        accumulatedHealMap.put(uuid, getAccumulatedHeal(entity) + heal);
     }
 
-    public static void clearAccumulatedData(PlayerEntity player) {
-        UUID uuid = player.getUuid();
+    public static void clearAccumulatedData(LivingEntity entity) {
+        UUID uuid = entity.getUuid();
         accumulatedDamageMap.remove(uuid);
         accumulatedHealMap.remove(uuid);
     }
 
-    public static void settleCalmness(ServerPlayerEntity player) {
-        UUID uuid = player.getUuid();
+    public static void settleCalmness(LivingEntity entity) {
+        UUID uuid = entity.getUuid();
 
         if (settlingPlayers.contains(uuid)) {
             return;
@@ -105,18 +105,18 @@ public class CalmnessEffect extends StatusEffect {
 
         settlingPlayers.add(uuid);
         try {
-            double accumulatedDamage = getAccumulatedDamage(player);
-            double accumulatedHeal = getAccumulatedHeal(player);
+            double accumulatedDamage = getAccumulatedDamage(entity);
+            double accumulatedHeal = getAccumulatedHeal(entity);
             double netChange = accumulatedHeal - accumulatedDamage;
 
             if (netChange > 0.001) {
-                player.heal((float) netChange);
+                entity.heal((float) netChange);
             } else if (netChange < -0.001) {
-                player.damage(player.getDamageSources().magic(), (float) (-netChange));
+                entity.damage(entity.getDamageSources().genericKill(), (float) (-netChange));
             }
         } finally {
             settlingPlayers.remove(uuid);
-            clearAccumulatedData(player);
+            clearAccumulatedData(entity);
         }
     }
 

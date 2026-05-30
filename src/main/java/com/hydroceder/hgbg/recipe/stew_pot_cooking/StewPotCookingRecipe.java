@@ -16,6 +16,8 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
@@ -24,20 +26,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class StewPotCookingRecipe implements Recipe<Inventory> {
     private static final Logger LOGGER = LoggerFactory.getLogger(StewPotCookingRecipe.class);
     
     private final Identifier id;
     private final List<ItemStack> inputs;
+    private final Map<Integer, TagKey<net.minecraft.item.Item>> inputTags;
     private final List<ItemStack> outputs;
     private final int cookTime;
     private final boolean scalable;
     
-    public StewPotCookingRecipe(Identifier id, List<ItemStack> inputs, List<ItemStack> outputs, int cookTime, boolean scalable) {
+    public StewPotCookingRecipe(Identifier id, List<ItemStack> inputs, Map<Integer, TagKey<net.minecraft.item.Item>> inputTags, List<ItemStack> outputs, int cookTime, boolean scalable) {
         this.id = id;
         this.inputs = inputs;
+        this.inputTags = inputTags;
         this.outputs = outputs;
         this.cookTime = cookTime;
         
@@ -50,7 +56,24 @@ public class StewPotCookingRecipe implements Recipe<Inventory> {
     }
     
     public StewPotCookingRecipe(Identifier id, List<ItemStack> inputs, List<ItemStack> outputs, int cookTime) {
-        this(id, inputs, outputs, cookTime, false);
+        this(id, inputs, new HashMap<>(), outputs, cookTime, false);
+    }
+    
+    public boolean hasTag(int index) {
+        return inputTags.containsKey(index);
+    }
+    
+    public TagKey<net.minecraft.item.Item> getInputTag(int index) {
+        return inputTags.get(index);
+    }
+    
+    private boolean matchesInput(ItemStack recipeStack, int index, ItemStack materialStack) {
+        TagKey<net.minecraft.item.Item> tag = inputTags.get(index);
+        if (tag != null) {
+            return materialStack.isIn(tag);
+        }
+        return ItemStack.areItemsEqual(recipeStack, materialStack)
+            && (recipeStack.getNbt() == null ? materialStack.getNbt() == null : recipeStack.getNbt().equals(materialStack.getNbt()));
     }
     
     private static DefaultedList<Ingredient> convertToIngredients(List<ItemStack> itemStacks) {
@@ -115,12 +138,13 @@ public class StewPotCookingRecipe implements Recipe<Inventory> {
     }
     
     public boolean matches(List<ItemStack> materials) {
-        for (ItemStack inputStack : inputs) {
+        for (int i = 0; i < inputs.size(); i++) {
+            ItemStack inputStack = inputs.get(i);
             int requiredCount = inputStack.getCount();
             int availableCount = 0;
             
             for (ItemStack materialStack : materials) {
-                if (ItemStack.areItemsEqual(inputStack, materialStack) && (inputStack.getNbt() == null ? materialStack.getNbt() == null : inputStack.getNbt().equals(materialStack.getNbt()))) {
+                if (matchesInput(inputStack, i, materialStack)) {
                     availableCount += materialStack.getCount();
                     if (availableCount >= requiredCount) {
                         break;
@@ -151,12 +175,13 @@ public class StewPotCookingRecipe implements Recipe<Inventory> {
             return false;
         }
         
-        for (ItemStack inputStack : inputs) {
+        for (int i = 0; i < inputs.size(); i++) {
+            ItemStack inputStack = inputs.get(i);
             int requiredCount = inputStack.getCount();
             int availableCount = 0;
             
             for (ItemStack materialStack : materials) {
-                if (ItemStack.areItemsEqual(inputStack, materialStack) && (inputStack.getNbt() == null ? materialStack.getNbt() == null : inputStack.getNbt().equals(materialStack.getNbt()))) {
+                if (matchesInput(inputStack, i, materialStack)) {
                     availableCount += materialStack.getCount();
                 }
             }
@@ -170,19 +195,20 @@ public class StewPotCookingRecipe implements Recipe<Inventory> {
     }
     
     public void consumeMaterials(List<ItemStack> materials, int scaleFactor) {
-        for (ItemStack inputStack : inputs) {
+        for (int i = 0; i < inputs.size(); i++) {
+            ItemStack inputStack = inputs.get(i);
             int requiredCount = inputStack.getCount() * scaleFactor;
             
-            for (int i = 0; i < materials.size(); i++) {
-                ItemStack materialStack = materials.get(i);
-                if (ItemStack.areItemsEqual(inputStack, materialStack) && (inputStack.getNbt() == null ? materialStack.getNbt() == null : inputStack.getNbt().equals(materialStack.getNbt()))) {
+            for (int j = 0; j < materials.size(); j++) {
+                ItemStack materialStack = materials.get(j);
+                if (matchesInput(inputStack, i, materialStack)) {
                     if (materialStack.getCount() > requiredCount) {
                         materialStack.decrement(requiredCount);
                         requiredCount = 0;
                     } else {
                         requiredCount -= materialStack.getCount();
-                        materials.remove(i);
-                        i--;
+                        materials.remove(j);
+                        j--;
                     }
                     
                     if (requiredCount == 0) {
@@ -203,13 +229,13 @@ public class StewPotCookingRecipe implements Recipe<Inventory> {
         }
         
         int maxFactor = Integer.MAX_VALUE;
-        for (ItemStack inputStack : inputs) {
+        for (int i = 0; i < inputs.size(); i++) {
+            ItemStack inputStack = inputs.get(i);
             int requiredCount = inputStack.getCount();
             int availableCount = 0;
             
             for (ItemStack materialStack : materials) {
-                if (ItemStack.areItemsEqual(inputStack, materialStack) && 
-                    (inputStack.getNbt() == null ? materialStack.getNbt() == null : inputStack.getNbt().equals(materialStack.getNbt()))) {
+                if (matchesInput(inputStack, i, materialStack)) {
                     availableCount += materialStack.getCount();
                 }
             }
@@ -261,27 +287,41 @@ public class StewPotCookingRecipe implements Recipe<Inventory> {
         @Override
         public StewPotCookingRecipe read(Identifier id, JsonObject json) {
             List<ItemStack> inputs = new ArrayList<>();
+            Map<Integer, TagKey<net.minecraft.item.Item>> inputTags = new HashMap<>();
             List<ItemStack> outputs = new ArrayList<>();
             
             JsonArray inputsArray = JsonHelper.getArray(json, "inputs");
-            for (JsonElement element : inputsArray) {
+            for (int i = 0; i < inputsArray.size(); i++) {
+                JsonElement element = inputsArray.get(i);
                 JsonObject inputObject = element.getAsJsonObject();
-                String itemId = JsonHelper.getString(inputObject, "item");
                 int count = JsonHelper.getInt(inputObject, "count", 1);
-                net.minecraft.item.Item item = Registries.ITEM.get(new Identifier(itemId));
-                ItemStack stack = new ItemStack(item, count);
                 
-                if (inputObject.has("nbt")) {
-                    try {
-                        String nbtString = JsonHelper.getString(inputObject, "nbt");
-                        NbtCompound nbt = StringNbtReader.parse(nbtString);
-                        stack.setNbt(nbt);
-                    } catch (Exception e) {
-                        throw new JsonParseException("Failed to parse NBT data for input: " + e.getMessage(), e);
+                if (inputObject.has("tag")) {
+                    String tagId = JsonHelper.getString(inputObject, "tag");
+                    TagKey<net.minecraft.item.Item> tag = TagKey.of(RegistryKeys.ITEM, new Identifier(tagId));
+                    inputTags.put(i, tag);
+                    net.minecraft.item.Item placeholderItem = Registries.ITEM.get(new Identifier("minecraft:barrier"));
+                    ItemStack placeholderStack = new ItemStack(placeholderItem, count);
+                    inputs.add(placeholderStack);
+                } else if (inputObject.has("item")) {
+                    String itemId = JsonHelper.getString(inputObject, "item");
+                    net.minecraft.item.Item item = Registries.ITEM.get(new Identifier(itemId));
+                    ItemStack stack = new ItemStack(item, count);
+                    
+                    if (inputObject.has("nbt")) {
+                        try {
+                            String nbtString = JsonHelper.getString(inputObject, "nbt");
+                            NbtCompound nbt = StringNbtReader.parse(nbtString);
+                            stack.setNbt(nbt);
+                        } catch (Exception e) {
+                            throw new JsonParseException("Failed to parse NBT data for input: " + e.getMessage(), e);
+                        }
                     }
+                    
+                    inputs.add(stack);
+                } else {
+                    throw new JsonParseException("Input must have either 'item' or 'tag' field");
                 }
-                
-                inputs.add(stack);
             }
             
             if (inputs.isEmpty()) {
@@ -316,17 +356,29 @@ public class StewPotCookingRecipe implements Recipe<Inventory> {
             int cookTime = JsonHelper.getInt(json, "cookTime", 200);
             boolean scalable = JsonHelper.getBoolean(json, "scalable", false);
             
-            return new StewPotCookingRecipe(id, inputs, outputs, cookTime, scalable);
+            return new StewPotCookingRecipe(id, inputs, inputTags, outputs, cookTime, scalable);
         }
         
         @Override
         public StewPotCookingRecipe read(Identifier id, PacketByteBuf buf) {
             List<ItemStack> inputs = new ArrayList<>();
+            Map<Integer, TagKey<net.minecraft.item.Item>> inputTags = new HashMap<>();
             List<ItemStack> outputs = new ArrayList<>();
             
             int inputCount = buf.readVarInt();
             for (int i = 0; i < inputCount; i++) {
-                inputs.add(buf.readItemStack());
+                boolean isTag = buf.readBoolean();
+                if (isTag) {
+                    Identifier tagId = buf.readIdentifier();
+                    TagKey<net.minecraft.item.Item> tag = TagKey.of(RegistryKeys.ITEM, tagId);
+                    inputTags.put(i, tag);
+                    int count = buf.readVarInt();
+                    net.minecraft.item.Item placeholderItem = Registries.ITEM.get(new Identifier("minecraft:barrier"));
+                    ItemStack placeholderStack = new ItemStack(placeholderItem, count);
+                    inputs.add(placeholderStack);
+                } else {
+                    inputs.add(buf.readItemStack());
+                }
             }
             
             int outputCount = buf.readVarInt();
@@ -337,14 +389,22 @@ public class StewPotCookingRecipe implements Recipe<Inventory> {
             int cookTime = buf.readVarInt();
             boolean scalable = buf.readBoolean();
             
-            return new StewPotCookingRecipe(id, inputs, outputs, cookTime, scalable);
+            return new StewPotCookingRecipe(id, inputs, inputTags, outputs, cookTime, scalable);
         }
         
         @Override
         public void write(PacketByteBuf buf, StewPotCookingRecipe recipe) {
             buf.writeVarInt(recipe.inputs.size());
-            for (ItemStack input : recipe.inputs) {
-                buf.writeItemStack(input);
+            for (int i = 0; i < recipe.inputs.size(); i++) {
+                ItemStack input = recipe.inputs.get(i);
+                boolean isTag = recipe.inputTags.containsKey(i);
+                buf.writeBoolean(isTag);
+                if (isTag) {
+                    buf.writeIdentifier(recipe.inputTags.get(i).id());
+                    buf.writeVarInt(input.getCount());
+                } else {
+                    buf.writeItemStack(input);
+                }
             }
             
             buf.writeVarInt(recipe.outputs.size());

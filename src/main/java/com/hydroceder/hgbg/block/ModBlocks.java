@@ -1,6 +1,7 @@
 package com.hydroceder.hgbg.block;
 
 import com.hydroceder.hgbg.item.ModItems;
+import com.hydroceder.hgbg.item.food.PlacableBlockItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
@@ -168,7 +169,7 @@ public class ModBlocks {
                 .nonOpaque());
         Registry.register(Registries.BLOCK, CHORUS_FRUIT_BOWL_ID, CHORUS_FRUIT_BOWL);
         
-        BlockItem cfbItem = new BlockItem(CHORUS_FRUIT_BOWL, new FabricItemSettings());
+        PlacableBlockItem cfbItem = new PlacableBlockItem(CHORUS_FRUIT_BOWL, new FabricItemSettings());
         Registry.register(Registries.ITEM, CHORUS_FRUIT_BOWL_ID, cfbItem);
         
         // 注册苹果果盘方块
@@ -178,7 +179,7 @@ public class ModBlocks {
                 .nonOpaque());
         Registry.register(Registries.BLOCK, APPLE_FRUIT_BOWL_ID, APPLE_FRUIT_BOWL);
         
-        BlockItem afbItem = new BlockItem(APPLE_FRUIT_BOWL, new FabricItemSettings());
+        PlacableBlockItem afbItem = new PlacableBlockItem(APPLE_FRUIT_BOWL, new FabricItemSettings());
         Registry.register(Registries.ITEM, APPLE_FRUIT_BOWL_ID, afbItem);
 
         // 注册西瓜果盘方块
@@ -188,7 +189,7 @@ public class ModBlocks {
                 .nonOpaque());
         Registry.register(Registries.BLOCK, MELON_FRUIT_BOWL_ID, MELON_FRUIT_BOWL);
 
-        BlockItem melonFruitBowlItem = new BlockItem(MELON_FRUIT_BOWL, new FabricItemSettings());
+        PlacableBlockItem melonFruitBowlItem = new PlacableBlockItem(MELON_FRUIT_BOWL, new FabricItemSettings());
         Registry.register(Registries.ITEM, MELON_FRUIT_BOWL_ID, melonFruitBowlItem);
 
         // 注册胡萝卜摆盘方块
@@ -198,7 +199,7 @@ public class ModBlocks {
                 .nonOpaque());
         Registry.register(Registries.BLOCK, CARROT_BOWL_ID, CARROT_BOWL);
 
-        BlockItem carrotBowlItem = new BlockItem(CARROT_BOWL, new FabricItemSettings());
+        PlacableBlockItem carrotBowlItem = new PlacableBlockItem(CARROT_BOWL, new FabricItemSettings());
         Registry.register(Registries.ITEM, CARROT_BOWL_ID, carrotBowlItem);
 
         // 注册奶油蘑菇汤方块（使用BlockItem以支持中键选取）
@@ -306,7 +307,7 @@ public class ModBlocks {
                 .nonOpaque());
         Registry.register(Registries.BLOCK, BREAD_PLATE_ID, BREAD_PLATE);
 
-        BlockItem breadPlateItem = new BlockItem(BREAD_PLATE, new FabricItemSettings());
+        PlacableBlockItem breadPlateItem = new PlacableBlockItem(BREAD_PLATE, new FabricItemSettings());
         Registry.register(Registries.ITEM, BREAD_PLATE_ID, breadPlateItem);
 
         METRONOME = new MetronomeBlock(FabricBlockSettings.create()

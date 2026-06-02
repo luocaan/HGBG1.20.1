@@ -8,14 +8,23 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 
-public class StareAtCubePieItem extends BlockItem {
-    public StareAtCubePieItem(Block block, Settings settings) {
+public class PlacableBlockItem extends BlockItem {
+    private final String extraTooltipKey;
+
+    public PlacableBlockItem(Block block, Settings settings) {
+        this(block, settings, null);
+    }
+
+    public PlacableBlockItem(Block block, Settings settings, String extraTooltipKey) {
         super(block, settings);
+        this.extraTooltipKey = extraTooltipKey;
     }
 
     @Override
     public void appendTooltip(ItemStack stack, World world, java.util.List<Text> tooltip, TooltipContext context) {
         tooltip.add(Text.translatable("item.hunger-begone.placable").formatted(Formatting.GRAY));
-        tooltip.add(Text.translatable("item.hunger-begone.stare_at_cube_pie.tooltip").formatted(Formatting.GRAY));
+        if (extraTooltipKey != null) {
+            tooltip.add(Text.translatable(extraTooltipKey).formatted(Formatting.GRAY));
+        }
     }
 }

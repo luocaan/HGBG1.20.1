@@ -60,6 +60,7 @@
   "item.hunger-begone.basket.empty": "空",
   "item.hunger-begone.basket.full": "籃已滿！",
   "item.hunger-begone.basket.cannot_store_basket": "不可納籃於籃中！",
+  "item.hunger-begone.placable": "可置",
   "item.hunger-begone.stew_pot": "镬",
   "block.hunger-begone.stew_pot": "镬",
   "block.hunger-begone.stew_pot.no_water": "吾不能無水而烹湯",

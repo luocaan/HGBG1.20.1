@@ -1,1 +1,1 @@
-{"parent": "hunger-begone:block/applefruitbowl"}
+{"parent": "minecraft:item/generated", "textures": {"layer0": "hunger-begone:item/apple_fruit_bowl"}}

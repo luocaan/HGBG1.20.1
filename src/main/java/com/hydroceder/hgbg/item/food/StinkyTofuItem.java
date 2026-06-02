@@ -15,6 +15,7 @@ public class StinkyTofuItem extends BlockItem {
 
     @Override
     public void appendTooltip(ItemStack stack, World world, java.util.List<Text> tooltip, TooltipContext context) {
+        tooltip.add(Text.translatable("item.hunger-begone.placable").formatted(Formatting.GRAY));
         tooltip.add(Text.translatable("item.hunger-begone.stinky_tofu.tooltip").formatted(Formatting.GRAY));
     }
 }

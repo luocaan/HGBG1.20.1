@@ -15,6 +15,7 @@ public class WuguangCakeItem extends BlockItem {
 
     @Override
     public void appendTooltip(ItemStack stack, World world, java.util.List<Text> tooltip, TooltipContext context) {
+        tooltip.add(Text.translatable("item.hunger-begone.placable").formatted(Formatting.GRAY));
         tooltip.add(Text.translatable("item.hunger-begone.wuguang_cake.tooltip").formatted(Formatting.GRAY));
     }
 }

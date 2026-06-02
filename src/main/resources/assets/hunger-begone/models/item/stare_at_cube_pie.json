@@ -1,1 +1,6 @@
-{"parent": "hunger-begone:block/stare_at_cube_pie"}
+{
+    "parent": "minecraft:item/generated",
+    "textures": {
+        "layer0": "hunger-begone:item/sttp"
+    }
+}

@@ -37,6 +37,12 @@ public class ModItemGroups {
                     
                     // 添加灶台到物品组
                     entries.add(ModBlocks.STOVE);
+
+                    // 添加锅盖到物品组
+                    entries.add(ModItems.POT_LID);
+
+                    // 添加炖锅到物品组
+                    entries.add(ModBlocks.STEW_POT);
                     
                     // 添加烤箱到物品组
                     entries.add(ModBlocks.OVEN);
@@ -46,30 +52,6 @@ public class ModItemGroups {
                     
                     // 添加置物架到物品组
                     entries.add(ModBlocks.SHELF);
-                    
-                    // 添加紫颂果盘到物品组
-                    entries.add(ModBlocks.CHORUS_FRUIT_BOWL);
-                    
-                    // 添加苹果果盘到物品组
-                    entries.add(ModBlocks.APPLE_FRUIT_BOWL);
-
-                    // 添加西瓜果盘到物品组
-                    entries.add(ModBlocks.MELON_FRUIT_BOWL);
-
-                    // 添加胡萝卜摆盘到物品组
-                    entries.add(ModBlocks.CARROT_BOWL);
-
-                    // 添加面包盘到物品组
-                    entries.add(ModBlocks.BREAD_PLATE);
-
-                    // 添加仰望夜空派到物品组
-                    entries.add(ModItems.STARE_AT_CUBE_PIE);
-
-                    // 添加臭豆腐到物品组
-                    entries.add(ModItems.STINKY_TOFU);
-
-                    // 添加五光糕到物品组
-                    entries.add(ModItems.WUGUANG_CAKE);
                     
                     // 添加空杯子到物品组
                     entries.add(ModBlocks.EMPTY_CUP);
@@ -94,12 +76,6 @@ public class ModItemGroups {
                     
                     // 添加篮子到物品组
                     entries.add(ModItems.BASKET);
-
-                    // 添加锅盖到物品组
-                    entries.add(ModItems.POT_LID);
-
-                    // 添加炖锅到物品组
-                    entries.add(ModBlocks.STEW_POT);
                     
                     // 添加法棍面包到物品组
                     entries.add(ModItems.BAGUETTE);
@@ -112,6 +88,30 @@ public class ModItemGroups {
                     entries.add(ModItems.COPPER_COOKIE);
                     entries.add(ModItems.IRON_COOKIE);
                     entries.add(ModItems.DIAMOND_COOKIE);
+
+                    // 添加紫颂果盘到物品组
+                    entries.add(ModBlocks.CHORUS_FRUIT_BOWL);
+                    
+                    // 添加苹果果盘到物品组
+                    entries.add(ModBlocks.APPLE_FRUIT_BOWL);
+
+                    // 添加西瓜果盘到物品组
+                    entries.add(ModBlocks.MELON_FRUIT_BOWL);
+
+                    // 添加胡萝卜摆盘到物品组
+                    entries.add(ModBlocks.CARROT_BOWL);
+
+                    // 添加面包盘到物品组
+                    entries.add(ModBlocks.BREAD_PLATE);
+
+                    // 添加仰望夜空派到物品组
+                    entries.add(ModItems.STARE_AT_CUBE_PIE);
+
+                    // 添加臭豆腐到物品组
+                    entries.add(ModItems.STINKY_TOFU);
+
+                    // 添加五光糕到物品组
+                    entries.add(ModItems.WUGUANG_CAKE);
 
                     // 添加惠灵顿牛排到物品组
                     entries.add(ModItems.WELLINGTON);
@@ -134,6 +134,17 @@ public class ModItemGroups {
                     entries.add(ModItems.FRIED_SHRIMP_PARFAIT);
                     entries.add(ModItems.COMMON_FRIED_SHRIMP_PARFAIT);
                     entries.add(ModItems.CAVE_SALAD);
+                    // 添加豆浆到物品组
+                    entries.add(ModItems.SOYBEAN_MILK);
+
+                    // 添加罗宋汤到物品组
+                    entries.add(ModItems.RUSSIAN_SOUP);
+
+                    // 添加地衣肉汤到物品组
+                    entries.add(ModItems.GLOW_LICHEN_MEAT_SOUP);
+
+                    // 添加炖菜杂烩到物品组
+                    entries.add(ModItems.STEW_HOTCHPOTCH);
                     
                     // 添加鸡翅和鸡腿到物品组
                     entries.add(ModItems.CHICKEN_WING);
@@ -223,18 +234,6 @@ public class ModItemGroups {
 
                     // 添加豆腐到物品组
                     entries.add(ModItems.TOFU);
-
-                    // 添加豆浆到物品组
-                    entries.add(ModItems.SOYBEAN_MILK);
-
-                    // 添加罗宋汤到物品组
-                    entries.add(ModItems.RUSSIAN_SOUP);
-
-                    // 添加地衣肉汤到物品组
-                    entries.add(ModItems.GLOW_LICHEN_MEAT_SOUP);
-
-                    // 添加炖菜杂烩到物品组
-                    entries.add(ModItems.STEW_HOTCHPOTCH);
 
                     // 添加肉沫烧茄子到物品组
                     entries.add(ModItems.MINCED_MEAT_EGGPLANT);

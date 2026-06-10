@@ -226,6 +226,9 @@
   "item.hunger-begone.salt.tooltip": "饱和 （1:00）",
   "item.hunger-begone.soy_sauce.tooltip": "急迫 （00:25）",
   "item.hunger-begone.chili_sauce.tooltip": "跳跃提升 II （00:35）",
+
+  "item.hunger-begone.effect_tooltip": "食用时: %s (%s)",
+  "item.hunger-begone.fire_effect_tooltip": "食用时: 着火 %d 秒",
   "item.hunger-begone.cinnamon.tooltip": "速度 （00:15）",
 
   "shelf.hint.no_recipe": "不是什么好主意",

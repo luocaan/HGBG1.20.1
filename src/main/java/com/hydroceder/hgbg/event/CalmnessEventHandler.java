@@ -16,7 +16,7 @@ public class CalmnessEventHandler {
 
     private static final Set<UUID> processingDamage = new HashSet<>();
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
-    private static final double DAMAGE_THRESHOLD = 600.0;
+    private static final double DAMAGE_THRESHOLD = 240.0;
 
     public static void register() {
         registerDamageHandler();

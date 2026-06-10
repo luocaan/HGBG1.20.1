@@ -18,7 +18,7 @@ public class HgbgCommand {
      */
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(CommandManager.literal("hgbg")
-            .requires(source -> source.hasPermissionLevel(0)) // 所有玩家都可以使用
+            .requires(source -> source.hasPermissionLevel(2)) // 仅管理员可使用
             .then(CommandManager.literal("debug")
                 .then(CommandManager.literal("on")
                     .executes(HgbgCommand::enableDebug))

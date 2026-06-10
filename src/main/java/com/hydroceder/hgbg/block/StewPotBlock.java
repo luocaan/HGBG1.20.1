@@ -1,6 +1,7 @@
 package com.hydroceder.hgbg.block;
 
 import com.hydroceder.hgbg.block.entity.StewPotBlockEntity;
+import com.hydroceder.hgbg.event.StewPotEvents;
 import com.hydroceder.hgbg.item.tool.PotLidItem;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -190,13 +191,35 @@ public class StewPotBlock extends BlockWithEntity {
             return ActionResult.SUCCESS;
         }
 
-        // 2. 放入材料 → HAS_WATER 状态（非水桶非锅盖）
+        // 2. 空桶 → HAS_WATER 状态取水（空桶变水桶 + 掉出所有物品 + 切回 EMPTY）
+        if (!heldStack.isEmpty() && heldStack.isOf(Items.BUCKET) && currentState == StewState.HAS_WATER) {
+            if (!player.isCreative()) {
+                heldStack.decrement(1);
+                player.giveItemStack(new ItemStack(Items.WATER_BUCKET));
+            }
+            // 掉出锅中所有材料与锅盖
+            potBE.dropItems();
+            potBE.clearMaterials();
+            // 炖锅切回默认 EMPTY 状态
+            world.setBlockState(pos, state.with(STEW_STATE, StewState.EMPTY), 3);
+            // 播放桶装水音效
+            world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL,
+                SoundCategory.BLOCKS, 1.0f, 1.0f);
+            return ActionResult.SUCCESS;
+        }
+
+        // 3. 放入材料 → HAS_WATER 状态（非水桶非锅盖）
         if (!heldStack.isEmpty()
             && !heldStack.isOf(Items.WATER_BUCKET)
             && !(heldStack.getItem() instanceof PotLidItem)
             && currentState == StewState.HAS_WATER) {
             ItemStack singleItem = heldStack.copy();
             singleItem.setCount(1);
+            // 触发炖锅存入物品事件：监听器可返回 FAIL 取消本次放入
+            ActionResult eventResult = StewPotEvents.INPUT_ITEM.invoker().onInputItem(world, pos, player, singleItem);
+            if (eventResult == ActionResult.FAIL) {
+                return ActionResult.PASS;
+            }
             if (potBE.addMaterial(singleItem)) {
                 heldStack.decrement(1);
                 world.playSound(null, pos, SoundEvents.BLOCK_WATER_AMBIENT,
@@ -205,8 +228,13 @@ public class StewPotBlock extends BlockWithEntity {
             }
         }
 
-        // 3. 锅盖 → HAS_WATER 状态开始烹饪
+        // 4. 锅盖 → HAS_WATER 状态开始烹饪
         if (!heldStack.isEmpty() && heldStack.getItem() instanceof PotLidItem && currentState == StewState.HAS_WATER) {
+            // 触发炖锅存入物品事件：锅盖作为被存入物品同样触发
+            ActionResult eventResult = StewPotEvents.INPUT_ITEM.invoker().onInputItem(world, pos, player, heldStack);
+            if (eventResult == ActionResult.FAIL) {
+                return ActionResult.PASS;
+            }
             potBE.addLid();
             heldStack.decrement(1);
             world.setBlockState(pos, state.with(STEW_STATE, StewState.COOKING), 3);
@@ -216,7 +244,7 @@ public class StewPotBlock extends BlockWithEntity {
             return ActionResult.SUCCESS;
         }
 
-        // 4. 空手 + EMPTY + 有材料 → 取出所有
+        // 5. 空手 + EMPTY + 有材料 → 取出所有
         if (heldStack.isEmpty() && currentState == StewState.EMPTY && potBE.hasMaterialsOrLid()) {
             potBE.dropItems();
             potBE.clearMaterials();
@@ -225,12 +253,12 @@ public class StewPotBlock extends BlockWithEntity {
             return ActionResult.SUCCESS;
         }
 
-        // 5. 烹饪中 → 不可操作
+        // 6. 烹饪中 → 不可操作
         if (currentState == StewState.COOKING) {
             return ActionResult.SUCCESS;
         }
 
-        // 6. 手持物品 + 无水 → 提示
+        // 7. 手持物品 + 无水 → 提示
         if (!heldStack.isEmpty() && currentState == StewState.EMPTY) {
             player.sendMessage(Text.translatable("block.hunger-begone.stew_pot.no_water"), true);
             return ActionResult.FAIL;
@@ -265,6 +293,11 @@ public class StewPotBlock extends BlockWithEntity {
 
         ItemStack singleItem = droppedStack.copy();
         singleItem.setCount(1);
+        // 触发炖锅存入物品事件：吸取掉落物时玩家为 null，监听器可返回 FAIL 取消本次吸取
+        ActionResult eventResult = StewPotEvents.INPUT_ITEM.invoker().onInputItem(world, pos, null, singleItem);
+        if (eventResult == ActionResult.FAIL) {
+            return;
+        }
         if (potBE.addMaterial(singleItem)) {
             droppedStack.decrement(1);
             if (droppedStack.isEmpty()) {

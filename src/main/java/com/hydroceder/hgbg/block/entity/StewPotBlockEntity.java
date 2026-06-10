@@ -2,6 +2,7 @@ package com.hydroceder.hgbg.block.entity;
 
 import com.hydroceder.hgbg.block.ModBlockEntityTypes;
 import com.hydroceder.hgbg.block.StewPotBlock;
+import com.hydroceder.hgbg.event.StewPotEvents;
 import com.hydroceder.hgbg.item.ModItems;
 import com.hydroceder.hgbg.item.tool.PotLidItem;
 import com.hydroceder.hgbg.recipe.stew_pot_cooking.StewPotCookingRecipe;
@@ -25,6 +26,7 @@ import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -143,12 +145,20 @@ public class StewPotBlockEntity extends BlockEntity implements Inventory {
             for (int i = 0; i < inventoryItems.size(); i++) {
                 ItemStack item = inventoryItems.get(i);
                 if (!item.isEmpty()) {
-                    ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), item.copy());
+                    // 触发炖锅输出物品事件：监听器可返回 FAIL 取消该物品的散落
+                    ActionResult eventResult = StewPotEvents.OUTPUT_ITEM.invoker().onOutputItem(world, pos, null, item);
+                    if (eventResult != ActionResult.FAIL) {
+                        ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), item.copy());
+                    }
                 }
             }
             if (hasLid) {
-                ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(),
-                    new ItemStack(ModItems.POT_LID));
+                ItemStack lidStack = new ItemStack(ModItems.POT_LID);
+                // 触发炖锅输出物品事件：锅盖作为被输出物品同样触发
+                ActionResult eventResult = StewPotEvents.OUTPUT_ITEM.invoker().onOutputItem(world, pos, null, lidStack);
+                if (eventResult != ActionResult.FAIL) {
+                    ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), lidStack);
+                }
             }
         }
     }
@@ -193,8 +203,12 @@ public class StewPotBlockEntity extends BlockEntity implements Inventory {
 
         if (rawMaterials.isEmpty()) {
             if (be.hasLid) {
-                ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(),
-                    new ItemStack(ModItems.POT_LID));
+                ItemStack lidStack = new ItemStack(ModItems.POT_LID);
+                // 触发炖锅输出物品事件：锅盖作为被输出物品同样触发
+                ActionResult lidResult = StewPotEvents.OUTPUT_ITEM.invoker().onOutputItem(world, pos, null, lidStack);
+                if (lidResult != ActionResult.FAIL) {
+                    ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), lidStack);
+                }
             }
             be.inventoryItems.clear();
             be.hasLid = false;
@@ -223,17 +237,28 @@ public class StewPotBlockEntity extends BlockEntity implements Inventory {
                 }
             }
             for (ItemStack output : outputs) {
-                ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(),
-                    output.copy());
+                // 触发炖锅输出物品事件：监听器可返回 FAIL 取消该物品的散落
+                ActionResult eventResult = StewPotEvents.OUTPUT_ITEM.invoker().onOutputItem(world, pos, null, output);
+                if (eventResult != ActionResult.FAIL) {
+                    ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), output.copy());
+                }
             }
         } else {
-            ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(),
-                createSuspiciousStewWithEffects(world));
+            ItemStack suspiciousStew = createSuspiciousStewWithEffects(world);
+            // 触发炖锅输出物品事件：可疑炖菜作为被输出物品同样触发
+            ActionResult eventResult = StewPotEvents.OUTPUT_ITEM.invoker().onOutputItem(world, pos, null, suspiciousStew);
+            if (eventResult != ActionResult.FAIL) {
+                ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), suspiciousStew);
+            }
         }
 
         if (be.hasLid) {
-            ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(),
-                new ItemStack(ModItems.POT_LID));
+            ItemStack lidStack = new ItemStack(ModItems.POT_LID);
+            // 触发炖锅输出物品事件：锅盖作为被输出物品同样触发
+            ActionResult lidResult = StewPotEvents.OUTPUT_ITEM.invoker().onOutputItem(world, pos, null, lidStack);
+            if (lidResult != ActionResult.FAIL) {
+                ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), lidStack);
+            }
         }
 
         be.inventoryItems.clear();

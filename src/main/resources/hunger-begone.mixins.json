@@ -7,7 +7,6 @@
 		"PlayerEatFoodMixin",
 		"PlayerWarmthMixin",
 		"SeasoningEffectMixin",
-		"PlayerHealMixin",
 		"CalmnessRemoveMixin",
 		"EndermanCoinMachineMixin",
 		"ThrownEggBlockHitMixin",

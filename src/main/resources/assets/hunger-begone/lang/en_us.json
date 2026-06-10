@@ -198,6 +198,9 @@
   "item.hunger-begone.salt.tooltip": "[Saturation][1 min]",
   "item.hunger-begone.soy_sauce.tooltip": "[Haste][25 sec]",
   "item.hunger-begone.chili_sauce.tooltip": "[Jump Boost II][35 sec]",
+
+  "item.hunger-begone.effect_tooltip": "When eaten: %s (%s)",
+  "item.hunger-begone.fire_effect_tooltip": "When consumed: Fire for %d sec",
   "item.hunger-begone.cinnamon.tooltip": "[Speed][15 sec]",
   
   "item.hunger-begone.full_sugar_lemonade": "Full Sugar Lemonade",

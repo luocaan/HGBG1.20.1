@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "hunger-begone:coconut"
+    }
+  ],
+  "result": {
+    "item": "hunger-begone:coconut_bowl",
+    "count": 2
+  }
+}

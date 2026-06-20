@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "hunger-begone:coconut_log"
+    }
+  ],
+  "result": {
+    "item": "hunger-begone:palm_planks",
+    "count": 4
+  }
+}

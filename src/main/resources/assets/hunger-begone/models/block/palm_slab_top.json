@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "hunger-begone:block/plam_planks",
+    "top": "hunger-begone:block/plam_planks",
+    "side": "hunger-begone:block/plam_planks"
+  }
+}

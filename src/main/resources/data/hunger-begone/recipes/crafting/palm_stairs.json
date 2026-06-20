@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "hunger-begone:palm_planks"
+    }
+  },
+  "result": {
+    "item": "hunger-begone:palm_stairs",
+    "count": 4
+  }
+}

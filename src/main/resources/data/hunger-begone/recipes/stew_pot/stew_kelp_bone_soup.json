@@ -1,0 +1,1 @@
+{"type": "hunger-begone:stew_pot_cooking", "inputs": [{"item": "minecraft:bowl", "count": 1}, {"item": "minecraft:kelp", "count": 1}, {"item": "minecraft:bone", "count": 1}], "outputs": [{"item": "hunger-begone:kelp_bone_soup", "count": 1}], "cookTime": 270}

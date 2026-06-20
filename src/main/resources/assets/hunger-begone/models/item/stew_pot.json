@@ -1,1 +1,15 @@
-{"parent": "hunger-begone:block/cookblock_stew_pot_onground_hashat"}
+{
+  "parent": "hunger-begone:block/cookblock_stew_pot_onground_hashat",
+  "display": {
+    "gui": {
+      "rotation": [45, 225, 0],
+      "translation": [0, 0.5, 0],
+      "scale": [0.6, 0.6, 0.6]
+    },
+    "fixed": {
+      "rotation": [-90, 0, 0],
+      "translation": [0, 0, -8],
+      "scale": [0.75, 0.75, 0.75]
+    }
+  }
+}

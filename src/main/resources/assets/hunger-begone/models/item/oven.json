@@ -1,3 +1,15 @@
 {
-  "parent": "hunger-begone:block/oven_empty_close"
+  "parent": "hunger-begone:block/oven_empty_close",
+  "display": {
+    "gui": {
+      "rotation": [30, 225, 0],
+      "translation": [0, 0, 0],
+      "scale": [0.625, 0.625, 0.625]
+    },
+    "fixed": {
+      "rotation": [-90, 0, 0],
+      "translation": [0, 0, -16],
+      "scale": [1, 1, 1]
+    }
+  }
 }

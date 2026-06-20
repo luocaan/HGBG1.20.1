@@ -1,0 +1,1 @@
+{"type": "hunger-begone:stew_pot_cooking", "inputs": [{"item": "minecraft:potato", "count": 1}, {"item": "minecraft:chicken", "count": 1}, {"item": "minecraft:milk_bucket", "count": 1}, {"item": "hunger-begone:mushroom_oil_bottle", "count": 1}], "outputs": [{"item": "hunger-begone:vichyssoise", "count": 1}], "cookTime": 300}

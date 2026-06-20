@@ -56,6 +56,7 @@
   "item.hunger-begone.basket.empty": "Empty",
   "item.hunger-begone.basket.full": "Basket is full!",
   "item.hunger-begone.basket.cannot_store_basket": "Cannot store a basket inside a basket!",
+  "item.hunger-begone.basket.not_your_pet": "You can't take something that isn't yours!",
   "item.hunger-begone.placable": "Placeable",
   "item.hunger-begone.stew_pot": "Stew Pot",
   "block.hunger-begone.stew_pot": "Stew Pot",
@@ -113,8 +114,6 @@
   "advancement.hunger-begone.ruined_jam_bread.description": "Please don't bake food multiple times",
   "advancement.hunger-begone.bake_explosive.title": "Baking explosives!?",
   "advancement.hunger-begone.bake_explosive.description": "Put explosives in the oven and get close.",
-  "advancement.hunger-begone.free_running.title": "Free Running",
-  "advancement.hunger-begone.free_running.description": "You've trained for long journeys and now don't tire easily!",
   "advancement.hunger-begone.catch_shrimp.title": "Ouch! It's sharp!",
   "advancement.hunger-begone.catch_shrimp.description": "Catch a shrimp",
   "advancement.hunger-begone.eat_goodbro.title": "YOOOOOOO",
@@ -143,6 +142,16 @@
   "block.hunger-begone.beat": "Metronome",
   "block.hunger-begone.sea_glow_lantern": "Sea Glow Lantern",
   "block.hunger-begone.coin_operated_machine": "Coin Operated Machine",
+  "block.hunger-begone.coconut_log": "Palm Log",
+  "block.hunger-begone.coconut_leaves": "Palm Leaves",
+  "block.hunger-begone.coconut_sapling": "Palm Sapling",
+  "block.hunger-begone.palm_planks": "Palm Planks",
+  "block.hunger-begone.palm_slab": "Palm Slab",
+  "block.hunger-begone.palm_stairs": "Palm Stairs",
+  "block.hunger-begone.palm_fence": "Palm Fence",
+  "block.hunger-begone.palm_fence_gate": "Palm Fence Gate",
+  "block.hunger-begone.palm_pressure_plate": "Palm Pressure Plate",
+  "block.hunger-begone.palm_button": "Palm Button",
 
   "block.hunger-begone.eggplant_crop": "Eggplant",
   "block.hunger-begone.soybean_crop": "Soybean",
@@ -166,6 +175,14 @@
   "item.hunger-begone.homeland_dirt": "Homeland Soil",
   "item.hunger-begone.sofa": "Sofa",
   "entity.hunger-begone.sofa": "Sofa",
+
+  "item.hunger-begone.coconut": "Coconut",
+  "item.hunger-begone.coconut_bowl": "Coconut Bowl",
+  "block.hunger-begone.hanging_coconut": "Hanging Coconut",
+
+  "item.hunger-begone.coconut_macaroons": "Coconut Macaroons",
+  "item.hunger-begone.bouillabaisse": "Bouillabaisse",
+  "item.hunger-begone.vichyssoise": "Vichyssoise",
 
   "item.hunger-begone.icecream": "Ice Cream",
   "item.hunger-begone.lemon_icecream": "Lemon Ice Cream",
@@ -202,6 +219,9 @@
   "item.hunger-begone.effect_tooltip": "When eaten: %s (%s)",
   "item.hunger-begone.fire_effect_tooltip": "When consumed: Fire for %d sec",
   "item.hunger-begone.cinnamon.tooltip": "[Speed][15 sec]",
+
+  "death.attack.hunger-begone.crushing": "%1$s bore the unbearable weight of life",
+  "death.attack.hunger-begone.crushing.player": "%1$s bore the unbearable weight of life (caused by %2$s)",
   
   "item.hunger-begone.full_sugar_lemonade": "Full Sugar Lemonade",
   "item.hunger-begone.lemon_pickle": "Lemon Pickle",

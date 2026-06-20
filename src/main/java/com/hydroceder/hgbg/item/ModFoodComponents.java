@@ -68,4 +68,9 @@ public class ModFoodComponents {
             .hunger(2)
             .saturationModifier(0.4f)
             .build();
+
+    public static final FoodComponent COCONUT_BOWL = new FoodComponent.Builder()
+            .hunger(6)
+            .saturationModifier(0.6f)
+            .build();
 }

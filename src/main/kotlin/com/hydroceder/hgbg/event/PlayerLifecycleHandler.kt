@@ -59,7 +59,7 @@ object PlayerLifecycleHandler {
     }
 
     private fun registerDeathEvent() {
-        ServerLivingEntityEvents.ALLOW_DEATH.register(ServerLivingEntityEvents.AllowDeath { entity, damageSource, damageAmount ->
+    ServerLivingEntityEvents.ALLOW_DEATH.register(ServerLivingEntityEvents.AllowDeath { entity, damageSource, damageAmount ->
             if (entity is PlayerEntity) {
                 if (damageSource.isOf(DamageTypes.GENERIC_KILL)) {
                     return@AllowDeath true
@@ -71,6 +71,7 @@ object PlayerLifecycleHandler {
             }
             return@AllowDeath true
         })
+
     }
 
     private fun registerDamageEvent() {
@@ -136,10 +137,6 @@ object PlayerLifecycleHandler {
 
                 if (x > 1000 || y > 1000 || z > 1000) {
                     com.hydroceder.hgbg.advancement.DistanceTrigger.getInstance().trigger(player as ServerPlayerEntity)
-                }
-
-                if (player.isSprinting) {
-                    com.hydroceder.hgbg.advancement.RunTrigger.getInstance().trigger(player as ServerPlayerEntity)
                 }
 
                 if (hasHomelandDirt) {

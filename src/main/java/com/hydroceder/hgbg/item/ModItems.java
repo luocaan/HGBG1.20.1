@@ -507,6 +507,13 @@ public class ModItems {
         new MincedMeatEggplantItem(new FabricItemSettings())
     );
 
+    // 海带排骨汤实例
+    public static final Item KELP_BONE_SOUP = Registry.register(
+        Registries.ITEM,
+        id("kelp_bone_soup"),
+        new KelpBoneSoupItem(new FabricItemSettings().maxCount(1))
+    );
+
     // 沙发实例
     public static final Item SOFA = Registry.register(
         Registries.ITEM,
@@ -547,6 +554,41 @@ public class ModItems {
         Registries.ITEM,
         id("cave_salad"),
         new CaveSaladItem(new FabricItemSettings().maxCount(1))
+    );
+
+    // 椰子实例（不可食用，仅作为材料）
+    public static final Item COCONUT = Registry.register(
+        Registries.ITEM,
+        id("coconut"),
+        new ThrownCoconutItem(new FabricItemSettings())
+    );
+
+    // 椰子碗实例
+    public static final Item COCONUT_BOWL = Registry.register(
+        Registries.ITEM,
+        id("coconut_bowl"),
+        new com.hydroceder.hgbg.item.food.CoconutBowlItem(new FabricItemSettings())
+    );
+
+    // 椰蓉饼实例
+    public static final Item COCONUT_MACAROONS = Registry.register(
+        Registries.ITEM,
+        id("coconut_macaroons"),
+        new com.hydroceder.hgbg.item.food.CoconutMacaroonsItem(new FabricItemSettings())
+    );
+
+    // 普罗旺斯鱼汤实例
+    public static final Item BOUILLABAISSE = Registry.register(
+        Registries.ITEM,
+        id("bouillabaisse"),
+        new com.hydroceder.hgbg.item.food.BouillabaisseItem(new FabricItemSettings().maxCount(1))
+    );
+
+    // 维希奶油冷汤实例
+    public static final Item VICHYSSOISE = Registry.register(
+        Registries.ITEM,
+        id("vichyssoise"),
+        new com.hydroceder.hgbg.item.food.VichyssoiseItem(new FabricItemSettings().maxCount(1))
     );
 
     public static void register() {

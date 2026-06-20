@@ -1,0 +1,1 @@
+{"type": "hunger-begone:pan_cooking", "cookTime": 200, "inputs": [{"item": "minecraft:bowl", "count": 1}, {"item": "minecraft:cod", "count": 1}, {"item": "minecraft:bread", "count": 1}, {"item": "hunger-begone:mushroom_oil_bottle", "count": 1}, {"item": "hunger-begone:mayonnaise_bottle", "count": 1}], "outputs": [{"item": "hunger-begone:bouillabaisse", "count": 1}]}

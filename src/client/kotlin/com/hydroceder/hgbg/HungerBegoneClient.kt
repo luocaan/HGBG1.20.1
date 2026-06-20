@@ -17,6 +17,7 @@ import net.minecraft.client.item.ModelPredicateProviderRegistry
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory
+import net.minecraft.client.render.entity.FlyingItemEntityRenderer
 import net.minecraft.client.world.ClientWorld
 import net.minecraft.entity.LivingEntity
 import net.minecraft.item.ItemStack
@@ -43,6 +44,9 @@ object HungerBegoneClient : ClientModInitializer {
 
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.STEW_POT, RenderLayer.getCutout())
 
+        // 设置棕榈树苗使用透明渲染层
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.COCONUT_SAPLING, RenderLayer.getCutout())
+
         // 注册沙发实体模型层
         EntityModelLayerRegistry.registerModelLayer(
             SofaModel.LAYER
@@ -55,6 +59,11 @@ object HungerBegoneClient : ClientModInitializer {
         
         // 注册沙发实体渲染器
         EntityRendererRegistry.register(ModEntities.SOFA, ::SofaEntityRenderer)
+
+        // 注册投掷椰子实体渲染器
+        EntityRendererRegistry.register(ModEntities.COCONUT_PROJECTILE) { ctx ->
+            FlyingItemEntityRenderer(ctx, 1.0f, true)
+        }
 
         // 注册节拍器方块实体渲染器（使用原生API替代弃用的BlockEntityRendererRegistry）
         BlockEntityRendererFactories.register(ModBlockEntityTypes.METRONOME_BLOCK_ENTITY)

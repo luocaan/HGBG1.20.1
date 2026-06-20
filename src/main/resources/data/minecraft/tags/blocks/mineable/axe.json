@@ -3,6 +3,15 @@
   "values": [
     "hunger-begone:shelf",
     "hunger-begone:mortar_and_pestle",
-    "hunger-begone:coin_operated_machine"
+    "hunger-begone:coin_operated_machine",
+    "hunger-begone:coconut_log",
+    "hunger-begone:palm_planks",
+    "hunger-begone:palm_slab",
+    "hunger-begone:palm_stairs",
+    "hunger-begone:palm_fence",
+    "hunger-begone:palm_fence_gate",
+    "hunger-begone:palm_pressure_plate",
+    "hunger-begone:palm_button",
+    "hunger-begone:hanging_coconut"
   ]
 }

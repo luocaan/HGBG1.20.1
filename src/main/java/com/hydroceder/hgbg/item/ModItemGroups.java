@@ -238,7 +238,25 @@ public class ModItemGroups {
                     // 添加肉沫烧茄子到物品组
                     entries.add(ModItems.MINCED_MEAT_EGGPLANT);
 
+                    // 添加海带排骨汤到物品组
+                    entries.add(ModItems.KELP_BONE_SOUP);
+
                     entries.add(ModItems.SOFA);
+
+                    // 添加椰子到物品组
+                    entries.add(ModItems.COCONUT);
+
+                    // 添加椰子碗到物品组
+                    entries.add(ModItems.COCONUT_BOWL);
+                    
+                    // 添加椰蓉饼到物品组
+                    entries.add(ModItems.COCONUT_MACAROONS);
+                    
+                    // 添加普罗旺斯鱼汤到物品组
+                    entries.add(ModItems.BOUILLABAISSE);
+                    
+                    // 添加维希奶油冷汤到物品组
+                    entries.add(ModItems.VICHYSSOISE);
                 })
                 .build();
         

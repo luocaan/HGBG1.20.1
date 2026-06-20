@@ -236,4 +236,24 @@ public class FoodProperties {
     // 肉沫烧茄子
     public static final int MINCED_MEAT_EGGPLANT_HUNGER = 6;
     public static final float MINCED_MEAT_EGGPLANT_SATURATION = 1.0f;
+
+    // 海带排骨汤
+    public static final int KELP_BONE_SOUP_HUNGER = 7;
+    public static final float KELP_BONE_SOUP_SATURATION = 2.0f;
+
+    // 椰子碗
+    public static final int COCONUT_BOWL_HUNGER = 6;
+    public static final float COCONUT_BOWL_SATURATION = 0.6f;
+
+    // 椰蓉饼
+    public static final int COCONUT_MACAROONS_HUNGER = 9;
+    public static final float COCONUT_MACAROONS_SATURATION = 1.111f;
+
+    // 普罗旺斯鱼汤
+    public static final int BOUILLABAISSE_HUNGER = 10;
+    public static final float BOUILLABAISSE_SATURATION = 1.0f;
+
+    // 维希奶油冷汤
+    public static final int VICHYSSOISE_HUNGER = 7;
+    public static final float VICHYSSOISE_SATURATION = 2.0f;
 }

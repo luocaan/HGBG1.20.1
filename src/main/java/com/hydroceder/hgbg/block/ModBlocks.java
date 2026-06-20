@@ -5,13 +5,30 @@ import com.hydroceder.hgbg.item.food.PlacableBlockItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockSetType;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.ButtonBlock;
 import net.minecraft.block.CropBlock;
+import net.minecraft.block.LeavesBlock;
+import net.minecraft.block.PillarBlock;
+import net.minecraft.block.PressurePlateBlock;
+import net.minecraft.block.SaplingBlock;
+import net.minecraft.block.SlabBlock;
+import net.minecraft.block.StairsBlock;
+import net.minecraft.block.WoodType;
+import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.block.sapling.SaplingGenerator;
 import net.minecraft.item.BlockItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.hydroceder.hgbg.structure.ModFeatures;
 
 /**
  * 模组方块注册类
@@ -92,6 +109,18 @@ public class ModBlocks {
     public static Block SEA_GLOW_LANTERN;
     public static final Identifier SEA_GLOW_LANTERN_ID = new Identifier("hunger-begone", "sea_glow_lantern");
 
+    // 棕榈原木
+    public static Block COCONUT_LOG;
+    public static final Identifier COCONUT_LOG_ID = new Identifier("hunger-begone", "coconut_log");
+
+    // 棕榈树叶
+    public static Block COCONUT_LEAVES;
+    public static final Identifier COCONUT_LEAVES_ID = new Identifier("hunger-begone", "coconut_leaves");
+
+    // 棕榈树苗
+    public static Block COCONUT_SAPLING;
+    public static final Identifier COCONUT_SAPLING_ID = new Identifier("hunger-begone", "coconut_sapling");
+
     public static Block EGGPLANT_CROP;
     public static final Identifier EGGPLANT_CROP_ID = new Identifier("hunger-begone", "eggplant_crop");
     public static final Identifier EGGPLANT_SEED_ID = new Identifier("hunger-begone", "eggplant_seed");
@@ -99,6 +128,38 @@ public class ModBlocks {
     public static Block SOYBEAN_CROP;
     public static final Identifier SOYBEAN_CROP_ID = new Identifier("hunger-begone", "soybean_crop");
     public static final Identifier SOYBEAN_ID = new Identifier("hunger-begone", "soybean");
+
+    // 棕榈木板
+    public static Block PALM_PLANKS;
+    public static final Identifier PALM_PLANKS_ID = new Identifier("hunger-begone", "palm_planks");
+
+    // 棕榈台阶
+    public static Block PALM_SLAB;
+    public static final Identifier PALM_SLAB_ID = new Identifier("hunger-begone", "palm_slab");
+
+    // 棕榈楼梯
+    public static Block PALM_STAIRS;
+    public static final Identifier PALM_STAIRS_ID = new Identifier("hunger-begone", "palm_stairs");
+
+    // 棕榈栅栏
+    public static Block PALM_FENCE;
+    public static final Identifier PALM_FENCE_ID = new Identifier("hunger-begone", "palm_fence");
+
+    // 棕榈栅栏门
+    public static Block PALM_FENCE_GATE;
+    public static final Identifier PALM_FENCE_GATE_ID = new Identifier("hunger-begone", "palm_fence_gate");
+
+    // 棕榈压力板
+    public static Block PALM_PRESSURE_PLATE;
+    public static final Identifier PALM_PRESSURE_PLATE_ID = new Identifier("hunger-begone", "palm_pressure_plate");
+
+    // 棕榈按钮
+    public static Block PALM_BUTTON;
+    public static final Identifier PALM_BUTTON_ID = new Identifier("hunger-begone", "palm_button");
+
+    // 悬挂椰子
+    public static Block HANGING_COCONUT;
+    public static final Identifier HANGING_COCONUT_ID = new Identifier("hunger-begone", "hanging_coconut");
 
     // 炖锅实例
     public static Block STEW_POT;
@@ -338,11 +399,112 @@ public class ModBlocks {
         BlockItem coinOperatedMachineItem = new BlockItem(COIN_OPERATED_MACHINE, new FabricItemSettings());
         Registry.register(Registries.ITEM, COIN_OPERATED_MACHINE_ID, coinOperatedMachineItem);
 
+        // 注册棕榈原木
+        COCONUT_LOG = new PillarBlock(FabricBlockSettings.create()
+                .strength(2.0f)
+                .sounds(net.minecraft.sound.BlockSoundGroup.WOOD));
+        Registry.register(Registries.BLOCK, COCONUT_LOG_ID, COCONUT_LOG);
+
+        BlockItem coconutLogItem = new BlockItem(COCONUT_LOG, new FabricItemSettings());
+        Registry.register(Registries.ITEM, COCONUT_LOG_ID, coconutLogItem);
+
+        // 注册棕榈树叶
+        COCONUT_LEAVES = new LeavesBlock(FabricBlockSettings.create()
+                .strength(0.2f)
+                .nonOpaque()
+                .sounds(net.minecraft.sound.BlockSoundGroup.GRASS)
+                .ticksRandomly());
+        Registry.register(Registries.BLOCK, COCONUT_LEAVES_ID, COCONUT_LEAVES);
+
+        BlockItem coconutLeavesItem = new BlockItem(COCONUT_LEAVES, new FabricItemSettings());
+        Registry.register(Registries.ITEM, COCONUT_LEAVES_ID, coconutLeavesItem);
+
+        // 注册棕榈树苗
+        COCONUT_SAPLING = new CoconutSaplingBlock(new SaplingGenerator() {
+            @Override
+            protected RegistryKey<ConfiguredFeature<?, ?>> getTreeFeature(net.minecraft.util.math.random.Random random, boolean bees) {
+                return ModFeatures.PALM_TREE_CONFIGURED_KEY;
+            }
+        }, FabricBlockSettings.create()
+                .strength(0.0f)
+                .nonOpaque()
+                .sounds(net.minecraft.sound.BlockSoundGroup.GRASS)
+                .noCollision()
+                .ticksRandomly());
+        Registry.register(Registries.BLOCK, COCONUT_SAPLING_ID, COCONUT_SAPLING);
+
+        BlockItem coconutSaplingItem = new BlockItem(COCONUT_SAPLING, new FabricItemSettings());
+        Registry.register(Registries.ITEM, COCONUT_SAPLING_ID, coconutSaplingItem);
+
+        // 注册棕榈木板
+        PALM_PLANKS = new Block(FabricBlockSettings.create()
+                .strength(2.0f, 3.0f)
+                .sounds(BlockSoundGroup.WOOD));
+        Registry.register(Registries.BLOCK, PALM_PLANKS_ID, PALM_PLANKS);
+        Registry.register(Registries.ITEM, PALM_PLANKS_ID, new BlockItem(PALM_PLANKS, new FabricItemSettings()));
+
+        // 注册棕榈台阶
+        PALM_SLAB = new SlabBlock(FabricBlockSettings.create()
+                .strength(2.0f, 3.0f)
+                .sounds(BlockSoundGroup.WOOD));
+        Registry.register(Registries.BLOCK, PALM_SLAB_ID, PALM_SLAB);
+        Registry.register(Registries.ITEM, PALM_SLAB_ID, new BlockItem(PALM_SLAB, new FabricItemSettings()));
+
+        // 注册棕榈楼梯
+        PALM_STAIRS = new StairsBlock(PALM_PLANKS.getDefaultState(), FabricBlockSettings.create()
+                .strength(2.0f, 3.0f)
+                .sounds(BlockSoundGroup.WOOD));
+        Registry.register(Registries.BLOCK, PALM_STAIRS_ID, PALM_STAIRS);
+        Registry.register(Registries.ITEM, PALM_STAIRS_ID, new BlockItem(PALM_STAIRS, new FabricItemSettings()));
+
+        // 注册棕榈栅栏
+        PALM_FENCE = new net.minecraft.block.FenceBlock(FabricBlockSettings.create()
+                .strength(2.0f, 3.0f)
+                .sounds(BlockSoundGroup.WOOD));
+        Registry.register(Registries.BLOCK, PALM_FENCE_ID, PALM_FENCE);
+        Registry.register(Registries.ITEM, PALM_FENCE_ID, new BlockItem(PALM_FENCE, new FabricItemSettings()));
+
+        // 注册棕榈栅栏门
+        PALM_FENCE_GATE = new net.minecraft.block.FenceGateBlock(
+                FabricBlockSettings.create().strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD),
+                WoodType.OAK);
+        Registry.register(Registries.BLOCK, PALM_FENCE_GATE_ID, PALM_FENCE_GATE);
+        Registry.register(Registries.ITEM, PALM_FENCE_GATE_ID, new BlockItem(PALM_FENCE_GATE, new FabricItemSettings()));
+
+        // 注册棕榈压力板
+        PALM_PRESSURE_PLATE = new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING,
+                FabricBlockSettings.create().strength(0.5f).sounds(BlockSoundGroup.WOOD).noCollision(),
+                BlockSetType.OAK);
+        Registry.register(Registries.BLOCK, PALM_PRESSURE_PLATE_ID, PALM_PRESSURE_PLATE);
+        Registry.register(Registries.ITEM, PALM_PRESSURE_PLATE_ID, new BlockItem(PALM_PRESSURE_PLATE, new FabricItemSettings()));
+
+        // 注册棕榈按钮
+        PALM_BUTTON = new ButtonBlock(
+                FabricBlockSettings.create().strength(0.5f).sounds(BlockSoundGroup.WOOD).noCollision(),
+                BlockSetType.OAK, 30, true);
+        Registry.register(Registries.BLOCK, PALM_BUTTON_ID, PALM_BUTTON);
+        Registry.register(Registries.ITEM, PALM_BUTTON_ID, new BlockItem(PALM_BUTTON, new FabricItemSettings()));
+
+        // 注册悬挂椰子
+        HANGING_COCONUT = new HangingCoconutBlock(FabricBlockSettings.create()
+                .strength(0.5f)
+                .requiresTool()
+                .sounds(net.minecraft.sound.BlockSoundGroup.WOOD)
+                .nonOpaque()
+                .noCollision());
+        Registry.register(Registries.BLOCK, HANGING_COCONUT_ID, HANGING_COCONUT);
+        Registry.register(Registries.ITEM, HANGING_COCONUT_ID, new BlockItem(HANGING_COCONUT, new FabricItemSettings()));
+
         EGGPLANT_CROP = new EggplantCropBlock(null);
         Registry.register(Registries.BLOCK, EGGPLANT_CROP_ID, EGGPLANT_CROP);
         registerCropBlock((CropBlock) EGGPLANT_CROP);
 
-        ModItems.EGGPLANT_SEED = new BlockItem(EGGPLANT_CROP, new FabricItemSettings());
+        ModItems.EGGPLANT_SEED = new BlockItem(EGGPLANT_CROP, new FabricItemSettings()) {
+            @Override
+            public String getTranslationKey() {
+                return "item.hunger-begone.eggplant_seed";
+            }
+        };
         Registry.register(Registries.ITEM, EGGPLANT_SEED_ID, ModItems.EGGPLANT_SEED);
 
         ((EggplantCropBlock) EGGPLANT_CROP).setSeedsItem(ModItems.EGGPLANT_SEED);

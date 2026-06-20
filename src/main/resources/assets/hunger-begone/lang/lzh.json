@@ -143,6 +143,10 @@
   "item.hunger-begone.homeland_dirt": "故土",
   "item.hunger-begone.sofa": "長椅",
 
+  "item.hunger-begone.coconut_macaroons": "椰蓉饼",
+  "item.hunger-begone.bouillabaisse": "普羅旺斯魚湯",
+  "item.hunger-begone.vichyssoise": "維希奶油冷湯",
+
   "item.hunger-begone.icecream": "冰酪",
   "item.hunger-begone.lemon_icecream": "檸檬冰酪",
   "item.hunger-begone.fried_shrimp_parfait": "珍饈烹蝦冰酪",
@@ -186,8 +190,6 @@
   "advancement.hunger-begone.ruined_jam_bread.description": "莫复炙食",
   "advancement.hunger-begone.bake_explosive.title": "炙火药！？",
   "advancement.hunger-begone.bake_explosive.description": "置火药于炙炉，近观之",
-  "advancement.hunger-begone.free_running.title": "纵马驰骋",
-  "advancement.hunger-begone.free_running.description": "久行不怠，气力悠长",
   "advancement.hunger-begone.apple_tree.title": "柰树",
   "advancement.hunger-begone.apple_tree.description": "催熟栎叶，可得柰乎？",
   "advancement.hunger-begone.lemon_tree.title": "黎檬树",
@@ -240,6 +242,9 @@
   "shelf.tool.stew_pot": "鑊",
 
   "entity.hunger-begone.sofa": "長椅",
+
+  "death.attack.hunger-begone.crushing": "%1$s負重過甚，不堪其荷",
+  "death.attack.hunger-begone.crushing.player": "%1$s受%2$s所累，不堪其荷",
 
   "block.hunger-begone.empty_cup": "空盞",
   "block.hunger-begone.wooden_cup": "調味料木盞",

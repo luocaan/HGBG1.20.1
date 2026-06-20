@@ -1,5 +1,6 @@
 package com.hydroceder.hgbg.entity;
 
+import com.hydroceder.hgbg.HgbgMod;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.EntityDimensions;
@@ -7,6 +8,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -22,6 +24,16 @@ public class ModEntities {
             new Identifier(MOD_ID, "sofa"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, SofaEntity::new)
                     .dimensions(EntityDimensions.fixed(1.5f, 1.0f))
+                    .build()
+    );
+
+    public static final EntityType<CoconutProjectile> COCONUT_PROJECTILE = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(MOD_ID, "coconut_projectile"),
+            FabricEntityTypeBuilder.<CoconutProjectile>create(SpawnGroup.MISC, CoconutProjectile::new)
+                    .dimensions(EntityDimensions.fixed(0.25f, 0.25f))
+                    .trackRangeBlocks(64)
+                    .trackedUpdateRate(2)
                     .build()
     );
 

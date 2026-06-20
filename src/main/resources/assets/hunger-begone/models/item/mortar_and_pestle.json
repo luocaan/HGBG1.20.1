@@ -1,3 +1,15 @@
 {
-  "parent": "hunger-begone:block/mortar_and_pestle"
+  "parent": "hunger-begone:block/mortar_and_pestle",
+  "display": {
+    "gui": {
+      "rotation": [37.13, 241.88, 0],
+      "translation": [0, 1.5, 0],
+      "scale": [0.575, 0.575, 0.575]
+    },
+    "fixed": {
+      "rotation": [-90, 0, 0],
+      "translation": [0, 0, -8],
+      "scale": [0.75, 0.75, 0.75]
+    }
+  }
 }

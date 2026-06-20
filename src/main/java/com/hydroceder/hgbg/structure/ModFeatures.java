@@ -31,10 +31,24 @@ public class ModFeatures {
     public static final RegistryKey SMALL_GARDEN_PLACED_KEY =
         RegistryKey.of(RegistryKeys.PLACED_FEATURE, new Identifier(HgbgMod.MOD_ID, "small_garden"));
     
+    // 棕榈树世界生成特征键
+    public static final Feature<DefaultFeatureConfig> PALM_TREE = new PalmTreeFeature();
+    
+    @SuppressWarnings("unchecked")
+    public static final RegistryKey PALM_TREE_CONFIGURED_KEY =
+        RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, new Identifier(HgbgMod.MOD_ID, "palm_tree"));
+    
+    @SuppressWarnings("unchecked")
+    public static final RegistryKey PALM_TREE_PLACED_KEY =
+        RegistryKey.of(RegistryKeys.PLACED_FEATURE, new Identifier(HgbgMod.MOD_ID, "palm_tree"));
+    
     public static void register() {
         Registry.register(Registries.FEATURE, new Identifier(HgbgMod.MOD_ID, "small_camp"), SMALL_CAMP);
         
         Registry.register(Registries.FEATURE, new Identifier(HgbgMod.MOD_ID, "small_garden"), SMALL_GARDEN);
+
+        // 注册棕榈树世界生成特征
+        Registry.register(Registries.FEATURE, new Identifier(HgbgMod.MOD_ID, "palm_tree"), PALM_TREE);
         
         BiomeModifications.addFeature(
             BiomeSelectors.foundInOverworld(),
@@ -55,6 +69,17 @@ public class ModFeatures {
             ),
             GenerationStep.Feature.VEGETAL_DECORATION,
             SMALL_GARDEN_PLACED_KEY
+        );
+
+        // 棕榈树生成于沙滩和海岸生物群系
+        BiomeModifications.addFeature(
+            BiomeSelectors.includeByKey(
+                BiomeKeys.BEACH,
+                BiomeKeys.SNOWY_BEACH,
+                BiomeKeys.STONY_SHORE
+            ),
+            GenerationStep.Feature.VEGETAL_DECORATION,
+            PALM_TREE_PLACED_KEY
         );
         
         LOGGER.info("Mod features registered successfully!");

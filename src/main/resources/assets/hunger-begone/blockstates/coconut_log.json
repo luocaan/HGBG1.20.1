@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "hunger-begone:block/cocount_log",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "hunger-begone:block/cocount_log"
+    },
+    "axis=z": {
+      "model": "hunger-begone:block/cocount_log",
+      "x": 90
+    }
+  }
+}

@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "hunger-begone:block/coconut_block"
+    "layer0": "hunger-begone:item/coconut"
   }
 }

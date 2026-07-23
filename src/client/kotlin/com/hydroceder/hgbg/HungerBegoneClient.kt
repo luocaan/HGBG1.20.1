@@ -47,6 +47,9 @@ object HungerBegoneClient : ClientModInitializer {
         // 设置棕榈树苗使用透明渲染层
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.COCONUT_SAPLING, RenderLayer.getCutout())
 
+        // 设置棕榈树叶使用透明渲染层
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.COCONUT_LEAVES, RenderLayer.getCutoutMipped())
+
         // 注册沙发实体模型层
         EntityModelLayerRegistry.registerModelLayer(
             SofaModel.LAYER

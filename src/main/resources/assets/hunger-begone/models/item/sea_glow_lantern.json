@@ -1,1 +1,6 @@
-{"parent": "hunger-begone:block/sea_glow_lantern"}
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "hunger-begone:item/sea_glow_lantern"
+  }
+}
